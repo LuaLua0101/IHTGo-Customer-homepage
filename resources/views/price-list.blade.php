@@ -4,8 +4,11 @@
 
     <div class="topHeight"></div>
     <div class="container pricelist-wrap">
-        <h2 style="text-align:center"><span style="font-size:24px"><span style="color:#e50303"><strong>BẢNG GIÁ GIAO HÀNG</strong></span></span></h2>
-
+        <h1 style="text-align:center">
+                <span style="color:#e50303"><strong>BẢNG GIÁ GIAO HÀNG</strong>
+            </span>
+        </h1>
+<br/>
         <!--GIAO HANG NOI TINH-->
         <section class="bang-gia">
             <h4><span>I. GIAO HÀNG TRONG NGÀY NỘI THÀNH PHỐ HỒ CHÍ MÌNH VÀ BÌNH DƯƠNG</span></h4>
@@ -19,7 +22,7 @@
                                 <th><span><strong>CƯỚC PHÍ (VND)</strong></span></th>
                             </tr>
                             <tr>
-                                <td>GIAO HÀNG BẰNG XE MÁY</td>
+                                <td>GIAO HÀNG BẰNG XE MÁY <i class="fas fa-motorcycle"  style='color:#e50303'></i></td>
                                 <td>25 KG</td>
                                 <td>70.000 VND</td>
                             </tr>
@@ -36,7 +39,7 @@
                                 <th><span><strong>THÊM ĐỊA ĐIỂM GIAO HÀNG</strong></span></th>
                             </tr>
                             <tr>
-                                <td>GIAO HÀNG BẰNG XE TẢI</td>
+                                <td>GIAO HÀNG BẰNG XE TẢI <i class="fas fa-truck"  style='color:#e50303'></i></td>
                                 <td>70.000 VND</td>
                                 <td>(+ 3,000 x SỐ KG)</td>
                                 <td>(+ 70,000 VND)</td>
@@ -46,7 +49,7 @@
                 </div>
             </div>
         </section>
-
+        <br />
 
         <!--GIAO CHUNG TU TP.HCM-BINH DUONG VA NGUOC LAI-->
         <section class="bang-gia">
@@ -60,7 +63,7 @@
                                 <th class="col-md-6"> <span><strong>CƯỚC PHÍ (VND)</strong></span></th>
                             </tr>
                             <tr>
-                                <td>TP. HỒ CHÍ MINH <i class="fas fa-exchange-alt"></i> BÌNH DƯƠNG</td>
+                                <td>TP. HỒ CHÍ MINH <i class="fas fa-exchange-alt" style='color:#e50303'></i> BÌNH DƯƠNG</td>
                                 <td>70,000 VND</td>
                             </tr>
                         </tbody>
@@ -68,6 +71,7 @@
                 </div>
             </div>
         </section>
+        <br />
         <!--GIAO HANG NGOAI TỈNH-->
         <section class="bang-gia">
             <h4><span>III. GIAO HÀNG NGOẠI TỈNH</span></h4>
@@ -81,8 +85,8 @@
                                 <th rowspan="2"><span><strong>TRỌNG LƯỢNG TỐI ĐA (KG)</strong></span></th>
                             </tr>
                             <tr>
-                                <td class="title-price">TỪ</td>
-                                <td class="title-price">ĐẾN</td>
+                                <td class="title-price"><i class="fas fa-walking"></i></td>
+                                <td class="title-price"><i class="fas fa-map-marked-alt"></i></td>
                             </tr>
                         </tbody>
                         <tbody>
@@ -145,14 +149,14 @@
                 </div>
             </div>
         </section>
-
+<br/>
         <!--HỎA TỐC-->
         <section class="bang-gia">
             <h4><span>IV. DỊCH VỤ GIAO HÀNG HỎA TỐC </span></h4>
             <p>DỰA VÀO BẢNG GIÁ Ở TRÊN VÀ NHÂN ĐÔI CƯỚC PHÍ CHO DỊCH VỤ GIAO HÀNG MÀ BẠN CHỌN</p>
         </section>
     </div>
-
+<br/>
 
 </div>
 @endsection

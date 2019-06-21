@@ -66,7 +66,7 @@ html, body {
 body {
     -webkit-font-smoothing: subpixel-antialiased;
     color: #303030;
-    font-family: Arial;
+    font-family: 'Segoe UI';
     font-size: 16px;
     /*transform: scale(1);*/
 }
@@ -83,7 +83,7 @@ pre {
     border: 0;
     border-radius: 0;
     margin: auto;
-    font-family: Arial !important;
+    font-family: "Segoe UI" !important;
     font-size: 16px;
 }
 
@@ -98,7 +98,7 @@ pre {
 }
 
 .topHeight {
-    height: 200px;
+    height: 150px;
 }
 
 @media (max-width:990px) {
@@ -160,7 +160,7 @@ pre {
     padding: 0 20px;
     box-sizing: border-box;
     position: absolute;
-    z-index: 999999;
+    z-index: 1;
 }
 
     .secondheader .logo-image {
@@ -355,7 +355,6 @@ pre {
     margin: 0;
     color: #fff;
     float: right;
-    padding: 7px 10px;
     background: #e50303;
     cursor: pointer;
 }
@@ -399,12 +398,8 @@ pre {
             background: #fff;
             display: block;
             text-align: center;
-            padding: 15px 20px;
+            padding: 10px 20px;
         }
-
-            .secondheader ul li:not(:nth-child(4)):not(:nth-child(5)) {
-                border-bottom: 1px solid #000;
-            }
 
     h1.brandlogo {
         display: none;
@@ -1083,7 +1078,7 @@ footer {
                 display: block;
                 padding: 0px 10px 10px 10px;
                 width: 100%;
-                height: 115px;
+                font-size: 15px;
             }
 
             .datalist-news .news-item .inner-item .date {
@@ -1128,7 +1123,7 @@ footer {
 
 /*****Price Page******/
 .pricelist-wrap table, .pricelist-wrap th, .pricelist-wrap td {
-    border: 1px solid #000;
+    border: 1px solid #ece8e8;
     border-collapse: collapse;
 }
 

@@ -29,13 +29,11 @@
 
     <!---------------------------------------Custom CSS---------------------------------------------->
     <link href="public/user/css/usercustom.css" rel="stylesheet" />
+    <link href="public/css/style.css" rel="stylesheet" />
     <link href="public/shared/common.css" rel="stylesheet" />
     <!----------------------------------------------------------------------------------------------->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
-
     <title>IHTGO - Trang Chủ</title>
-
 
 </head>
 
@@ -71,8 +69,6 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Văn phòng Đồng Nai<span class="caret"></span></a>
                     <ul class="dropdown-menu drop-vanphong">
                         <li><a href="#!">100 KP. Bình Dương, P. Long Bình Tân,<br />Biên Hòa, Đồng Nai.</a></li>
-
-
                     </ul>
                 </li>
             </ul>
@@ -93,14 +89,292 @@
             <h1 class="brandlogo"><a href="{!! url('/'); !!}"><img class="logo-image" src="public/Images/Index/logo.png" alt="logo" title="logo" /></a></h1>
             <ul class="header-link">
                 <li class="active"><a href="{!! url('/'); !!}"><strong>TRANG CHỦ</strong></a></li>
-                <li class=""><a href="gioi-thieu">GIỚI THIỆU</a></li>
-                <li class=""><a href="bang-gia"><strong>BẢNG GIÁ</strong></a></li>
-                <li class=" "><a href="tin-tuc"><strong>TIN TỨC</strong></a></li>
-                <li class=""><a class="btn btndatgiaohang" href="https://ihtgo.page.link/ihtgo-app "><strong>ĐẶT GIAO HÀNG NGAY</strong></a></li>
+                <li><a href="{!! url('gioi-thieu'); !!}">GIỚI THIỆU</a></li>
+                <li><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
+                <li><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
+                <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#DatHang"><strong>ĐẶT GIAO HÀNG NGAY</strong></button></li>
+                <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Login"><strong>ĐĂNG NHẬP</strong></button></li>
+                <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Registered"><strong>ĐĂNG KÝ</strong></button></li>
             </ul>
             <div class="clearfix"></div>
         </nav>
     </header>
+    <!--  Modal Dat hang-->
+    <div class="modal fade" id="DatHang" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ĐƠN HÀNG MỚI</h4>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-6">
+                        <h4>Thông tin người gửi đơn hàng</h4>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-user" style='color:#e50303'></i></span>
+                                <input type="text" class="form-control" placeholder="Họ và Tên người gửi">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" placeholder="SĐT người gửi">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <input type="text" class="form-control" placeholder="Địa chỉ người gửi">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <select class="form-control" id="sel1">
+                                    <option>Vui lòng chọn tỉnh - thành phố</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <select class="form-control" id="sel1">
+                                    <option>Vui lòng chọn quận - huyện</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Thông tin người nhận đơn hàng</h4>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="Họ và Tên người nhận">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" placeholder="SĐT người nhận">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <input type="text" class="form-control" placeholder="Địa chỉ người nhận">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <select class="form-control" id="sel1">
+                                    <option>Vui lòng chọn tỉnh - thành phố</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <select class="form-control" id="sel1">
+                                    <option>Vui lòng chọn quận - huyện</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h4>Thông tin đơn hàng</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
+                                    <input type="text" class="form-control" placeholder="Kích thước">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
+                                    <input type="text" class="form-control" placeholder="Cân nặng">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-hand-holding-usd"></i></span>
+                                <input type="text" class="form-control" placeholder="Thu hộ">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="custom-file col-md-4">
+                            <label>Ảnh đơn hàng:</label>
+                                <div class="upload-btn-wrapper">
+                                    <img id="img1" width="130" src="public/images/Index/notfound.png">
+                                    <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>Ghi chú:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="title-form">Giao hỏa tốc:</label>
+                            <label class="container">Có
+                                <input type="radio" checked="checked" name="radio1">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container ">Không
+                                <input type="radio" name="radio1">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="title-form">Loại xe:</label>
+                            <label class="container">Xe máy
+                                <input type="radio" checked="checked" name="radio2">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container ">Xe tải
+                                <input type="radio" name="radio2">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="title-form">Trường hợp:</label>
+                            <label class="container">Giao nội tỉnh
+                                <input type="radio" checked="checked" name="radio3">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container ">Giao ngoại tỉnh
+                                <input type="radio" name="radio3">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container ">Giao chứng từ
+                                <input type="radio" name="radio3">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="title-form">Phương thức thanh toán</label>
+                            <label class="container">Tiền mặt
+                                <input type="radio" checked="checked" name="radio4">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container ">Thanh toán theo tháng
+                                <input type="radio" name="radio4">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="title-form">Người thanh toán:</label>
+                            <label class="container">Người gửi
+                                <input type="radio" checked="checked" name="radio5">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container ">Người nhận
+                                <input type="radio" name="radio5">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
+                    <button type="button" class="btn" data-dismiss="modal"><i class="fas fa-times"></i>Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal login-->
+    <div class="modal fade" id="Login" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ĐĂNG NHẬP</h4>
+                </div>
+                <div class="modal-body ">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-user"></i></span>
+                            <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"><i class="fas fa-sign-in-alt" style="color:white"></i>Đăng nhập</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal Registered-->
+    <div class="modal fade" id="Registered" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Hãy trở thành khách hàng IHTGO ngay!</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Họ và Tên">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                            <input type="text" class="form-control" placeholder="SĐT liên hệ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                            <input type="password" class="form-control" placeholder="Mật khẩu">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                            <input type="password" class="form-control" placeholder="Xác nhận mật khẩu">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     @yield('content')
     <!---------------------------FOOTER------------------------------->
     <footer>
@@ -165,7 +439,7 @@
     <!-- The scroll to top feature -->
     <div class="scroll-top-wrapper ">
         <span class="scroll-top-inner">
-            <i class="fa fa-2x fa-arrow-up"></i>
+            <i class="fa fa-2x fa-arrow-up" style="color:white"></i>
         </span>
     </div>
 
@@ -189,8 +463,12 @@
 
     <!------------------------------------Custom JS---------------------------------------->
     <script src="public/user/js/usercustom.js"></script>
-
-
 </body>
 
 </html>
+<script>
+    function readURL(event, id) {
+        var output = document.getElementById('img' + id);
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>

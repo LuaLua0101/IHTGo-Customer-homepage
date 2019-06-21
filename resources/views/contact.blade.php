@@ -5,7 +5,6 @@
     <div class="container-fluid about-wrap">
         <div class="w100 center-text margin-auto row about-top-image">
             <img src="public/Images/About/gioi thieu.png" />
-
         </div>
         <div class="h30px"></div>
         <div class="w100 about-contact">
@@ -31,17 +30,18 @@
                             <input class="form-control" type="text" id="contactCompany" name="contactCompany" maxlength="250" placeholder="Vui lòng để lại tên cửa hàng / công ty / doanh nghiệp của bạn" />
                         </div>
                         <div class="form-group">
-                            <label>Số điện thoại <span class="text-danger">*</span> <span id="errorContactPhone" class="validateError"></span></label>
-                            <div class="input-group">
+                            <label>Số điện thoại <span class="text-danger">*</span>
+                                <span id="errorContactPhone" class="validateError"></span></label>
+                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                 <input class="form-control" id="contactPhone" name="contactPhone" data-inputmask="'alias':'number','mask':'+84 999 999 9999','placeholder':''" data-mask="" type="text" placeholder="+84" />
-                                <span class="input-group-addon"><i class="fa fa-phone" style="color: #b1b1b1;"></i></span>
+
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Email <span class="text-danger">*</span> <span id="errorContactEmail" class="validateError"></span></label>
                             <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 <input class="form-control" id="contactEmail" name="contactEmail" type="text" placeholder="my@example.com" />
-                                <span class="input-group-addon"><i class="fa fa-envelope" style="color: #b1b1b1;"></i></span>
                             </div>
                         </div>
                         <div class="form-group center-text" style="margin-top: 7%;">
