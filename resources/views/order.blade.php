@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>#1231331321</td>
+                            <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #qqqqq</a></td>
                             <td>abc</td>
                             <td>Xe máy</td>
                             <td>Ghi nợ</td>
@@ -91,7 +91,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>#1231331321</td>
+                            <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #1231331321qưqweqe</a></td>
                             <td>abcáddadasdadasdasdasd</td>
                             <td>Xe máy</td>
                             <td>Ghi nợ</td>

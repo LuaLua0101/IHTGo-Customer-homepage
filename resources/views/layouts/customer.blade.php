@@ -71,6 +71,14 @@
                         <li><a href="#!">100 KP. Bình Dương, P. Long Bình Tân,<br />Biên Hòa, Đồng Nai.</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Xin chào Kai<span class="caret"></span></a>
+                    <ul class="dropdown-menu drop-vanphong">
+                        <li><a href="#!" data-toggle="modal" data-target="#InfoUser">Thông tin cá nhân</a></li>
+                        <li><a href="#!" data-toggle="modal" data-target="#ChangePassword">Đổi mật khẩu</a></li>
+                        <li><a href="#!">Đăng xuất</a></li>
+                    </ul>
+                </li>
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -113,7 +121,7 @@
                         <h4>Thông tin người gửi đơn hàng</h4>
                         <div class="form-group">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="far fa-user" style='color:#e50303'></i></span>
+                                <span class="input-group-addon"><i class="far fa-user"></i></span>
                                 <input type="text" class="form-control" placeholder="Họ và Tên người gửi">
                             </div>
                         </div>
@@ -221,7 +229,7 @@
                         </div>
                         <div class="row">
                             <div class="custom-file col-md-4">
-                            <label>Ảnh đơn hàng:</label>
+                                <label>Ảnh đơn hàng:</label>
                                 <div class="upload-btn-wrapper">
                                     <img id="img1" width="130" src="public/images/Index/notfound.png">
                                     <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
@@ -374,6 +382,100 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!-- Modal Info User-->
+    <div class="modal fade" id="InfoUser" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thông tin cá nhân</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Họ và Tên">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                            <input type="tel" class="form-control" placeholder="SĐT">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                            <input type="text" class="form-control" placeholder="Địa chỉ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                            <select class="form-control" id="sel1">
+                                <option>Vui lòng chọn tỉnh - thành phố</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                            <select class="form-control" id="sel1">
+                                <option>Vui lòng chọn quận - huyện</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal ChangePassword-->
+    <div class="modal fade" id="ChangePassword" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Đổi mật khẩu</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Mật khẩu hiện tại:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                            <input type="password" class="form-control" placeholder="Mật khẩu hiện tại">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu mới:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                            <input type="password" class="form-control" placeholder="Mật khẩu mới">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Xác nhận mật khẩu:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                            <input type="password" class="form-control" placeholder="Xác nhận mật khẩu">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
+                </div>
+            </div>
         </div>
     </div>
     @yield('content')

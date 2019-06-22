@@ -16,3 +16,6 @@ Route::get('noi-dung', function () {
 Route::get('don-hang', function () {
     return view('order');
 });
+Route::get('chi-tiet-don-hang', function () {
+    return view('order-detail');
+});
