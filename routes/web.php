@@ -13,3 +13,6 @@ Route::get('tin-tuc', function () {
 Route::get('noi-dung', function () {
     return view('new-detail');
 });
+Route::get('don-hang', function () {
+    return view('order');
+});

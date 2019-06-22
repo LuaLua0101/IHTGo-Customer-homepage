@@ -93,6 +93,7 @@
                 <li><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
                 <li><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
                 <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#DatHang"><strong>ĐẶT GIAO HÀNG NGAY</strong></button></li>
+                <li><a class="btn btndatgiaohang" href="{!! url('don-hang'); !!}"><strong>QUẢN LÝ ĐƠN HÀNG</strong></a></li>
                 <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Login"><strong>ĐĂNG NHẬP</strong></button></li>
                 <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Registered"><strong>ĐĂNG KÝ</strong></button></li>
             </ul>
