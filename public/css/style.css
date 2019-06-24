@@ -152,3 +152,6 @@ i {
     border-color: #e50303 !important;
     border-radius: 0%!important;
 }
+#dat-hang,#don-hang{
+    display: none;
+}
