@@ -1,5 +1,23 @@
 <?php
-Route::get('/', 'HomeController@index');
+
+// Sửa đường dẫn trang chủ mặc định
+
+Route::get('/', function () {
+    return view('index');
+});
+
+// Đăng ký thành viên
+Route::get('register', 'Auth\RegisterController@getRegister');
+Route::post('register', 'Auth\RegisterController@postRegister');
+
+// Đăng nhập và xử lý đăng nhập
+
+Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@postLogin']);
+
+// Đăng xuất
+Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LogoutController@getLogout']);
+
+
 
 Route::get('gioi-thieu', function () {
     return view('contact');
@@ -19,6 +37,3 @@ Route::get('don-hang', function () {
 Route::get('chi-tiet-don-hang', function () {
     return view('order-detail');
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

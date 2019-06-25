@@ -2,38 +2,34 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function postLogin(Request $request)
     {
-        $this->middleware('guest')->except('logout');
+        try {
+            // Nếu dữ liệu hợp lệ sẽ kiểm tra trong csdl
+            $email = $request->input('email');
+            $password = $request->input('password');
+
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
+                Session::flash('success', 'Đăng nhập thành công');
+                return redirect('/');
+            } else {
+                // Kiểm tra không đúng sẽ hiển thị thông báo lỗi
+                Session::flash('error', 'Email hoặc mật khẩu không đúng!');
+                return redirect('/');
+            }
+        } catch (\Exception $ex) {
+            return $ex;
+        }
     }
 }

@@ -71,14 +71,20 @@
                         <li><a href="#!">100 KP. Bình Dương, P. Long Bình Tân,<br />Biên Hòa, Đồng Nai.</a></li>
                     </ul>
                 </li>
+                @if(Auth::user())
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Xin chào Kai<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Xin chào {{Auth::user()->name}}<span class="caret"></span></a>
                     <ul class="dropdown-menu drop-vanphong">
                         <li><a href="#!" data-toggle="modal" data-target="#InfoUser">Thông tin cá nhân</a></li>
                         <li><a href="#!" data-toggle="modal" data-target="#ChangePassword">Đổi mật khẩu</a></li>
-                        <li><a href="#!">Đăng xuất</a></li>
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">Đăng xuất</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </ul>
                 </li>
+                @endif
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -100,10 +106,13 @@
                 <li><a href="{!! url('gioi-thieu'); !!}">GIỚI THIỆU</a></li>
                 <li><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
                 <li><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
+                @if(Auth::user())
                 <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>ĐẶT GIAO HÀNG NGAY</strong></button></li>
                 <li><a class="btn btndatgiaohang" href="{!! url('don-hang'); !!}" id='don-hang'><strong>QUẢN LÝ ĐƠN HÀNG</strong></a></li>
+                @else
                 <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Login"><strong>ĐĂNG NHẬP</strong></button></li>
                 <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Registered"><strong>ĐĂNG KÝ</strong></button></li>
+                @endif
             </ul>
             <div class="clearfix"></div>
         </nav>
@@ -304,7 +313,6 @@
                                 <span class="checkmark"></span>
                             </label>
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -319,22 +327,25 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <form method="POST" action="{{ route('login') }}">
-                    @csrf
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">ĐĂNG NHẬP</h4>
+
                     </div>
                     <div class="modal-body ">
                         <div class="form-group">
                             <div class="input-group">
+                                <label hidden id='error-email'></label>
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                                <input type="text" class="form-control" id=email name="email" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
+                                <label hidden id='error-password'></label>
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                                <input type="password" class="form-control" id='password' name="password" placeholder="Password" required>
                             </div>
                         </div>
                     </div>
@@ -350,7 +361,7 @@
     <div class="modal fade" id="Registered" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ url('register') }}">
                     @csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -378,7 +389,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password" id='password'>
+                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -490,8 +501,25 @@
             </div>
         </div>
     </div>
+    @if (Session::has('error'))
+    <div class="noti">
+        <div class="alert alert-danger alert-dismissible fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Danger!</strong>{{ Session::get('error') }}
+        </div>
+    </div>
+    @endif
+    @if (Session::has('success'))
+    <div class="noti">
+        <div class="alert alert-success alert-dismissible fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{ Session::get('success') }}
+        </div>
+    </div>
+    @endif
     @yield('content')
     <!---------------------------FOOTER------------------------------->
+
     <footer>
         <div class="footer-imgcontent">
             <div class="w100 footer-imgcontent-inner">

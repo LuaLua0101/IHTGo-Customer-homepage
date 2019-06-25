@@ -138,13 +138,18 @@ i {
     border-color: #e50303 !important;
     border-radius: 0%!important;
 }
-#dat-hang,#don-hang{
-    display: none;
-}
 .form-search-order input{
     border: 0;
     border-bottom: 1px solid #e50303;
 }
 .form-search-order label{
     padding-right: 1em;
+}
+.noti{
+    right: 2%;
+    top: 15%;
+    z-index: 9999;
+    clear: both;
+    margin: 0 auto;
+    position: fixed;
 }

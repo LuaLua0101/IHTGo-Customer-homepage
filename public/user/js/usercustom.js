@@ -33,14 +33,14 @@ $(function () {
         },
         add: function () {
             if (this.flagAdd) {
-                for (var i = 0; i < this.elements.length; i++) {
+                for (var i = 0;i < this.elements.length;i++) {
                     document.getElementById(this.elements[i]).className += " fixed-theme";
                 }
                 this.flagAdd = false;
             }
         },
         remove: function () {
-            for (var i = 0; i < this.elements.length; i++) {
+            for (var i = 0;i < this.elements.length;i++) {
                 document.getElementById(this.elements[i]).className =
                     document.getElementById(this.elements[i]).className.replace(/(?:^|\s)fixed-theme(?!\S)/g, '');
             }
@@ -251,4 +251,23 @@ $(function () {
             $('#errorContactEmail').text("");
         }
     });
+    $("#btnLogin").click(function () {
+        var loi = 0;
+        var email = $("#email").val();
+        var password = $("#password").val().length;
+        // Checking for blank fields.
+        if (email == '' || password == '') {
+            $('input[type="text"],input[type="password"]').css("border", "2px solid red");
+            $('input[type="text"],input[type="password"]').css("box-shadow", "0 0 3px red");
+            alert("Please fill all fields...!!!!!!");
+            loi++;
+        }
+        if (password < 6) {
+            $('input[type="text"],input[type="password"]').css("box-shadow", "0 0 3px red");
+            alert("123");
+        } else {
+            return true;
+        }
+    });
 });
+
