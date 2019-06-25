@@ -19,3 +19,6 @@ Route::get('don-hang', function () {
 Route::get('chi-tiet-don-hang', function () {
     return view('order-detail');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

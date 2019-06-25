@@ -63,24 +63,10 @@ i {
     color: #e50303;
 }
 
-/* The container */
-.container {
-    display: block;
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 15px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
 /* Hide the browser's default radio button */
 .container input {
     position: absolute;
-    opacity: 0;
+    /* opacity: 0; */
     cursor: pointer;
 }
 
@@ -154,4 +140,11 @@ i {
 }
 #dat-hang,#don-hang{
     display: none;
+}
+.form-search-order input{
+    border: 0;
+    border-bottom: 1px solid #e50303;
+}
+.form-search-order label{
+    padding-right: 1em;
 }
