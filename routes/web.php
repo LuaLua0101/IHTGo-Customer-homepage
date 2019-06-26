@@ -1,23 +1,15 @@
 <?php
 
 // Sửa đường dẫn trang chủ mặc định
-
 Route::get('/', function () {
     return view('index');
 });
-
 // Đăng ký thành viên
-Route::get('register', 'Auth\RegisterController@getRegister');
 Route::post('register', 'Auth\RegisterController@postRegister');
-
 // Đăng nhập và xử lý đăng nhập
-
 Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@postLogin']);
-
 // Đăng xuất
-Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LogoutController@getLogout']);
-
-
+Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LogoutController@postLogout']);
 
 Route::get('gioi-thieu', function () {
     return view('contact');

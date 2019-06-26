@@ -153,3 +153,6 @@ i {
     margin: 0 auto;
     position: fixed;
 }
+.formModal .text-danger{
+    font-size: 13px;
+}

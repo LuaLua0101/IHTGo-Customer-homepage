@@ -326,87 +326,91 @@
     <div class="modal fade" id="Login" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login') }}" class='formModal' id='formLogin'>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">ĐĂNG NHẬP</h4>
-
                     </div>
                     <div class="modal-body ">
                         <div class="form-group">
+                            <span class="text-danger" id='error-email1'></span>
                             <div class="input-group">
-                                <label hidden id='error-email'></label>
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" id=email name="email" placeholder="Email" required>
+                                <input type="text" class="form-control" id='email1' name="email" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group">
+                            <span class="text-danger" id='error-password1'></span>
                             <div class="input-group">
-                                <label hidden id='error-password'></label>
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" id='password' name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" id='password1' name="password" placeholder="Password" required>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-sign-in-alt" style="color:white"></i>Đăng nhập</button>
+                        <button type="submit" class="btn btn-danger" id='btnLogin' disabled><i class="fas fa-sign-in-alt" style="color:white"></i>Đăng nhập</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
     <!-- Modal Registered-->
     <div class="modal fade" id="Registered" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" action="{{ url('register') }}">
-                    @csrf
+                <form method="POST" action="{{ url('register') }}" class='formModal' id='formRegister'>
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Hãy trở thành khách hàng IHTGO ngay!</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
+                            <span class="text-danger" id='error-name2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên" name='name'>
+                                <input type="text" class="form-control" placeholder="Họ và Tên" id='name2' name='name' required>
                             </div>
                         </div>
                         <div class="form-group">
+                            <span class="text-danger" id='error-email2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
-                                <input type="mails" class="form-control" placeholder="Email" name='email'>
+                                <input type="mails" class="form-control" placeholder="Email" id='email2' name='email' required>
                             </div>
                         </div>
                         <div class="form-group">
+                            <span class="text-danger" id='error-phone2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="SĐT liên hệ" name=phone>
+                                <input type="tel" class="form-control" placeholder="SĐT di động liên hệ" id='phone2' name=phone required>
                             </div>
                         </div>
                         <div class="form-group">
+                            <span class="text-danger" id='error-password2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password">
+                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password" id="password2" required>
                             </div>
                         </div>
                         <div class="form-group">
+                            <span class="text-danger" id='error-re-password2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name='re-password' id='re-password'>
+                                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name='re-password' id='re-password2' required>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
+                        <button type="submit" class="btn btn-danger" id='btnRegister' disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
                     </div>
                 </form>
             </div>
 
         </div>
     </div>
+    @if(Auth::user())
     <!-- Modal Info User-->
     <div class="modal fade" id="InfoUser" role="dialog">
         <div class="modal-dialog">
@@ -419,13 +423,13 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="far fa-user"></i></span>
-                            <input type="text" class="form-control" placeholder="Họ và Tên">
+                            <input type="text" class="form-control" placeholder="Họ và Tên" value="{{Auth::user()->name}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" placeholder="SĐT">
+                            <input type="tel" class="form-control" placeholder="SĐT" value="{{Auth::user()->phone}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -464,6 +468,7 @@
 
         </div>
     </div>
+    @endif
     <!-- Modal ChangePassword-->
     <div class="modal fade" id="ChangePassword" role="dialog">
         <div class="modal-dialog">
@@ -505,7 +510,7 @@
     <div class="noti">
         <div class="alert alert-danger alert-dismissible fade in">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Danger!</strong>{{ Session::get('error') }}
+            {{ Session::get('error') }}
         </div>
     </div>
     @endif
@@ -513,7 +518,7 @@
     <div class="noti">
         <div class="alert alert-success alert-dismissible fade in">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> {{ Session::get('success') }}
+            {{ Session::get('success') }}
         </div>
     </div>
     @endif

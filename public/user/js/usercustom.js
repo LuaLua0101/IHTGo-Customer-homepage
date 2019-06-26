@@ -251,23 +251,150 @@ $(function () {
             $('#errorContactEmail').text("");
         }
     });
-    $("#btnLogin").click(function () {
-        var loi = 0;
-        var email = $("#email").val();
-        var password = $("#password").val().length;
-        // Checking for blank fields.
-        if (email == '' || password == '') {
-            $('input[type="text"],input[type="password"]').css("border", "2px solid red");
-            $('input[type="text"],input[type="password"]').css("box-shadow", "0 0 3px red");
-            alert("Please fill all fields...!!!!!!");
-            loi++;
-        }
-        if (password < 6) {
-            $('input[type="text"],input[type="password"]').css("box-shadow", "0 0 3px red");
-            alert("123");
+    //check form login
+    $("#email1").blur(function () {
+        var email = $.trim($("#email1").val());
+        if (email == '') {
+            $('#error-email1').text('Email không được trống');
+            $('#email1').focus();
+        } else if (!isEmail(email)) {
+            $('#error-email1').text('Email không đúng định dạng');
+            $('#email1').focus();
         } else {
-            return true;
+            $('#error-email1').text('');
         }
     });
+    $("#password1").blur(function () {
+        var password = $.trim($("#password1").val());
+        if (password == '') {
+            $('#error-password1').text('Mật khẩu không được trống');
+            $('#password1').focus();
+        } else if (password.length < 6) {
+            $('#error-password1').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#password1').focus();
+        } else {
+            $('#error-password1').text('');
+        }
+    });
+    $("#formLogin").keyup(function () {
+        var email = $.trim($("#email1").val());
+        var password = $.trim($("#password1").val());
+        if (email != '' && password != '' && password.length > 5 && isEmail(email)) {
+            $('#btnLogin').prop("disabled", false);
+        }
+        else {
+            $('#btnLogin').prop("disabled", true);
+        }
+    });
+    //check form register
+    $("#name2").blur(function () {
+        var name = $.trim($("#name2").val());
+        if (name == '') {
+            $('#error-name2').text('Họ Tên không được trống');
+            $('#name2').focus();
+        } else {
+            $('#error-name2').text('');
+        }
+    });
+    $("#email2").blur(function () {
+        var email = $.trim($("#email2").val());
+        if (email == '') {
+            $('#error-email2').text('Email không được trống');
+            $('#email2').focus();
+        } else if (!isEmail(email)) {
+            $('#error-email2').text('Email không đúng định dạng');
+            $('#email2').focus();
+        } else {
+            $('#error-email2').text('');
+        }
+    });
+    $("#phone2").blur(function () {
+        var phone = $.trim($("#phone2").val());
+        if (phone == '') {
+            $('#error-phone2').text('Số điện thoại không được trống');
+            $('#phone2').focus();
+        } else if (!checkPhoneNumber(phone)) {
+            $('#error-phone2').text('Số điện thoại không đúng định dạng');
+            $('#phone2').focus();
+        }
+        else {
+            $('#error-phone2').text('');
+        }
+    });
+    $("#password2").blur(function () {
+        var password = $.trim($("#password2").val());
+        if (password == '') {
+            $('#error-password2').text('Mật khẩu không được trống');
+            $('#password2').focus();
+        } else if (password.length < 6) {
+            $('#error-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#password2').focus();
+        } else {
+            $('#error-password2').text('');
+        }
+    });
+    $("#re-password2").blur(function () {
+        var password = $.trim($("#password2").val());
+        var re_password = $.trim($("#re-password2").val());
+        if (re_password == '') {
+            $('#error-re-password2').text('Mật khẩu không được trống');
+            $('#re-password2').focus();
+        } else if (re_password.length < 6) {
+            $('#error-re-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#re-password2').focus();
+        }
+        else if (password != re_password) {
+            $('#error-re-password2').text('Mật khẩu nhập lại không đúng');
+        } else {
+            $('#error-re-password2').text('');
+        }
+    });
+    $("#formRegister").keyup(function () {
+        var name = $.trim($("#name2").val());
+        var email = $.trim($("#email2").val());
+        var phone = $.trim($("#phone2").val());
+        var password = $.trim($("#password2").val());
+        var re_password = $.trim($("#re-password2").val());
+        var flag = 0;
+        if (name != '' && email != '' && phone != '' && password != '' && re_password != '') {
+            flag++;
+        }
+        if (password.length > 5 && re_password.length > 5) {
+            flag++;
+        }
+        if (isEmail(email) && checkPhoneNumber(phone)) {
+            flag++;
+        } if (password == re_password) {
+            flag++;
+        } if (flag == 4) {
+            $('#btnRegister').prop("disabled", false);
+        }
+        else {
+            $('#btnRegister').prop("disabled", true);
+        }
+    });
+    //validate email
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+    //validate
+    function checkPhoneNumber(data) {
+        var flag = false;
+        var phone = data; // ID của trường Số điện thoại
+        phone = phone.replace('(+84)', '0');
+        phone = phone.replace('+84', '0');
+        phone = phone.replace('0084', '0');
+        phone = phone.replace(/ /g, '');
+        if (phone != '') {
+            var firstNumber = phone.substring(0, 2);
+            if ((firstNumber == '09' || firstNumber == '08' || firstNumber == '07' || firstNumber == '05' || firstNumber == '03') && phone.length == 10) {
+                if (phone.match(/^\d{10}/)) {
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
 });
 
