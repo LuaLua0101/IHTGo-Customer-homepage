@@ -34,7 +34,7 @@
     <!----------------------------------------------------------------------------------------------->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <title>IHTGO - Trang Chủ</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
 <body class="body-container">
@@ -253,14 +253,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-12 formRadio">
+                        <div class="form-group col-md-6 col-sm-6 ">
                             <label class="title-form">Giao hỏa tốc:</label>
                             <label class="container">Có
                                 <input type="radio" checked="checked" name="radio1">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container ">Không
+                            <label class="container">Không
                                 <input type="radio" name="radio1">
                                 <span class="checkmark"></span>
                             </label>
@@ -271,7 +271,7 @@
                                 <input type="radio" checked="checked" name="radio2">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container ">Xe tải
+                            <label class="container">Xe tải
                                 <input type="radio" name="radio2">
                                 <span class="checkmark"></span>
                             </label>
@@ -282,22 +282,26 @@
                                 <input type="radio" checked="checked" name="radio3">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container ">Giao ngoại tỉnh
+                            <label class="container">Giao ngoại tỉnh
                                 <input type="radio" name="radio3">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container ">Giao chứng từ
+                            <label class="container">Giao chứng từ
                                 <input type="radio" name="radio3">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="form-group col-md-6 col-sm-6">
                             <label class="title-form">Phương thức thanh toán</label>
-                            <label class="container">Tiền mặt
+                            <label class="container">Phương thức thanh toán
                                 <input type="radio" checked="checked" name="radio4">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container ">Thanh toán theo tháng
+                            <label class="container">Tiền mặt
+                                <input type="radio" name="radio4">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container">Thanh toán theo tháng
                                 <input type="radio" name="radio4">
                                 <span class="checkmark"></span>
                             </label>
@@ -308,7 +312,7 @@
                                 <input type="radio" checked="checked" name="radio5">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container ">Người nhận
+                            <label class="container">Người nhận
                                 <input type="radio" name="radio5">
                                 <span class="checkmark"></span>
                             </label>
@@ -401,6 +405,28 @@
                                 <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name='re-password' id='re-password2' required>
                             </div>
                         </div>
+                        <div class=" row">
+                            <div class="formRadio col-md-12">
+                                <label class="col-md-3">Loại khách hàng: </label>
+                                <label class="container col-md-2">Cá nhân
+                                    <input type="radio" checked="checked" name="radio" id='rdoPersonal'>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container col-md-3">Doanh nghiệp
+                                    <input type="radio" name="radio" id='rdoCompany'>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="listCompany">
+                            <label>Danh sách công ty:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-building"></i></span>
+                                <select class="form-control" id="company_id" name="company_id" style="width: 100%">
+                                <option value="0" selected>Vui lòng chọn</option>
+                            </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger" id='btnRegister' disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
@@ -420,6 +446,19 @@
                     <h4 class="modal-title">Thông tin cá nhân</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="formRadio col-md-12">
+                            <span class="col-md-3">Loại khách hàng: </span>
+                            <label class="container col-md-2">Cá nhân
+                                <input type="radio" checked="checked" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="container col-md-2">Doanh nghiệp
+                                <input type="radio" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="far fa-user"></i></span>
@@ -435,31 +474,10 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                            <input type="text" class="form-control" placeholder="Địa chỉ">
+                            <input type="text" class="form-control" placeholder="Địa chỉ" value="{{$address->ar}}">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                            <select class="form-control" id="sel1">
-                                <option>Vui lòng chọn tỉnh - thành phố</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                            <select class="form-control" id="sel1">
-                                <option>Vui lòng chọn quận - huyện</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
@@ -524,7 +542,6 @@
     @endif
     @yield('content')
     <!---------------------------FOOTER------------------------------->
-
     <footer>
         <div class="footer-imgcontent">
             <div class="w100 footer-imgcontent-inner">

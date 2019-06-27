@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
+use Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +16,7 @@ class LogoutController extends Controller
     public function postLogout()
     {
         Auth::logout();
+        Session::flash('success', 'Đăng xuất thành công');
         return redirect('/');
     }
 }

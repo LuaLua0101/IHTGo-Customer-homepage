@@ -7,24 +7,22 @@
             <h2 style="margin: -1.5%;"><span style="font-size: 24px; text-transform:uppercase; color:#e50303;"><strong>Đơn hàng</strong></span></h2>
         </div>
         <div class="h50px"></div>
-        <div class="row form-search-order">
-            <div class="form-group col-md-3">
-                <div class="input-group">
-                    <label class=" control-label">Ngày bắt đầu: </label>
+        <div class=" form-search-order ">
+            <div class="form-inline ">
+                <div class="form-group">
+                    <label>Ngày bắt đầu: </label>
                     <input type="date" /></li>
                 </div>
-            </div>
-            <div class="form-group col-md-3">
-                <div class="input-group">
-                    <label class=" control-label">Ngày kết thúc: </label>
+                <div class="form-group ">
+                    <label>Ngày kết thúc: </label>
                     <input type="date" /></li>
                 </div>
+                <div class="form-group"style="margin-left:1em">
+                    <button type="button" class="btn btn-danger" >Tìm</button>
+                </div>
+                <div class="form-group" style="    float: right;"> <label class="">Tổng tiền: 200,000 VNĐ </label></div>
             </div>
-            <div class="form-group col-md-2">
-                <label></label>
-                <button type="button" class="btn btn-danger">Tìm</button>
-            </div>
-            <div class="form-group col-md-3"> <label class="">Tổng tiền: 200,000 VNĐ </label></div>
+
         </div>
     </div>
     <div class="container">

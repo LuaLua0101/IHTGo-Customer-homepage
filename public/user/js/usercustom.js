@@ -396,5 +396,38 @@ $(function () {
         }
         return flag;
     }
+    // set time show for the alert
+    setTimeout(function () {
+        $(".alert").alert('close');
+    }, 2000);
+    //province of district
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+
+    });
+    $('#receive_province_id').on('change', function () {
+        var cId = $('#receive_province_id').val();
+        $.get('districtOfProvince/' + cId, function (data) {
+            $("#receive_district_id").empty();
+            data.forEach(function (item) {
+                $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+            })
+        });
+    });
+
+    $('#rdoCompany').change(function () {
+        $.get('listCompany', function (data) {
+            $('#listCompany').css('display', 'block');
+            $("#company_id").empty();
+            data.forEach(function (item) {
+                $("#company_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+            })
+        });
+    });
+    $('#rdoPersonal').change(function () {
+        $('#listCompany').css('display', 'none');
+    });
 });
 
