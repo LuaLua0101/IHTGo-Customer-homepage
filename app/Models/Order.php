@@ -41,6 +41,7 @@ class Order
     {
         if (Request::ajax()) {
             $res = self::getList_Status($status);
+            
             return $res;
         }
     }
