@@ -71,6 +71,9 @@ i {
 .nav-pills a {
     color: #000;
 }
+.nav-pills > li{
+    border: 1px solid red;
+}
 .nav-pills > li > a {
     border-radius: 0px !important;
 }
@@ -170,6 +173,6 @@ i {
     font-size: 13px;
     padding-left: 0;
 }
- #listCompany{
+#listCompany{
     display: none;
 }

@@ -251,7 +251,8 @@ $(function () {
             $('#errorContactEmail').text("");
         }
     });
-    //check form login
+    //------------------------Raymond edit----------------------
+    //validate form login--------------
     $("#email1").blur(function () {
         var email = $.trim($("#email1").val());
         if (email == '') {
@@ -286,7 +287,7 @@ $(function () {
             $('#btnLogin').prop("disabled", true);
         }
     });
-    //check form register
+    //validate form register-----------
     $("#name2").blur(function () {
         var name = $.trim($("#name2").val());
         if (name == '') {
@@ -373,12 +374,122 @@ $(function () {
             $('#btnRegister').prop("disabled", true);
         }
     });
+    //validate form info user-----------
+    $("#name3").blur(function () {
+        var name = $.trim($("#name3").val());
+        if (name == '') {
+            $('#error-name3').text('Họ Tên không được trống');
+            $('#name3').focus();
+        } else {
+            $('#error-name3').text('');
+        }
+    });
+    $("#phone3").blur(function () {
+        var phone = $.trim($("#phone3").val());
+        if (phone == '') {
+            $('#error-phone3').text('Số điện thoại không được trống');
+            $('#phone3').focus();
+        } else if (!checkPhoneNumber(phone)) {
+            $('#error-phone3').text('Số điện thoại không đúng định dạng');
+            $('#phone3').focus();
+        }
+        else {
+            $('#error-phone3').text('');
+        }
+    });
+    $("#address3").blur(function () {
+        var name = $.trim($("#address3").val());
+        if (name == '') {
+            $('#error-address3').text('Địa chỉ không được trống');
+            $('#address3').focus();
+        } else {
+            $('#error-address3').text('');
+        }
+    });
+    $("#formInfoUser").keyup(function () {
+        var name = $.trim($("#name3").val());
+        var address = $.trim($("#address3").val());
+        var phone = $.trim($("#phone3").val());
+        var flag = 0;
+        if (name != '' && phone != '' && address != '') {
+            flag++;
+        }
+        if (checkPhoneNumber(phone)) {
+            flag++;
+        } if (flag == 2) {
+            $('#btnInfoUser').prop("disabled", false);
+        }
+        else {
+            $('#btnInfoUser').prop("disabled", true);
+        }
+    });
+    //validate form change password-----------
+    $("#current-password4").blur(function () {
+        var password = $.trim($("#current-password4").val());
+        if (password == '') {
+            $('#error-current-password4').text('Mật khẩu không được trống');
+            $('#current-password4').focus();
+        } else if (password.length < 6) {
+            $('#error-current-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#current-password4').focus();
+        } else {
+            $('#error-current-password4').text('');
+        }
+    });
+    $("#new-password4").blur(function () {
+        var password = $.trim($("#new-password4").val());
+        if (password == '') {
+            $('#error-new-password4').text('Mật khẩu không được trống');
+            $('#new-password4').focus();
+        } else if (password.length < 6) {
+            $('#error-new-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#new-password4').focus();
+        } else {
+            $('#error-new-password4').text('');
+        }
+    });
+    $("#re-password4").blur(function () {
+        var password = $.trim($("#new-password4").val());
+        var re_password = $.trim($("#re-password4").val());
+        if (re_password == '') {
+            $('#error-re-password4').text('Mật khẩu không được trống');
+            $('#re-password4').focus();
+        } else if (re_password.length < 6) {
+            $('#error-re-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#re-password4').focus();
+        }
+        else if (password != re_password) {
+            $('#error-re-password4').text('Mật khẩu nhập lại không đúng');
+        } else {
+            $('#error-re-password4').text('');
+        }
+    });
+    $("#formChangePassword").keyup(function () {
+        var current_password = $.trim($("#current-password4").val());
+        var password = $.trim($("#new-password4").val());
+        var re_password = $.trim($("#re-password4").val());
+        var flag = 0;
+        if (current_password != '' && password != '' && re_password != '') {
+            flag++;
+        }
+        if (current_password.length > 5 && password.length > 5 && re_password.length > 5) {
+            flag++;
+        }
+        if (password == re_password) {
+            flag++;
+        } if (flag == 3) {
+            $('#btnChangePassword').prop("disabled", false);
+        }
+        else {
+            $('#btnChangePassword').prop("disabled", true);
+        }
+    });
     //validate email
     function isEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
     }
-    //validate
+    //validate check phone
     function checkPhoneNumber(data) {
         var flag = false;
         var phone = data; // ID của trường Số điện thoại
@@ -400,12 +511,11 @@ $(function () {
     setTimeout(function () {
         $(".alert").alert('close');
     }, 2000);
-    //province of district
+    //thêm biến token cho ajax
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-
     });
     $('#receive_province_id').on('change', function () {
         var cId = $('#receive_province_id').val();
@@ -416,10 +526,10 @@ $(function () {
             })
         });
     });
-
+    //hiển thị danh sách công ty trên form đăng ký
     $('#rdoCompany').change(function () {
+        $('#listCompany').css('display', 'block');
         $.get('listCompany', function (data) {
-            $('#listCompany').css('display', 'block');
             $("#company_id").empty();
             data.forEach(function (item) {
                 $("#company_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
@@ -428,6 +538,21 @@ $(function () {
     });
     $('#rdoPersonal').change(function () {
         $('#listCompany').css('display', 'none');
+        $("#company_id2").empty();
+    });
+    //hiển thị danh sách công ty trên form thông tin cá nhân
+    $('#rdoCompany2').change(function () {
+        $('#listCompany2').css('display', 'block');
+        $.get('listCompany', function (data) {
+            $("#company_id2").empty();
+            data.forEach(function (item) {
+                $("#company_id2").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+            })
+        });
+    });
+    $('#rdoPersonal2').change(function () {
+        $('#listCompany2').css('display', 'none');
+        $("#company_id2").empty();
     });
 });
 

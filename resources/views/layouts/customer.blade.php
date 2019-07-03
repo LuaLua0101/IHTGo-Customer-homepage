@@ -423,8 +423,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="form-control" id="company_id" name="company_id" style="width: 100%">
-                                <option value="0" selected>Vui lòng chọn</option>
-                            </select>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -433,95 +432,127 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
     @if(Auth::user())
     <!-- Modal Info User-->
     <div class="modal fade" id="InfoUser" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Thông tin cá nhân</h4>
+            <form method="POST" action="{{ url('edit-user') }}" class='formModal' id='formInfoUser'>
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thông tin cá nhân</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <span class="text-danger" id='error-name3'></span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="Họ và Tên" name="name" id="name3" value="{{Auth::user()->name}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="text-danger" id='error-phone3'></span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" placeholder="SĐT" id='phone3' name="phone" value="{{Auth::user()->phone}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="text-danger" id='error-address3'></span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                @if($customer==null)
+                                <input type="text" class="form-control" name="address" id="address3" placeholder="Địa chỉ" value="">
+                                @else
+                                <input type="text" class="form-control" name="address" id="address3" placeholder="Địa chỉ" value="{{$customer->address}}">
+                                @endif
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class="formRadio col-md-12">
+                                <label class="col-md-3">Loại khách hàng: </label>
+                                <label class="container col-md-2">Cá nhân
+                                    <input type="radio" name="radio" {{($customer->type == 1) ? 'checked' :null}} id='rdoPersonal2'>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container col-md-3">Doanh nghiệp
+                                    <input type="radio" name="radio" {{($customer->type == 2) ? 'checked' :null}} id='rdoCompany2'>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        @if($customer->type == 2 )
+                        <div class="form-group" id="listCompany2">
+                            <label>Danh sách công ty:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-building"></i></span>
+                                <select class="form-control" id="company_id2" name="company_id" style="width: 100%">
+                                    @foreach($company as $c)
+                                    <option value="{{$c->id}}" {{($customer->company_id == $c->id) ? 'selected' :null}}>{{$c->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @else
+                        <div class="form-group" id="listCompany2" style="display:none">
+                            <label>Danh sách công ty:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-building"></i></span>
+                                <select class="form-control" id="company_id2" name="company_id" style="width: 100%">
+                                </select>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger" id='btnInfoUser' di\><i class="far fa-save" style="color:white"></i>Lưu</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="formRadio col-md-12">
-                            <span class="col-md-3">Loại khách hàng: </span>
-                            <label class="container col-md-2">Cá nhân
-                                <input type="radio" checked="checked" name="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container col-md-2">Doanh nghiệp
-                                <input type="radio" name="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="far fa-user"></i></span>
-                            <input type="text" class="form-control" placeholder="Họ và Tên" value="{{Auth::user()->name}}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" placeholder="SĐT" value="{{Auth::user()->phone}}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                            <input type="text" class="form-control" placeholder="Địa chỉ" value="{{$address->ar}}">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
-                </div>
-            </div>
-
+            </form>
         </div>
     </div>
     @endif
     <!-- Modal ChangePassword-->
     <div class="modal fade" id="ChangePassword" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Đổi mật khẩu</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Mật khẩu hiện tại:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <input type="password" class="form-control" placeholder="Mật khẩu hiện tại">
+            <form method="POST" action="{{ url('change-password') }}" class='formModal' id='formChangePassword'>
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Đổi mật khẩu</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Mật khẩu hiện tại:<span class="text-danger" id='error-current-password4'></span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="Mật khẩu hiện tại">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu mới:<span class="text-danger" id='error-new-password4'></span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="Mật khẩu mới">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Xác nhận mật khẩu:<span class="text-danger" id='error-re-password4'></span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="Xác nhận mật khẩu">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Mật khẩu mới:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <input type="password" class="form-control" placeholder="Mật khẩu mới">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Xác nhận mật khẩu:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <input type="password" class="form-control" placeholder="Xác nhận mật khẩu">
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger" id='btnChangePassword' disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     @if (Session::has('error'))
