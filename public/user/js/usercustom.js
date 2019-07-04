@@ -536,10 +536,7 @@ $(function () {
             })
         });
     });
-    $('#rdoPersonal').change(function () {
-        $('#listCompany').css('display', 'none');
-        $("#company_id2").empty();
-    });
+
     //hiển thị danh sách công ty trên form thông tin cá nhân
     $('#rdoCompany2').change(function () {
         $('#listCompany2').css('display', 'block');
@@ -550,6 +547,12 @@ $(function () {
             })
         });
     });
+    //thay đổi trạng thái loại khách hàng trên form đăng ký thành viên
+    $('#rdoPersonal').change(function () {
+        $('#listCompany').css('display', 'none');
+        $("#company_id2").empty();
+    });
+    //thay đổi trạng thái loại khách hàng trên form thông tin cá nhân
     $('#rdoPersonal2').change(function () {
         $('#listCompany2').css('display', 'none');
         $("#company_id2").empty();

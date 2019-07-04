@@ -24,10 +24,19 @@ class OrderController extends Controller
             return $ex;
         }
     }
+    public function totalPriceAll()
+    {
+        try {
+            $res = Order::totalPriceAll();
+            return $res;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
     public function totalPrice(Request $request)
     {
         try {
-            $res = Company::listCompany($request);
+            $res = Order::totalPrice($request->id);
             return $res;
         } catch (\Exception $ex) {
             return $ex;

@@ -30,8 +30,8 @@
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <ul class="nav nav-pills tab-order">
-                <li class="active"><a data-toggle="pill" href="#home">Tất cả ({{count($order)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(1);"  href="#menu1">Chờ ({{count($order_watting)}})</a></li>
+                <li class="active"><a data-toggle="pill" href="#home" onclick="totalPriceAll();">Tất cả ({{count($order)}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(1);" href="#menu1">Chờ ({{count($order_watting)}})</a></li>
                 <li><a data-toggle="pill" onclick="totalPrice(2);" href="#menu2">Chưa giao ({{count($order_no_delivery)}})</a></li>
                 <li><a data-toggle="pill" onclick="totalPrice(3);" href="#menu3">Đang giao ({{count($order_beging_delivery)}})</a></li>
                 <li><a data-toggle="pill" onclick="totalPrice(4);" href="#menu4">Đã hoàn thành ({{count($order_done_delivery)}})</a></li>
@@ -574,10 +574,38 @@
     </div>
 </div>
 <script>
+    //thay đổi tổng tiền trên trang list đơn hàng
+    function totalPriceAll() {
+        $.ajax({
+            type: "GET",
+            url: 'total-price-order-all',
+            success: function(data) {
+                $('#total-price').empty();
+                $('#total-price').html(' ' +formatCurrency(data));
+                console.log(data);
+            }
+        })
+    }
+
     function totalPrice(id) {
-       console.log(id);
-       $('#total-price').empty();
-       $('#total-price').html(id);
+        $.ajax({
+            type: "GET",
+            url: 'total-price-order',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#total-price').empty();
+                $('#total-price').html(' ' + formatCurrency(data));
+                console.log(data);
+            }
+        })
+    }
+
+    function formatCurrency(number) {
+        var n = number.split('').reverse().join("");
+        var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");
+        return n2.split('').reverse().join('') + ' VNĐ';
     }
 </script>
 @endsection

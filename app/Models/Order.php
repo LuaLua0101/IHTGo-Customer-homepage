@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
+use Request;
 
 class Order
 {
@@ -37,12 +39,26 @@ class Order
     }
 
     //hiển thị tổng tiền đơn hàng theo trạng thái đơn
+    public static function totalPriceAll()
+    {
+        if (Request::ajax()) {
+            $price = 0;
+            $res = self::getList();
+            foreach($res as $r){
+                $price += $r->total_price;
+            }
+            return $price;
+        }
+    }
     public static function totalPrice($status)
     {
         if (Request::ajax()) {
+            $price = 0;
             $res = self::getList_Status($status);
-            
-            return $res;
+            foreach($res as $r){
+                $price += $r->total_price;
+            }
+            return $price;
         }
     }
 }

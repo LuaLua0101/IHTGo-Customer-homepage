@@ -26,4 +26,5 @@ Route::get('chi-tiet-don-hang', 'HomeController@order_detail');
 //hiển thị danh sách  (AJAX)
 Route::get('districtOfProvince/{province_id?}', 'DistrictController@districtOfProvince');
 Route::get('listCompany', 'CompanyController@listCompany');
+Route::get('total-price-order-all', 'OrderController@totalPriceAll');
 Route::get('total-price-order', 'OrderController@totalPrice');
