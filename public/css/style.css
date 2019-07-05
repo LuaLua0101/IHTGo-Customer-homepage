@@ -81,7 +81,7 @@ i {
     border-top: 2px solid #e50303;
     border-bottom: 2px solid #e50303;
 }
-.list-group .list-group-item i {
+.list-group .list-group-item i::before {
     padding-right: 1em;
 }
 .list-group-item.active {
@@ -175,4 +175,53 @@ i {
 }
 #listCompany{
     display: none;
+}
+#btnSearchOrder{
+    border-radius:0%!important; 
+}
+.bage-basic{
+    background: #ddd;
+    text-align: center;
+    padding: 5px 5px;
+    font-size: 9px;
+    font-weight: 500;
+}
+.bage-primary{
+    background: #337ab7;
+    text-align: center;
+    padding: 5px 5px;
+    font-size: 9px;
+    font-weight: 500;
+}
+.bage-success{
+    background: #5cb85c;
+    text-align: center;
+    padding: 5px 5px;
+    color:#fff;
+    font-size: 9px;
+    font-weight: 500;
+}
+.bage-info{
+    background: #5bc0de;
+    text-align: center;
+    padding: 5px 5px;
+    color:#fff;
+    font-size: 9px;
+    font-weight: 500;
+}
+.bage-warning{
+    background: #f0ad4e;
+    text-align: center;
+    padding: 5px 5px;
+    color:#fff;
+    font-size: 9px;
+    font-weight: 500;
+}
+.bage-danger{
+    background: #e50303;
+    text-align: center;
+    padding: 5px 5px;
+    color:#fff;
+    font-size: 9px;
+    font-weight: 500;
 }

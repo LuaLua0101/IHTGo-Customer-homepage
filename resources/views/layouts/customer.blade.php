@@ -219,7 +219,7 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
+                                    <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
                                     <input type="text" class="form-control" placeholder="Kích thước">
                                 </div>
                             </div>

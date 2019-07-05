@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Session;
@@ -37,6 +36,25 @@ class OrderController extends Controller
     {
         try {
             $res = Order::totalPrice($request->id);
+            return $res;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    //trang search order date
+    public function totalPriceAllSearch(Request $request)
+    {
+        try {
+            $res = Order::totalPriceAllSearch($request);
+            return $res;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public function totalPriceSearch(Request $request)
+    {
+        try {
+            $res = Order::totalPriceSearch($request, $request->id);
             return $res;
         } catch (\Exception $ex) {
             return $ex;

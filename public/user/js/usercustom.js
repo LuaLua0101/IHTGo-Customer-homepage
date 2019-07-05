@@ -484,12 +484,50 @@ $(function () {
             $('#btnChangePassword').prop("disabled", true);
         }
     });
-    //validate email
+    //validate form change search order-----------
+    $("#start-date").change(function () {
+        var start_date = $.trim($("#start-date").val());
+        if (start_date == '') {
+            $('#error-start-date').text('Vui lòng chọn ngày bắt đầu');
+        } else {
+            $('#error-start-date').text('');
+        }
+    });
+    $("#end-date").change(function () {
+        var start_date = $.trim($("#start-date").val());
+        var end_date = $.trim($("#end-date").val());
+        if (end_date == '') {
+            $('#error-end-date').text('Vui lòng chọn ngày bắt đầu');
+        } else if (start_date > end_date) {
+            $('#error-end-date').text('Vui lòng chọn ngày kết thúc lớn hơn ngày bắt đầu');
+        }
+        else {
+            $('#error-end-date').text('');
+        }
+    });
+    $("#formSearchOrder").change(function () {
+        var start_date = $.trim($("#start-date").val());
+        var end_date = $.trim($("#end-date").val());
+        var flag = 0;
+        if (start_date != '' && end_date != '') {
+            flag++;
+        }
+        if (start_date < end_date) {
+            flag++;
+        }
+        if (flag == 2) {
+            $('#btnSearchOrder').prop("disabled", false);
+        }
+        else {
+            $('#btnSearchOrder').prop("disabled", true);
+        }
+    });
+    //validate email-----------
     function isEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
     }
-    //validate check phone
+    //validate check phone------
     function checkPhoneNumber(data) {
         var flag = false;
         var phone = data; // ID của trường Số điện thoại

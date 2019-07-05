@@ -8,7 +8,7 @@
         </div>
         <div class="h50px"></div>
         <div class=" form-search-order ">
-            <form method="GET" action="{{ url('tim-don-hang')}}" class='formModal' id='formSearchOrder'>
+            <form method="GET" action="{{ url('tim-don-hang') }}" class='formModal' id='formSearchOrder'>
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="form-inline ">
                     <div class="form-group">
@@ -50,7 +50,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -64,63 +63,33 @@
                         <tbody>
                             @foreach($order as $o)
                             <tr>
-                                <td><a href="chi-tiet-don-hang?id={{$o->id}}"> #{{$o->code}}</a></td>
+                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -128,18 +97,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -152,7 +116,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -167,62 +130,32 @@
                             @foreach($order_watting as $o)
                             <tr>
                                 <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -230,18 +163,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -254,7 +182,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -269,62 +196,32 @@
                             @foreach($order_no_delivery as $o)
                             <tr>
                                 <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -332,18 +229,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -356,7 +248,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -371,62 +262,32 @@
                             @foreach($order_beging_delivery as $o)
                             <tr>
                                 <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -434,18 +295,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -458,7 +314,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -473,62 +328,32 @@
                             @foreach($order_done_delivery as $o)
                             <tr>
                                 <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -536,18 +361,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -560,7 +380,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -574,63 +393,33 @@
                         <tbody>
                             @foreach($order_customer_cancel as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang/{{$id}}'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -638,18 +427,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -662,7 +446,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -677,62 +460,32 @@
                             @foreach($order_iht_cancel as $o)
                             <tr>
                                 <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -740,18 +493,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -764,7 +512,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -779,62 +526,32 @@
                             @foreach($order_fail as $o)
                             <tr>
                                 <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
-                                <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+                                <td>{{$o->name}}</td>
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
-                                <td>
-                                    <p class="bage-warning">Chờ </p>
-                                </td>
+                                <td>Chờ </td>
                                 @elseif($o->status==2)
-                                <td>
-                                    <p class="bage-info">Chưa giao</p>
-                                </td>
+                                <td>Chưa giao </td>
                                 @elseif($o->status==3)
-                                <td>
-                                    <p class="bage-info">Đang giao </p>
-                                </td>
+                                <td>Đang giao </td>
                                 @elseif($o->status==4)
-                                <td>
-                                    <p class="bage-success">Đã hoàn thành</p>
-                                </td>
+                                <td>Đã hoàn thành</td>
                                 @elseif($o->status==5)
-                                <td>
-                                    <p class="bage-basic">Khách hủy </p>
-                                </td>
+                                <td>Khách hủy </td>
                                 @elseif($o->status==6)
-                                <td>
-                                    <p class="bage-basic">IHTGo hủy</p>
-                                </td>
+                                <td>IHTGo hủy </td>
                                 @elseif($o->status==7)
-                                <td>
-                                    <p class="bage-danger">Không thành công</p>
-                                </td>
+                                <td>Không thành công </td>
                                 @endif
 
                                 <!-- Trạng thái đơn hang -->
                                 @if($o->is_payment==0)
-                                <td>
-                                    <p class="bage-basic"> Chưa thanh toán</p>
-                                </td>
+                                <td>Chưa thanh toán </td>
                                 @elseif($o->is_payment==1)
-                                <td>
-                                    <p class="bage-success"> Đã thanh toán</p>
-                                </td>
+                                <td>Đã thanh toán </td>
                                 @elseif($o->is_payment==2)
-                                <td>
-                                    <p class="bage-danger">Ghi nợ</p>
-                                </td>
+                                <td>Ghi nợ </td>
                                 @endif
 
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
@@ -842,18 +559,13 @@
                                 <td>{{$o->created_at}}</td>
                                 <!-- Phương thức thanh toán -->
                                 @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
+                                <td>Tiền mặt </td>
                                 @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
+                                <td>Theo tháng </td>
                                 @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
+                                <td>Phương thức khác </td>
                                 @endif
+
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -868,10 +580,24 @@
 <script>
     //thay đổi tổng tiền trên trang list đơn hàng
     function totalPriceAll() {
+        //lấy giá trị url 
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                .exec(window.location.search);
+
+            return (results !== null) ? results[1] || 0 : false;
+        }
+        var end_date = $.urlParam('end_date');
+        var start_date = $.urlParam('start_date');
         $.ajax({
             type: "GET",
-            url: 'total-price-order-all',
+            url: 'total-price-order-all-search',
+            data: {
+                start_date: start_date,
+                end_date: end_date
+            },
             success: function(data) {
+                console.log(data);
                 $('#total-price').empty();
                 $('#total-price').html(' ' + formatCurrency(data));
             }
@@ -879,13 +605,25 @@
     }
 
     function totalPrice(id) {
+         //lấy giá trị url 
+         $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                .exec(window.location.search);
+
+            return (results !== null) ? results[1] || 0 : false;
+        }
+        var end_date = $.urlParam('end_date');
+        var start_date = $.urlParam('start_date');
         $.ajax({
             type: "GET",
-            url: 'total-price-order',
+            url: 'total-price-order-search',
             data: {
-                id: id
+                id: id,
+                start_date: start_date,
+                end_date: end_date
             },
             success: function(data) {
+                console.log(data);
                 $('#total-price').empty();
                 $('#total-price').html(' ' + formatCurrency(data));
             }
