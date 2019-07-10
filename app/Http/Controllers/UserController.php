@@ -20,11 +20,11 @@ class UserController extends Controller
                 $customer = Customer::editCustomer_Personal($request);
             }
             if ($user == 200 && $customer == 200) {
-                Session::flash('success', 'Thay đổi thông tin thành viên thành công!');
-                return redirect('/');
+                return back()
+                ->with('success', 'Thay đổi thông tin thành viên thành công!');
             } else {
-                Session::flash('error', 'Thay đổi thông tin thành viên thất bại!');
-                return redirect('/');
+                return back()
+                ->with('error', 'Thay đổi thông tin thành viên thất bại!');
             }
         } catch (\Exception $ex) {
             return $ex;
@@ -35,11 +35,11 @@ class UserController extends Controller
         try {
             $res = User::changePassword($request);
             if ($res == 200) {
-                Session::flash('success', 'Thay đổi mật khẩu thành viên thành công!');
-                return redirect('/');
+                return back()
+                ->with('success', 'Thay đổi mật khẩu thành viên thành công!');
             } else {
-                Session::flash('error', 'Thay đổi mật khẩu thành viên thất bại!');
-                return redirect('/');
+                return back()
+                ->with('success', 'Thay đổi mật khẩu thành viên thất bại!');
             }
         } catch (\Exception $ex) {
             return $ex;

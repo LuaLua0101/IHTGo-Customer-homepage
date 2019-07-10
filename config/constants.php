@@ -2,6 +2,7 @@
 return [
     'USER_TABLE' => 'users',
     'ORDER_TABLE' => 'orders',
+    'ORDER_DETAIL_TABLE'=>'order_details',
     'PROVINCE_TABLE'=>'provinces',
     'DISTRICT_TABLE'=>'districts',
     'COMPANY_TABLE'=>'companies',

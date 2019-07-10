@@ -484,6 +484,7 @@ $(function () {
             $('#btnChangePassword').prop("disabled", true);
         }
     });
+
     //validate form change search order-----------
     $("#start-date").change(function () {
         var start_date = $.trim($("#start-date").val());
@@ -522,6 +523,148 @@ $(function () {
             $('#btnSearchOrder').prop("disabled", true);
         }
     });
+    //validate form create order-----------
+    $("#sender_name").blur(function () {
+        var name = $.trim($("#sender_name").val());
+        if (name == '') {
+            $('#error-sender-name').text('Họ Tên không được trống');
+            $('#sender_name').focus();
+        } else {
+            $('#error-sender-name').text('');
+        }
+    });
+    $("#sender_phone").blur(function () {
+        var phone = $.trim($("#sender_phone").val());
+        if (phone == '') {
+            $('#error-sender-phone').text('Số điện thoại không được trống');
+            $('#sender_phone').focus();
+        } else if (!checkPhoneNumber(phone)) {
+            $('#error-sender-phone').text('Số điện thoại không đúng định dạng');
+            $('#sender_phone').focus();
+        }
+        else {
+            $('#error-sender-phone').text('');
+        }
+    });
+    $("#sender_province_id").blur(function () {
+        var province = $.trim($("#sender_province_id").val());
+        if (province == '' || province == 0) {
+            $('#error-sender-province-id').text('Tỉnh-thành phố không được trống');
+            $('#sender_province_id').focus();
+        } else {
+            $('#error-sender-province-id').text('');
+        }
+    });
+    $("#sender_district_id").blur(function () {
+        var district = $.trim($("#sender_district_id").val());
+        if (district == '' || district == 0) {
+            $('#error-sender-district-id').text('Quận - huyện không được trống');
+            $('#sender_district_id').focus();
+        } else {
+            $('#error-sender-district-id').text('');
+        }
+    });
+    $("#receive_name").blur(function () {
+        var name = $.trim($("#receive_name").val());
+        if (name == '') {
+            $('#error-receive-name').text('Họ Tên không được trống');
+            $('#receive_name').focus();
+        } else {
+            $('#error-receive-name').text('');
+        }
+    });
+    $("#receive_phone").blur(function () {
+        var phone = $.trim($("#receive_phone").val());
+        if (phone == '') {
+            $('#error-receive-phone').text('Số điện thoại không được trống');
+            $('#receive_phone').focus();
+        } else if (!checkPhoneNumber(phone)) {
+            $('#error-receive-phone').text('Số điện thoại không đúng định dạng');
+            $('#receive_phone').focus();
+        } else {
+            $('#error-receive-phone').text('');
+        }
+    });
+    $("#receive_province_id").blur(function () {
+        var province = $.trim($("#receive_province_id").val());
+        if (province == '' || province == 0) {
+            $('#error-receive-province-id').text('Tỉnh-thành phố không được trống');
+            $('#receive_province_id').focus();
+        } else {
+            $('#error-receive-province-id').text('');
+        }
+    });
+    $("#receive_district_id").blur(function () {
+        var district = $.trim($("#receive_district_id").val());
+        if (district == '' || district == 0) {
+            $('#error-receive-district-id').text('Quận - huyện không được trống');
+            $('#receive_district_id').focus();
+        } else {
+            $('#error-receive-district-id').text('');
+        }
+    });
+    $("#length").blur(function () {
+        var length = $.trim($("#length").val());
+        if (length == '') {
+            $('#error-size-order').text('Chiều dài không được trống');
+            $('#length').focus();
+        } else {
+            $('#error-size-order').text('');
+        }
+    });
+    $("#width").blur(function () {
+        var width = $.trim($("#width").val());
+        if (width == '') {
+            $('#error-size-order').text('Chiều rộng không được trống');
+            $('#width').focus();
+        } else {
+            $('#error-size-order').text('');
+        }
+    });
+    $("#weight").blur(function () {
+        var weight = $.trim($("#weight").val());
+        if (weight == '') {
+            $('#error-weight-order').text('Trọng lượng không được trống');
+            $('#weight').focus();
+        } else if (weight > 25) {
+            $('#error-weight-order').text('Trọng lượng không được lớn hơn 25kg');
+            $('#weight').focus();
+        }
+        else {
+            $('#error-weight-order').text('');
+        }
+    });
+    $("#formCreateOrder").change(function () {
+        var sender_name = $.trim($("#sender_name").val());
+        var sender_phone = $.trim($("#sender_phone").val());
+        var sender_province_id = $.trim($("#sender_province_id").val());
+        var sender_district_id = $.trim($("#sender_district_id").val());
+        var receive_name = $.trim($("#receive_name").val());
+        var receive_phone = $.trim($("#receive_phone").val());
+        var receive_province_id = $("#receive_province_id").val();
+        var receive_district_id = $("#receive_district_id").val();
+        var length = $.trim($("#length").val());
+        var width = $.trim($("#width").val());
+        var weight = $.trim($("#weight").val());
+
+        var flag = 0;
+        if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_district_id != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_district_id != '' && length != '' && width != '' && weight != '') {
+            flag++;
+        }
+        if (weight < 25) {
+            flag++;
+        }
+        if (checkPhoneNumber(sender_phone) && checkPhoneNumber(receive_phone)) {
+            flag++;
+        }
+        if (flag == 3) {
+            $('#btnCreateOrder').prop("disabled", false);
+        }
+        else {
+            $('#btnCreateOrder').prop("disabled", true);
+        }
+    });
+
     //validate email-----------
     function isEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -541,6 +684,10 @@ $(function () {
                 if (phone.match(/^\d{10}/)) {
                     flag = true;
                 }
+            } else if ((firstNumber == '02') && phone.length == 11 || phone.length == 12) {
+                if ((phone.match(/^\d{11}/)) || (phone.match(/^\d{12}/))) {
+                    flag = true;
+                }
             }
         }
         return flag;
@@ -555,14 +702,34 @@ $(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $('#receive_province_id').on('change', function () {
-        var cId = $('#receive_province_id').val();
-        $.get('districtOfProvince/' + cId, function (data) {
-            $("#receive_district_id").empty();
-            data.forEach(function (item) {
-                $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
-            })
-        });
+    //hiển thị quận/huyện theo tỉnh/thành phố khi chọn vào (form tạo đơn hàng)
+    $('#receive_province_id').change(function () {
+        var Id = $('#receive_province_id').val();
+        $.ajax({
+            type: "GET",
+            url: 'districtOfProvince/' + Id,
+            success: function (data) {
+                $("#receive_district_id").empty();
+                $("#receive_district_id").append("<option value ='0'>Vui lòng chọn quận - huyện(*) </option>");
+                data.forEach(function (item) {
+                    $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+                })
+            }
+        })
+    });
+    $('#sender_province_id').change(function () {
+        var Id = $('#sender_province_id').val();
+        $.ajax({
+            type: "GET",
+            url: 'districtOfProvince/' + Id,
+            success: function (data) {
+                $("#sender_district_id").empty();
+                $("#sender_district_id").append("<option value ='0'>Vui lòng chọn quận - huyện(*) </option>");
+                data.forEach(function (item) {
+                    $("#sender_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+                })
+            }
+        })
     });
     //hiển thị danh sách công ty trên form đăng ký
     $('#rdoCompany').change(function () {

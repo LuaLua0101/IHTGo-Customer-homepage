@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Session;
 
 class OrderController extends Controller
 {
@@ -12,12 +11,13 @@ class OrderController extends Controller
     {
         try {
             $res = Order::create($request);
+
             if ($res == 200) {
-                Session::flash('success', 'Tạo mới đơn hàng thành công!');
-                return redirect('/');
+                return back()
+                    ->with('success', 'Tạo mới đơn hàng thành công!');
             } else {
-                Session::flash('error', 'Tạo mới đơn hàng thất bại!');
-                return redirect('/');
+                return back()
+                    ->with('error', 'Tạo mới đơn hàng thành công!');
             }
         } catch (\Exception $ex) {
             return $ex;

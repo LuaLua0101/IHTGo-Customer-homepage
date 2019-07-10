@@ -50,7 +50,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -64,18 +63,14 @@
                         <tbody>
                             @foreach($order as $o)
                             <tr>
-                                <td><a href="chi-tiet-don-hang?id={{$o->id}}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -142,7 +137,9 @@
                                 @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
+
                             @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -152,7 +149,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -166,18 +162,14 @@
                         <tbody>
                             @foreach($order_watting as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -254,7 +246,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -268,18 +259,14 @@
                         <tbody>
                             @foreach($order_no_delivery as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -356,7 +343,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -370,18 +356,14 @@
                         <tbody>
                             @foreach($order_beging_delivery as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -458,7 +440,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -472,18 +453,14 @@
                         <tbody>
                             @foreach($order_done_delivery as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -560,7 +537,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -574,18 +550,14 @@
                         <tbody>
                             @foreach($order_customer_cancel as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang/{{$id}}'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -662,7 +634,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -676,18 +647,14 @@
                         <tbody>
                             @foreach($order_iht_cancel as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
@@ -764,7 +731,6 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Giao hỏa tốc</th>
                                 <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
@@ -778,18 +744,14 @@
                         <tbody>
                             @foreach($order_fail as $o)
                             <tr>
-                                <td><a href="{!! url('chi-tiet-don-hang'); !!}"> #{{$o->code}}</a></td>
+                                <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                        <!-- Giao hỏa tốc -->
+                                        @if($o->is_speed==1)
+                                        <i class="fas fa-rocket"></i>
+                                        @endif
+                                        #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
-                                <!-- Giao hỏa tốc -->
-                                @if($o->is_speed==0)
-                                <td>
-                                    <p class="bage-basic"> Không</p>
-                                </td>
-                                @elseif($o->is_speed==1)
-                                <td>
-                                    <p class="bage-success">Có</p>
-                                </td>
-                                @endif
+
                                 <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)

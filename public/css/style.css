@@ -1,9 +1,6 @@
-/* modal  */
-@media (min-width: 768px) {
-    .modal-content {
-        box-shadow: none !important;
-        border: 1px solid #e50303;
-    }
+
+#imgPricePage img{
+    display: block; margin-left: auto; margin-right: auto;width: 70%;
 }
 .modal-header {
     background-color: #e50303;
@@ -225,3 +222,26 @@ i {
     font-size: 9px;
     font-weight: 500;
 }
+#formOrderDetail .tltHeading{
+    color: #e50303;
+    font-weight: bold;
+    font-size: 13px;
+}
+#formOrderDetail span:hover{
+    background-color: #ddd;
+}
+/*  */
+@media (min-width: 768px) {
+    .modal-content {
+        box-shadow: none !important;
+        border: 1px solid #e50303;
+    }
+    
+}
+@media all and (max-width: 600px) {
+    #imgPricePage img{
+        width: 90%;
+        margin-top: -1em;
+        margin-bottom: -5em;
+    }
+  }

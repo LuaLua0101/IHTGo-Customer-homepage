@@ -7,43 +7,49 @@ use App\Models\Company;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Session;
-
+use App\Models\Province;
 
 class HomeController extends Controller
 {
 
     public function index()
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('index', ['customer' => $customer, 'company' => $company]);
+        return view('index', ['customer' => $customer, 'company' => $company, 'province' => $province]);
     }
     public function contact()
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('contact', ['customer' => $customer, 'company' => $company]);
+        return view('contact', ['customer' => $customer, 'company' => $company, 'province' => $province]);
     }
     public function price_list()
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('price-list', ['customer' => $customer, 'company' => $company]);
+        return view('price-list', ['customer' => $customer, 'company' => $company, 'province' => $province]);
     }
     public function news()
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('news', ['customer' => $customer, 'company' => $company]);
+        return view('news', ['customer' => $customer, 'company' => $company, 'province' => $province]);
     }
     public function new_detail()
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('new-detail', ['customer' => $customer, 'company' => $company]);
+        return view('new-detail', ['customer' => $customer, 'company' => $company, 'province' => $province]);
     }
     public function order()
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
         $order = Order::getList();
@@ -70,11 +76,12 @@ class HomeController extends Controller
             'order_customer_cancel' => $order_customer_cancel,
             'order_iht_cancel' => $order_iht_cancel,
             'order_fail' => $order_fail,
-            'sum_order' => $sum_order
+            'sum_order' => $sum_order, 'province' => $province
         ]);
     }
     public function order_search(Request $request)
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
         $order = Order::getListSearch($request);
@@ -101,26 +108,16 @@ class HomeController extends Controller
             'order_customer_cancel' => $order_customer_cancel,
             'order_iht_cancel' => $order_iht_cancel,
             'order_fail' => $order_fail,
-            'sum_order' => $sum_order
+            'sum_order' => $sum_order, 'province' => $province
         ]);
     }
-    public function order_detail(Request $request)
+    public function order_detail($id)
     {
+        $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $order=Order::detail($request->id);
-        $order_watting = Order::getList_StatusSearch($request->id, 1);
-        $order_no_delivery = Order::getList_StatusSearch($request->id, 2);
-        $order_beging_delivery = Order::getList_StatusSearch($request->id, 3);
-        $order_done_delivery = Order::getList_StatusSearch($request->id, 4);
-        $order_customer_cancel = Order::getList_StatusSearch($request->id, 5);
-        $order_iht_cancel = Order::getList_StatusSearch($request->id, 6);
-        $order_fail = Order::getList_StatusSearch($request->id, 7);
+        $order = Order::detail($id);
 
-        $sum_order = 0;
-        foreach ($order as $item) {
-            $sum_order += $item->total_price;
-        }
-        return view('.order-detail', ['customer' => $customer,'company'=>$company,'order'=>$order]);
+        return view('order-detail', ['customer' => $customer, 'company' => $company, 'order' => $order, 'province' => $province]);
     }
 }

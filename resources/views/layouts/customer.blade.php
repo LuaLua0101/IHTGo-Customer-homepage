@@ -7,30 +7,30 @@
     <link rel="shortcut icon" type="image/x-icon" href="/Content/Images/Index/logo.png" />
 
     <!--------------------------------------Bootstrap CSS--------------------------------------------->
-    <link href="public/vendor/bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!----------------------------------------------------------------------------------->
-    <link href="public/vendor/bootstrap-3.3.7/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet" />
 
     <!----------------------------------------PagedList----------------------------------------------->
-    <link href="public/vendor/PagedList.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/PagedList.css" rel="stylesheet') }}" />
 
     <!-------------------------------------Owl Carousel CSS------------------------------------------>
-    <link href="public/vendor/owl carousel 2/assets/owl.carousel.min.css" rel="stylesheet" />
-    <link href="public/vendor/owl carousel 2/assets/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/owl carousel 2/assets/owl.carousel.min.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/owl carousel 2/assets/owl.theme.default.min.css') }}" rel="stylesheet" />
 
     <!-----------------------------------Ekko lightbox CSS------------------------------------------->
-    <link href="public/vendor/ekko lightbox/ekko-lightbox.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/ekko lightbox/ekko-lightbox.css') }}" rel="stylesheet" />
 
     <!----------------------------------------AOS CSS------------------------------------------------>
-    <link href="public/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/aos/aos.css') }}" rel="stylesheet" />
 
     <!----------------------------------------Fontawesome CSS---------------------------------------->
-    <link href="public/vendor/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" />
 
     <!---------------------------------------Custom CSS---------------------------------------------->
-    <link href="public/user/css/usercustom.css" rel="stylesheet" />
-    <link href="public/css/style.css" rel="stylesheet" />
-    <link href="public/shared/common.css" rel="stylesheet" />
+    <link href="{{ URL::asset('public/user/css/usercustom.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('public/css/style.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('public/shared/common.css') }}" rel="stylesheet" />
     <!----------------------------------------------------------------------------------------------->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <title>IHTGO - Trang Chủ</title>
@@ -100,7 +100,7 @@
             <div style="clear:both;"></div>
         </div>
         <nav class="secondheader secondHeadPhoneFix">
-            <h1 class="brandlogo"><a href="{!! url('/'); !!}"><img class="logo-image" src="public/Images/Index/logo.png" alt="logo" title="logo" /></a></h1>
+            <h1 class="brandlogo"><a href="{!! url('/'); !!}"><img class="logo-image" src="{{ URL::asset('public/Images/Index/logo.png') }}" alt="logo" title="logo" /></a></h1>
             <ul class="header-link">
                 <li class="active"><a href="{!! url('/'); !!}"><strong>TRANG CHỦ</strong></a></li>
                 <li><a href="{!! url('gioi-thieu'); !!}">GIỚI THIỆU</a></li>
@@ -120,210 +120,241 @@
     <!--  Modal Dat hang-->
     <div class="modal fade" id="DatHang" role="dialog">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">ĐƠN HÀNG MỚI</h4>
-                </div>
-                <div class="modal-body row">
-                    <div class="col-md-6">
-                        <h4>Thông tin người gửi đơn hàng</h4>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên người gửi">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="SĐT người gửi">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <input type="text" class="form-control" placeholder="Địa chỉ người gửi">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <select class="form-control" id="sel1">
-                                    <option>Vui lòng chọn tỉnh - thành phố</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <select class="form-control" id="sel1">
-                                    <option>Vui lòng chọn quận - huyện</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                        </div>
+            <form method="POST" action="{{ url('create-order') }}" class='formModal' id='formCreateOrder' enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">TẠO ĐƠN HÀNG MỚI</h4>
                     </div>
-                    <div class="col-md-6">
-                        <h4>Thông tin người nhận đơn hàng</h4>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên người nhận">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="SĐT người nhận">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <input type="text" class="form-control" placeholder="Địa chỉ người nhận">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <select class="form-control" id="sel1">
-                                    <option>Vui lòng chọn tỉnh - thành phố</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <select class="form-control" id="sel1">
-                                    <option>Vui lòng chọn quận - huyện</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <h4>Thông tin đơn hàng</h4>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="form-group col-md-6">
+                    <div class="modal-body row">
+                        <div class="col-md-6">
+                            <h4>Thông tin người gửi(*)</h4>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-sender-name'></span>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                    <input type="text" class="form-control" placeholder="Kích thước">
+                                    <span class="input-group-addon"><i class="far fa-user"></i></span>
+                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="Họ và Tên người gửi(*)">
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group">
+                                <span class="text-danger" id='error-sender-phone'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                                    <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="Số điện thoại người gửi(*)">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="text-danger" id='error-sender-province-id'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    <select class="form-control" id="sender_province_id" name="sender_province_id">
+                                        <option value="0">Vui lòng chọn tỉnh - thành phố(*)</option>
+                                        @foreach($province as $p)
+                                        <option value="{{$p->province_id}}">{{$p->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-sender-district-id'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    <select class="form-control" id="sender_district_id" name="sender_district_id">
+                                        <option>Vui lòng chọn quận - huyện(*)</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-sender-address'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="Địa chỉ người gửi(*)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Thông tin người nhận(*)</h4>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-receive-name'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="far fa-user"></i></span>
+                                    <input type="text" class="form-control" name="receive_name" id="receive_name" placeholder="Họ và Tên người nhận(*)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-receive-phone'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                                    <input type="tel" class="form-control" name="receive_phone" id="receive_phone" placeholder="Số điện thoại người nhận(*)">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="text-danger" id='error-receive-province-id'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    <select class="form-control" id="receive_province_id" name="receive_province_id">
+                                        <option>Vui lòng chọn tỉnh - thành phố(*)</option>
+                                        @foreach($province as $p)
+                                        <option value="{{$p->province_id}}">{{$p->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-receive-district-id'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    <select class="form-control" id="receive_district_id" name="receive_district_id">
+                                        <option>Vui lòng chọn quận - huyện(*)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-receive-address'></span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    <input type="text" class="form-control" id="receive_address" name="receive_address" placeholder="Địa chỉ người nhận(*)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h4>Thông tin đơn hàng(*)</h4>
+                        </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-box-open"></i></span>
+                                    <input type="text" class="form-control" placeholder="Tên đơn hàng" id="name" name="name">
+                                </div>
+                            </div>
+                            <label class="title-form">Kích thước (cm)= (Dài * Rộng * Cao)/5000</label> <span class="text-danger" id='error-size-order'></span>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
+                                        <input type="text" class="form-control" placeholder="Dài(cm)*" id="length" name="length">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
+                                        <input type="text" class="form-control" placeholder="Rộng(cm)*" id="width" name="width">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
+                                        <input type="text" class="form-control" placeholder="Cao(cm)*" id="height" name="height">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-danger" id='error-weight-order'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
-                                    <input type="text" class="form-control" placeholder="Cân nặng">
+                                    <input type="text" class="form-control" placeholder="Trọng lượng(< 25kg)*" id="weight" name="weight">
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-hand-holding-usd"></i></span>
-                                <input type="text" class="form-control" placeholder="Thu hộ">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="custom-file col-md-4">
-                                <label>Ảnh đơn hàng:</label>
-                                <div class="upload-btn-wrapper">
-                                    <img id="img1" width="130" src="public/images/Index/notfound.png">
-                                    <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
-                                </div>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label>Ghi chú:</label>
+                            <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    <span class="input-group-addon"><i class="fas fa-hand-holding-usd"></i></span>
+                                    <input type="text" class="form-control" placeholder="Thu hộ(VND)" id="take_money" name="take_money">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="custom-file col-md-4">
+                                    <label>Ảnh đơn hàng:<span class="text-danger" id='error-image-order'></span></label>
+                                    <div class="upload-btn-wrapper">
+                                        <img id="img1" width="130" src="{{ URL::asset('public/images/Index/notfound.png') }}">
+                                        <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label>Ghi chú:<span class="text-danger" id='error-note-order'></span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
+                                        <textarea class="form-control" rows="5" name="note"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6 col-sm-12 formRadio">
+                            <div class="form-group col-md-6 col-sm-6 ">
+                                <label class="title-form">Giao hỏa tốc:</label>
+                                <label class="container">Có
+                                    <input type="radio" checked="checked" name="is_speed" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Không
+                                    <input type="radio" name="is_speed" value="0">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label class="title-form">Loại xe:</label>
+                                <label class="container">Xe máy
+                                    <input type="radio" checked="checked" name="car_type" value="8">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Xe tải
+                                    <input type="radio" name="car_type" value="7">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label class="title-form">Trường hợp:</label>
+                                <label class="container">Giao nội tỉnh
+                                    <input type="radio" checked="checked" name="car_option" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Giao ngoại tỉnh
+                                    <input type="radio" name="car_option" value="3">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Giao chứng từ
+                                    <input type="radio" name="car_option" value="2">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label class="title-form">Phương thức thanh toán</label>
+                                <label class="container">Tiền mặt
+                                    <input type="radio" checked="checked" name="payment_type" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Theo tháng
+                                    <input type="radio" name="payment_type" value="2">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Phương thức khác
+                                    <input type="radio" name="payment_type" value="3">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="title-form">Người thanh toán:</label>
+                                <label class="container">Người nhận
+                                    <input type="radio" name="payer" value="1" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Người gửi
+                                    <input type="radio"  name="payer" value="2">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-sm-12 formRadio">
-                        <div class="form-group col-md-6 col-sm-6 ">
-                            <label class="title-form">Giao hỏa tốc:</label>
-                            <label class="container">Có
-                                <input type="radio" checked="checked" name="radio1">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Không
-                                <input type="radio" name="radio1">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-6 col-sm-6">
-                            <label class="title-form">Loại xe:</label>
-                            <label class="container">Xe máy
-                                <input type="radio" checked="checked" name="radio2">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Xe tải
-                                <input type="radio" name="radio2">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-6 col-sm-6">
-                            <label class="title-form">Trường hợp:</label>
-                            <label class="container">Giao nội tỉnh
-                                <input type="radio" checked="checked" name="radio3">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Giao ngoại tỉnh
-                                <input type="radio" name="radio3">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Giao chứng từ
-                                <input type="radio" name="radio3">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-6 col-sm-6">
-                            <label class="title-form">Phương thức thanh toán</label>
-                            <label class="container">Phương thức thanh toán
-                                <input type="radio" checked="checked" name="radio4">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Tiền mặt
-                                <input type="radio" name="radio4">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Thanh toán theo tháng
-                                <input type="radio" name="radio4">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="title-form">Người thanh toán:</label>
-                            <label class="container">Người gửi
-                                <input type="radio" checked="checked" name="radio5">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Người nhận
-                                <input type="radio" name="radio5">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger" id="btnCreateOrder" disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
+                        <button type="button" class="btn" data-dismiss="modal"><i class="fas fa-times"></i>Đóng</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"><i class="far fa-save" style="color:white"></i>Lưu</button>
-                    <button type="button" class="btn" data-dismiss="modal"><i class="fas fa-times"></i>Đóng</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- Modal login-->
@@ -388,7 +419,7 @@
                             <span class="text-danger" id='error-phone2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="SĐT di động liên hệ" id='phone2' name=phone required>
+                                <input type="tel" class="form-control" placeholder="Số điện thoại di động liên hệ" id='phone2' name=phone required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -457,7 +488,7 @@
                             <span class="text-danger" id='error-phone3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="SĐT" id='phone3' name="phone" value="{{Auth::user()->phone}}">
+                                <input type="tel" class="form-control" placeholder="Số điện thoại" id='phone3' name="phone" value="{{Auth::user()->phone}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -640,25 +671,25 @@
     </div>
 
     <!---------------------------------Jquery JS------------------------------------------>
-    <script src="public/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
 
     <!--------------------------------Bootstrap JS---------------------------------------->
-    <script src="public/vendor/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/js/bootstrap.min.js') }}"></script>
 
     <!--------------------------------Ekko lightbox JS-------------------------------------->
-    <script src="public/vendor/ekko lightbox/ekko-lightbox.js"></script>
+    <script src="{{ URL::asset('public/vendor/ekko lightbox/ekko-lightbox.js') }}"></script>
 
     <!--------------------------------Owl Carousel JS---------------------------------------->
-    <script src="public/vendor/owl carousel 2/owl.carousel.min.js"></script>
+    <script src="{{ URL::asset('public/vendor/owl carousel 2/owl.carousel.min.js') }}"></script>
 
     <!-------------------------------------AOS JS------------------------------------------>
-    <script src="public/vendor/aos/aos.js"></script>
+    <script src="{{ URL::asset('public/vendor/aos/aos.js') }}"></script>
 
     <!-----------------------------------Inputmask JS------------------------------------------>
-    <script src="public/vendor/inputmask/jquery.inputmask.bundle.min.js"></script>
+    <script src="{{ URL::asset('public/vendor/inputmask/jquery.inputmask.bundle.min.js') }}"></script>
 
     <!------------------------------------Custom JS---------------------------------------->
-    <script src="public/user/js/usercustom.js"></script>
+    <script src="{{ URL::asset('public/user/js/usercustom.js') }}"></script>
 </body>
 
 </html>
