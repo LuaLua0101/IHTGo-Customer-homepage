@@ -22,7 +22,6 @@ Route::get('tim-don-hang', 'HomeController@order_search');
 
 //hiển thị danh sách  (AJAX)
 Route::get('districtOfProvince/{province_id?}', 'DistrictController@districtOfProvince');
-Route::get('listCompany', 'CompanyController@listCompany');
 Route::get('/loadmore', 'LoadMoreController@index');
 Route::post('/loadmore/load_data', 'LoadMoreController@load_data')->name('loadmore.load_data');
 

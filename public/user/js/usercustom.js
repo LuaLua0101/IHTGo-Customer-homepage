@@ -745,23 +745,11 @@ $(function () {
     //hiển thị danh sách công ty trên form đăng ký
     $('#rdoCompany').change(function () {
         $('#listCompany').css('display', 'block');
-        $.get('listCompany', function (data) {
-            $("#company_id").empty();
-            data.forEach(function (item) {
-                $("#company_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
-            })
-        });
     });
 
     //hiển thị danh sách công ty trên form thông tin cá nhân
     $('#rdoCompany2').change(function () {
         $('#listCompany2').css('display', 'block');
-        $.get('listCompany', function (data) {
-            $("#company_id2").empty();
-            data.forEach(function (item) {
-                $("#company_id2").append("<option value = '" + item.id + "'>" + item.text + "</option>");
-            })
-        });
     });
     //thay đổi trạng thái loại khách hàng trên form đăng ký thành viên
     $('#rdoPersonal').change(function () {

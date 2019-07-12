@@ -31,6 +31,7 @@
     <link href="{{ URL::asset('public/user/css/usercustom.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('public/css/style.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('public/shared/common.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
     <!----------------------------------------------------------------------------------------------->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <title>IHTGO - Trang Chủ</title>
@@ -227,7 +228,7 @@
                             <h4>Thông tin đơn hàng(*)</h4>
                         </div>
                         <div class="col-md-6">
-                        <div class="form-group">
+                            <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-box-open"></i></span>
                                     <input type="text" class="form-control" placeholder="Tên đơn hàng" id="name" name="name">
@@ -344,7 +345,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">Người gửi
-                                    <input type="radio"  name="payer" value="2">
+                                    <input type="radio" name="payer" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -455,7 +456,10 @@
                             <label>Danh sách công ty:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
-                                <select class="form-control" id="company_id" name="company_id" style="width: 100%">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" style="width: 100%" id="company_id" name="company_id">
+                                    @foreach($company as $c)
+                                    <option value="{{$c->id}}">{{$c->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -504,6 +508,7 @@
                                 @endif
                             </div>
                         </div>
+
                         <div class=" row">
                             <div class="formRadio col-md-12">
                                 <label class="col-md-3">Loại khách hàng: </label>
@@ -522,7 +527,7 @@
                             <label>Danh sách công ty:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
-                                <select class="form-control" id="company_id2" name="company_id" style="width: 100%">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
                                     @foreach($company as $c)
                                     <option value="{{$c->id}}" {{($customer->company_id == $c->id) ? 'selected' :null}}>{{$c->name}}</option>
                                     @endforeach
@@ -534,11 +539,16 @@
                             <label>Danh sách công ty:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
-                                <select class="form-control" id="company_id2" name="company_id" style="width: 100%">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
+                                    @foreach($company as $c)
+                                    <option value="{{$c->id}}">{{$c->name}}</option>
+                                    @endforeach
                                 </select>
+
                             </div>
                         </div>
                         @endif
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger" id='btnInfoUser' di\><i class="far fa-save" style="color:white"></i>Lưu</button>
@@ -692,6 +702,7 @@
 
     <!------------------------------------Custom JS---------------------------------------->
     <script src="{{ URL::asset('public/user/js/usercustom.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 </body>
 
 </html>
