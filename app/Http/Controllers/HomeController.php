@@ -120,4 +120,19 @@ class HomeController extends Controller
 
         return view('order-detail', ['customer' => $customer, 'company' => $company, 'order' => $order, 'province' => $province]);
     }
+
+    public function arrayPaginator($array, $request)
+    {
+        $page = Input::get('page', 1);
+        $perPage = 10;
+        $offset = ($page * $perPage) - $perPage;
+
+        return new LengthAwarePaginator(
+            array_slice($array, $offset, $perPage, true),
+            count($array),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+    }
 }

@@ -118,6 +118,7 @@
         </nav>
     </header>
     <!--  Modal Dat hang-->
+    @if(Auth::user())
     <div class="modal fade" id="DatHang" role="dialog">
         <div class="modal-dialog modal-lg">
             <form method="POST" action="{{ url('create-order') }}" class='formModal' id='formCreateOrder' enctype="multipart/form-data">
@@ -134,14 +135,14 @@
                                 <span class="text-danger" id='error-sender-name'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="Họ và Tên người gửi(*)">
+                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="Họ và Tên người gửi(*)" value="{{Auth::user()->name}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-phone'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="Số điện thoại người gửi(*)">
+                                    <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="Số điện thoại người gửi(*)" value="{{Auth::user()->phone}}">
                                 </div>
                             </div>
 
@@ -357,6 +358,7 @@
             </form>
         </div>
     </div>
+    @endif
     <!-- Modal login-->
     <div class="modal fade" id="Login" role="dialog">
         <div class="modal-dialog modal-sm">

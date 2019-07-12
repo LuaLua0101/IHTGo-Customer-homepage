@@ -34,17 +34,18 @@
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <ul class="nav nav-pills tab-order">
-                <li class="active"><a data-toggle="pill" href="#home" onclick="totalPriceAll();">Tất cả ({{count($order)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(1);" href="#menu1">Chờ ({{count($order_watting)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(2);" href="#menu2">Chưa giao ({{count($order_no_delivery)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(3);" href="#menu3">Đang giao ({{count($order_beging_delivery)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(4);" href="#menu4">Đã hoàn thành ({{count($order_done_delivery)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(5);" href="#menu5">Khách hủy ({{count($order_customer_cancel)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(6);" href="#menu6">IHTGo hủy ({{count($order_iht_cancel)}})</a></li>
-                <li><a data-toggle="pill" onclick="totalPrice(7);" href="#menu7">Không thành công ({{count($order_fail)}})</a></li>
+                <li class="active"><a data-toggle="pill" href="#home" onclick="totalPriceAll();">Tất cả ({{$order->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(1);" href="#menu1">Chờ ({{$order_watting->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(2);" href="#menu2">Chưa giao ({{$order_no_delivery->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(3);" href="#menu3">Đang giao ({{$order_beging_delivery->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(4);" href="#menu4">Đã hoàn thành ({{$order_done_delivery->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(5);" href="#menu5">Khách hủy ({{$order_customer_cancel->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(6);" href="#menu6">IHTGo hủy ({{$order_iht_cancel->total()}})</a></li>
+                <li><a data-toggle="pill" onclick="totalPrice(7);" href="#menu7">Không thành công ({{$order_fail->total()}})</a></li>
             </ul>
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
+                    {{ $order->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -63,6 +64,7 @@
                         <tbody>
                             @foreach($order as $o)
                             <tr>
+
                                 <td><a href="chi-tiet-don-hang/id={{$o->id}}">
                                         <!-- Giao hỏa tốc -->
                                         @if($o->is_speed==1)
@@ -139,11 +141,11 @@
                             </tr>
 
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
                 <div id="menu1" class="tab-pane fade in">
+                    {{ $order_watting->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -241,6 +243,7 @@
                     </table>
                 </div>
                 <div id="menu2" class="tab-pane fade in ">
+                    {{ $order_no_delivery->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -338,6 +341,7 @@
                     </table>
                 </div>
                 <div id="menu3" class="tab-pane fade in ">
+                  {{ $order_beging_delivery->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -435,6 +439,7 @@
                     </table>
                 </div>
                 <div id="menu4" class="tab-pane fade in ">
+                    {{ $order_done_delivery->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -532,6 +537,7 @@
                     </table>
                 </div>
                 <div id="menu5" class="tab-pane fade in ">
+                   {{ $order_customer_cancel->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -629,6 +635,7 @@
                     </table>
                 </div>
                 <div id="menu6" class="tab-pane fade in ">
+                   {{ $order_iht_cancel->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -726,6 +733,7 @@
                     </table>
                 </div>
                 <div id="menu7" class="tab-pane fade in ">
+                    {{ $order_fail->links() }}
                     <table class="table table-striped">
                         <thead>
                             <tr>

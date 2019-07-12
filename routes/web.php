@@ -17,7 +17,7 @@ Route::get('bang-gia', 'HomeController@price_list');
 Route::get('tin-tuc', 'HomeController@news');
 Route::get('noi-dung', 'HomeController@new_detail');
 Route::get('don-hang', 'HomeController@order');
-Route::get('chi-tiet-don-hang/id={id}', 'HomeController@order_detail');
+Route::get('chi-tiet-don-hang/id={id?}', 'HomeController@order_detail');
 Route::get('tim-don-hang', 'HomeController@order_search');
 
 //hiển thị danh sách  (AJAX)

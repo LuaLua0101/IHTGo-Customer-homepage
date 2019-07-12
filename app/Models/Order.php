@@ -4,15 +4,30 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Controllers\ImageController;
 use Request;
 
 class Order
 {
+    //hàm phân trang
+    public static function paginateArray($data, $perPage = 15)
+    {
+        $page = Paginator::resolveCurrentPage();
+        $total = count($data);
+        $results = array_slice($data, ($page - 1) * $perPage, $perPage);
+
+        return new LengthAwarePaginator($results, $total, $perPage, $page, [
+            'path' => Paginator::resolveCurrentPath(),
+        ]);
+    }
     //danh sách đơn hàng
     public static function getList()
     {
         $user_id = Auth::user()->id;
-        $res = DB::select("select od.sender_address,od.receive_address,o.*,
+        $res = self::paginateArray(
+            DB::select("select od.sender_address,od.receive_address,o.*,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
@@ -20,7 +35,25 @@ class Order
         IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
         FROM orders o, order_details od
         WHERE o.id=od.order_id AND o.user_id=$user_id
-        ORDER BY o.id DESC");
+        ORDER BY o.id DESC")
+        );
+        return $res;
+    }
+    //danh sách đơn hàng theo trạng thái đơn
+    public static function getList_Status($status)
+    {
+        $user_id = Auth::user()->id;
+        $res = self::paginateArray(
+            $res = DB::select("select od.sender_address,od.receive_address,o.*,
+                IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
+                IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
+                IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
+                IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
+                IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
+                FROM orders o, order_details od
+                WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status
+                ORDER BY o.id DESC")
+        );
         return $res;
     }
     //danh sách đơn hàng search date
@@ -29,7 +62,8 @@ class Order
         $start_date = $data->start_date;
         $end_date = $data->end_date;
         $user_id = Auth::user()->id;
-        $res = DB::select("select od.sender_address,od.receive_address,o.*,
+        $res = self::paginateArray(
+            $res = DB::select("select od.sender_address,od.receive_address,o.*,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
@@ -37,14 +71,38 @@ class Order
         IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
         FROM orders o, order_details od
         WHERE o.id=od.order_id AND o.user_id=$user_id AND '$start_date' < o.created_at AND o.created_at < '$end_date'
-        ORDER BY o.id DESC");
+        ORDER BY o.id DESC")
+        );
         return $res;
+    }
+    //danh sách đơn hàng theo trạng thái đơn
+    public static function getList_StatusSearch($data, $status)
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $start_date = $data->start_date;
+            $end_date = $data->end_date;
+            $res = self::paginateArray(
+                $res = DB::select("select od.sender_address,od.receive_address,o.*,
+              IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
+              IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
+              IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
+              IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
+              IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
+              FROM orders o, order_details od
+              WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status AND '$start_date' < o.created_at AND o.created_at < '$end_date' 
+              ORDER BY o.id DESC")
+            );
+            return $res;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
     }
     //danh sách chi tiết đơn hàng
     public static function detail($id)
     {
         $user_id = Auth::user()->id;
-        $res = DB::select(DB::raw("select od.sender_address,od.receive_address,o.*,od.*,
+        $res = DB::select(DB::raw("select od.sender_address,od.receive_address,o.*,od.*,o.id as order_id,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
@@ -58,42 +116,8 @@ class Order
         ORDER BY o.id DESC"))[0];
         return $res;
     }
-    //danh sách đơn hàng theo trạng thái đơn
-    public static function getList_Status($status)
-    {
-        $user_id = Auth::user()->id;
-        $res = DB::select("select od.sender_address,od.receive_address,o.*,
-            IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
-            IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
-            IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-            IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-            IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
-            FROM orders o, order_details od
-            WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status
-            ORDER BY o.id DESC");
-        return $res;
-    }
-    //danh sách đơn hàng theo trạng thái đơn
-    public static function getList_StatusSearch($data, $status)
-    {
-        try {
-            $user_id = Auth::user()->id;
-            $start_date = $data->start_date;
-            $end_date = $data->end_date;
-            $res = DB::select("select od.sender_address,od.receive_address,o.*,
-          IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
-          IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
-          IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-          IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-          IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
-          FROM orders o, order_details od
-          WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status AND '$start_date' < o.created_at AND o.created_at < '$end_date' 
-          ORDER BY o.id DESC");
-            return $res;
-        } catch (\Exception $ex) {
-            return $ex;
-        }
-    }
+
+
     //hiển thị tổng tiền đơn hàng theo trạng thái đơn
     public static function totalPriceAll()
     {
@@ -145,7 +169,6 @@ class Order
     public static function create($data)
     {
         try {
-
             $user_id = Auth::user()->id;
             $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
                 [
@@ -180,6 +203,7 @@ class Order
                     'weight' => $data->weight,
                 ]
             );
+            ImageController::uploadImageOrder($data,$order_id);
             return 200;
         } catch (\Exception $ex) {
             return $ex;

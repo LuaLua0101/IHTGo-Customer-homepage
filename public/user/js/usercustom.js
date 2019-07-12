@@ -714,6 +714,12 @@ $(function () {
                 data.forEach(function (item) {
                     $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
                 })
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+                console.log('jqXHR:');
+                console.log(jqXHR);
+
             }
         })
     });
@@ -728,6 +734,11 @@ $(function () {
                 data.forEach(function (item) {
                     $("#sender_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
                 })
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('jqXHR:');
+                console.log(jqXHR);
+
             }
         })
     });

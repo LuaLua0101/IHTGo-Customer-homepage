@@ -113,7 +113,25 @@
                     <span class="list-group-item"><i class="fas fa-clock"></i><span class="tltHeading">Thời gian đặt hàng:</span>{{$order->created_at}}</span>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="list-group">
+                    <span class="list-group-item active">Ảnh đơn hàng</span>
+                    <img data-toggle="modal" data-target="#myModal" id="myImg" src={{"../public/storage/order/" . $order->order_id."_order.png?" . rand()}} alt="No Image" style="width:100%;max-width:300px" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <img data-toggle="modal" width="100%" height="100%" data-target="#myModal" id="myImg" src={{"../public/storage/order/" . $order->order_id."_order.png?" . rand()}} alt="No Image" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
