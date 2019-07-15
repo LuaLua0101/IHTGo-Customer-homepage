@@ -1,12 +1,17 @@
-
-#imgPricePage img{
-    display: block; margin-left: auto; margin-right: auto;width: 70%;
+#imgPricePage img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
 .modal-header {
     background-color: #e50303;
     color: white;
     text-align: center;
     font-weight: bold;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+        0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border: 0;
 }
 .close {
     color: #fff !important;
@@ -25,9 +30,36 @@
 }
 .btn-danger {
     background: #e50303 !important;
+    border-radius: 0% !important;
+    height: 3em !important;
 }
 .btn-danger:hover {
     background: #ea3535 !important;
+}
+.btnSave {
+    border-radius: 0%;
+    height: 2.5em;
+    border: 2px solid #ea3535;
+    color: #ea3535;
+    background: #fff;
+    padding-left: 1em;
+    padding-right: 1em;
+    cursor: pointer !important;
+}
+.btnClose {
+    border-radius: 0%;
+    height: 2.5em;
+    color: #fff;
+    background: #ea3535;
+    border: 2px solid #ea3535;
+    padding-left: 1em;
+    padding-right: 1em;
+    cursor: pointer !important;
+}
+.btnSave:hover,
+.btnClose:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+        0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 .btn-default {
     color: #9e9e9e !important;
@@ -68,7 +100,7 @@ i {
 .nav-pills a {
     color: #000;
 }
-.nav-pills > li{
+.nav-pills > li {
     border: 1px solid red;
 }
 .nav-pills > li > a {
@@ -166,86 +198,91 @@ i {
     border-radius: 50%;
     background: white;
 }
-.formRadio label{
+.formRadio label {
     font-size: 13px;
     padding-left: 0;
 }
-#listCompany{
+#listCompany {
     display: none;
 }
-#btnSearchOrder{
-    border-radius:0%!important; 
+#btnSearchOrder {
+    border-radius: 0% !important;
 }
-.bage-basic{
+.bage-basic {
     background: #ddd;
     text-align: center;
     padding: 5px 5px;
     font-size: 9px;
     font-weight: 500;
 }
-.bage-primary{
+.bage-primary {
     background: #337ab7;
     text-align: center;
     padding: 5px 5px;
     font-size: 9px;
     font-weight: 500;
 }
-.bage-success{
+.bage-success {
     background: #5cb85c;
     text-align: center;
     padding: 5px 5px;
-    color:#fff;
+    color: #fff;
     font-size: 9px;
     font-weight: 500;
 }
-.bage-info{
+.bage-info {
     background: #5bc0de;
     text-align: center;
     padding: 5px 5px;
-    color:#fff;
+    color: #fff;
     font-size: 9px;
     font-weight: 500;
 }
-.bage-warning{
+.bage-warning {
     background: #f0ad4e;
     text-align: center;
     padding: 5px 5px;
-    color:#fff;
+    color: #fff;
     font-size: 9px;
     font-weight: 500;
 }
-.bage-danger{
+.bage-danger {
     background: #e50303;
     text-align: center;
     padding: 5px 5px;
-    color:#fff;
+    color: #fff;
     font-size: 9px;
     font-weight: 500;
 }
-#formOrderDetail .tltHeading{
+#formOrderDetail .tltHeading {
     color: #e50303;
     font-weight: bold;
     font-size: 13px;
 }
-#formOrderDetail span:hover{
+#formOrderDetail span:hover {
     background-color: #ddd;
 }
-.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
-    background-color: #e50303!important;
-    border-color: #e50303!important;
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #e50303 !important;
+    border-color: #e50303 !important;
 }
 /*  */
 @media (min-width: 768px) {
     .modal-content {
         box-shadow: none !important;
         border: 1px solid #e50303;
+        border-radius: 0%;
     }
-    
 }
 @media all and (max-width: 600px) {
-    #imgPricePage img{
+    #imgPricePage img {
         width: 90%;
         margin-top: -1em;
         margin-bottom: -5em;
     }
-  }
+}

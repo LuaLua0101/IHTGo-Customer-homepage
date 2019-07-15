@@ -31,7 +31,7 @@ class RegisterController extends Controller
                     'user_id' => $res->id,
                     'type' => 2,
                     'code'=>$code,
-                    'address'=>$res->address,
+                    'address'=>$data->address,
                     'company_id' => $data['company_id'],
                     'created_at' => date('Y-m-d h:i:s'),
                 ]
@@ -43,7 +43,7 @@ class RegisterController extends Controller
                 [
                     'user_id' => $res->id,
                     'type' => 1,
-                    'address'=>$res->address,
+                    'address'=>$data->address,
                     'created_at' => date('Y-m-d h:i:s'),
                 ]
             );

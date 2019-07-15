@@ -126,7 +126,6 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">TẠO ĐƠN HÀNG MỚI</h4>
                     </div>
                     <div class="modal-body row">
@@ -352,8 +351,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger" id="btnCreateOrder" disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
-                        <button type="button" class="btn" data-dismiss="modal"><i class="fas fa-times"></i>Đóng</button>
+                        <button type="submit" class="btnSave" id="btnCreateOrder" disabled>LƯU</button>
+                        <button type="button" class="btnClose" data-dismiss="modal">ĐÓNG</button>
                     </div>
                 </div>
             </form>
@@ -367,7 +366,6 @@
                 <form method="POST" action="{{ route('login') }}" class='formModal' id='formLogin'>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">ĐĂNG NHẬP</h4>
                     </div>
                     <div class="modal-body ">
@@ -387,7 +385,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger" id='btnLogin' disabled><i class="fas fa-sign-in-alt" style="color:white"></i>Đăng nhập</button>
+                        <button type="submit" class="btnSave" id='btnLogin' disabled>ĐĂNG NHẬP</button>
                     </div>
                 </form>
             </div>
@@ -400,15 +398,14 @@
                 <form method="POST" action="{{ url('register') }}" class='formModal' id='formRegister'>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Hãy trở thành khách hàng IHTGO ngay!</h4>
+                        <h4 class="modal-title">HÃY TRỞ THÀNH KHÁCH HÀNG IHTGO NGAY!</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <span class="text-danger" id='error-name2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên" id='name2' name='name' required>
+                                <input type="text" class="form-control" placeholder="Họ và Tên của bạn" id='name2' name='name' required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -422,7 +419,7 @@
                             <span class="text-danger" id='error-phone2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="Số điện thoại di động liên hệ" id='phone2' name=phone required>
+                                <input type="tel" class="form-control" placeholder="Số điện thoại của bạn" id='phone2' name=phone required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -437,6 +434,13 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
                                 <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name='re-password' id='re-password2' required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="text-danger" id='error-sender-address'></span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                <input type="text" class="form-control" name="address" id="address" placeholder="Địa chỉ của bạn">
                             </div>
                         </div>
                         <div class=" row">
@@ -465,7 +469,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger" id='btnRegister' disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
+                        <button type="submit" class="btnSave" id='btnRegister' disabled>LƯU</button>
                     </div>
                 </form>
             </div>
@@ -479,8 +483,7 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thông tin cá nhân</h4>
+                        <h4 class="modal-title">THÔNG TIN CÁ NHÂN</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -551,7 +554,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger" id='btnInfoUser' di\><i class="far fa-save" style="color:white"></i>Lưu</button>
+                        <button type="submit" class="btnSave" id='btnInfoUser'>Lưu</button>
                     </div>
                 </div>
             </form>
@@ -565,8 +568,7 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Đổi mật khẩu</h4>
+                        <h4 class="modal-title">ĐỔI MẬT KHẨU</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -592,7 +594,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger" id='btnChangePassword' disabled><i class="far fa-save" style="color:white"></i>Lưu</button>
+                        <button type="submit" class="btnSave" id='btnChangePassword' disabled>LƯU</button>
                     </div>
                 </div>
             </form>
