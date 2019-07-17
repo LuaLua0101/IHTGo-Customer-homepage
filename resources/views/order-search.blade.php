@@ -50,13 +50,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -71,7 +69,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -121,20 +118,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -147,13 +130,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -168,7 +149,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -218,20 +198,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -244,13 +210,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -265,7 +229,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -315,20 +278,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -341,13 +290,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -362,7 +309,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -412,20 +358,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -438,13 +370,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -459,7 +389,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -509,20 +438,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -535,13 +450,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -556,7 +469,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -606,20 +518,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -632,13 +530,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -653,7 +549,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -703,20 +598,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach
@@ -729,13 +610,11 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên đơn hàng</th>
-                                <th>Loại xe</th>
                                 <th>Trạng thái</th>
                                 <th>Thanh toán</th>
                                 <th>Địa chỉ gửi</th>
                                 <th>Địa chỉ nhận</th>
                                 <th>Ngày tạo</th>
-                                <th>Thanh toán</th>
                                 <th>Tổng tiền</th>
                             </tr>
                         </thead>
@@ -750,7 +629,6 @@
                                         #{{$o->code}}</a></td>
                                 <td>{{$o->name}} </td>
 
-                                <td>{{$o->car_type}}</td>
                                 <!-- Trạng thái đơn hàng -->
                                 @if($o->status==1)
                                 <td>
@@ -800,20 +678,6 @@
                                 <td>{{$o->sender_district_name}},{{$o->sender_province_name}} </td>
                                 <td>{{$o->receive_district_name}},{{$o->receive_province_name}}</td>
                                 <td>{{$o->created_at}}</td>
-                                <!-- Phương thức thanh toán -->
-                                @if($o->payment_type=='1')
-                                <td>
-                                    <p class="bage-info">Tiền mặt</p>
-                                </td>
-                                @elseif($o->payment_type=='2')
-                                <td>
-                                    <p class="bage-success">Theo tháng </p>
-                                </td>
-                                @else
-                                <td>
-                                    <p class="bage-primary">Phương thức khác</p>
-                                </td>
-                                @endif
                                 <td>{{number_format($o->total_price).' VNĐ'}} </td>
                             </tr>
                             @endforeach

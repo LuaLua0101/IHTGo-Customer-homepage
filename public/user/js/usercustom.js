@@ -25,60 +25,17 @@ $(function () {
     action over the elements of the nav bar that we want to change.
     type {{flagAdd: boolean, elements: string[], add: Function, remove: Function}}
     */
-    var myNavBar = {
-        flagAdd: true,
-        elements: [],
-        init: function (elements) {
-            this.elements = elements;
-        },
-        add: function () {
-            if (this.flagAdd) {
-                for (var i = 0;i < this.elements.length;i++) {
-                    document.getElementById(this.elements[i]).className += " fixed-theme";
-                }
-                this.flagAdd = false;
-            }
-        },
-        remove: function () {
-            for (var i = 0;i < this.elements.length;i++) {
-                document.getElementById(this.elements[i]).className =
-                    document.getElementById(this.elements[i]).className.replace(/(?:^|\s)fixed-theme(?!\S)/g, '');
-            }
-            this.flagAdd = true;
-        }
-    };
-    /**
- * Init the object. Pass the object the array of elements
- * that we want to change when the scroll goes down
- */
-    myNavBar.init([
-        //"firstheaderID",
-        //"brandID",
-        //"secondheaderID",
-        //"logo-imageID",
-        //"btndatgiaohangID",
-        "responsive-barID"
-        //"drop-vanphongID"
-    ]);
+
     /**
  * Function that manage the direction
  * of the scroll
  */
-    function offSetManager() {
-        var yOffset = 0;
-        var currYOffSet = window.pageYOffset;
-        if (yOffset < currYOffSet) {
-            myNavBar.add();
-        }
-        else if (currYOffSet == yOffset) {
-            myNavBar.remove();
-        }
-    }
+
     /**
      * We have to do a first detectation of offset because the page
      * could be load with scroll down set.
      */
-    offSetManager();
+
     //----------------------------------------------------
     //                      FOOTER
     //----------------------------------------------------
@@ -742,6 +699,7 @@ $(function () {
             }
         })
     });
+
     //hiển thị danh sách công ty trên form đăng ký
     $('#rdoCompany').change(function () {
         $('#listCompany').css('display', 'block');
@@ -761,5 +719,53 @@ $(function () {
         $('#listCompany2').css('display', 'none');
         $("#company_id2").empty();
     });
+    $('#btnHistoryDelivery').click(function () {
+        var id = $("[name=rdoHistoryDelivery]:checked").val();
+        $.ajax({
+            type: "GET",
+            url: 'loadHistoryDelivery/' + id,
+            success: function (data) {
+                data.forEach(function (item) {
+                    $("#receive_name").val(item.receive_name);
+                    $("#receive_phone").val(item.receive_phone);
+                    $("#receive_address").val(item.receive_address);
+                    $('#receive_province_id option').each(function () {
+                        if (this.value == item.receive_province_id) {
+                            $("#receive_province_id option[value='" + this.value + "']").prop('selected', true)
+                        }
+                    });
+                    var Id = $('#receive_province_id').val();
+                    $.ajax({
+                        type: "GET",
+                        url: 'districtOfProvince/' + Id,
+                        success: function (data) {
+                            $("#receive_district_id").empty();
+                            // $("#receive_district_id").append("<option value ='0'>Vui lòng chọn quận - huyện(*) </option>");
+                            data.forEach(function (item) {
+                                $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+                            });
+                            $('#receive_district_id option').each(function () {
+                                if (this.value == item.receive_district_id) {
+                                    $("#receive_district_id option[value='" + this.value + "']").prop('selected', true)
+                                }
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+
+                            console.log('jqXHR:');
+                            console.log(jqXHR);
+
+                        }
+                    })
+
+                })
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('jqXHR:');
+                console.log(jqXHR);
+            }
+        })
+    });
+
 });
 

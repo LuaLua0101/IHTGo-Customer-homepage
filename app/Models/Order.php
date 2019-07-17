@@ -31,8 +31,7 @@ class Order
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-        IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
+        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
         FROM orders o, order_details od
         WHERE o.id=od.order_id AND o.user_id=$user_id
         ORDER BY o.id DESC")
@@ -48,8 +47,7 @@ class Order
                 IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
                 IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
                 IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-                IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-                IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
+                IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
                 FROM orders o, order_details od
                 WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status
                 ORDER BY o.id DESC")
@@ -67,8 +65,7 @@ class Order
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-        IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
+        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
         FROM orders o, order_details od
         WHERE o.id=od.order_id AND o.user_id=$user_id AND '$start_date' < o.created_at AND o.created_at < '$end_date'
         ORDER BY o.id DESC")
@@ -87,8 +84,7 @@ class Order
               IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
               IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
               IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-              IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-              IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type
+              IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
               FROM orders o, order_details od
               WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status AND '$start_date' < o.created_at AND o.created_at < '$end_date' 
               ORDER BY o.id DESC")
@@ -107,7 +103,6 @@ class Order
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name,
-        IFNULL((SELECT ot.name FROM others ot WHERE ot.id=o.car_type),'') as car_type,
 		IFNULL((SELECT u.name FROM  deliveries d, drivers dr,users u WHERE d.order_id=o.id AND d.driver_id=dr.id AND dr.user_id=u.id),'') as receive_shipper_name,
 		IFNULL((SELECT u.phone FROM  deliveries d, drivers dr,users u WHERE d.order_id=o.id AND d.driver_id=dr.id AND dr.user_id=u.id),'') as receive__shipper_phone,
 		IFNULL((SELECT c.number FROM deliveries d, cars c WHERE o.id=d.order_id AND d.car_id=c.id),'') as receive__shipper_car
@@ -174,10 +169,8 @@ class Order
                 [
                     'name' => $data->name,
                     'code' => self::codeOrder(),
-                    'car_type' => (int) $data->car_type,
                     'car_option' => (int) $data->car_option,
                     'status' => 1,
-                    'payment_type' => (int) $data->payment_type,
                     'is_payment' => 0,
                     'user_id' => $user_id,
                     'payer' => (int) $data->payer,
@@ -203,7 +196,7 @@ class Order
                     'weight' => $data->weight,
                 ]
             );
-            ImageController::uploadImageOrder($data,$order_id);
+            ImageController::uploadImageOrder($data, $order_id);
             return 200;
         } catch (\Exception $ex) {
             return $ex;
@@ -228,5 +221,26 @@ class Order
             $res = 'IHT' . date('Ymd') . '001';
         }
         return $res;
+    }
+
+    //lịch sử thông tin người nhận 
+    public static function historyDelivery()
+    {
+        $res = DB::select("select od.id,od.receive_name,od.receive_phone,od.receive_address,
+            IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
+        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
+        FROM orders o, order_details od
+        WHERE o.id=od.order_id 
+        ORDER BY o.id DESC
+                LIMIT 10");
+        return $res;
+    }
+    //load lịch sử thông tin người nhận 
+    public static function loadHistoryDelivery($id)
+    {
+        if (Request::ajax()) {
+            $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))->where('id', $id)->get();
+            return $res;
+        }
     }
 }

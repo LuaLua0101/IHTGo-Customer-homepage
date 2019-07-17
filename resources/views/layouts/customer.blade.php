@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -42,82 +41,53 @@
     <!---------------------------HEADER------------------------------->
     <header>
         <!---------------------First Header----------------------->
-        <div class="firstheader">
-            <h1 class="brand">một thành viên của iht group</h1>
-            <ul class="rightside">
-                <li class="">0902 926 925</li>
-                <li class="">ihtgo.vn@gmail.com</li>
-                <li class="">Thứ 2 - 6: 8h - 17h</li>
-                <li class="">Thứ 7: 8h - 12h</li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Văn phòng HCM<span class="caret"></span></a>
-                    <ul class="dropdown-menu drop-vanphong">
-                        <li><a href="#!">Lầu 3, tòa nhà Thành An, số 8 Bà Triệu, P.12<br />Quận 5, TP. HCM</a></li>
-                        <li><a href="#!">1610 Võ Văn Kiệt, P7<br />Quận 6, TP. HCM</a></li>
-                        <li><a href="#!">3A 64/3 Ấp 3, Xã Phạm Văn Hai<br /> H. Bình Chánh, TP. HCM</a></li>
-                        <li><a href="#!">91 Tô Ký<br />Đông Hưng Thuận, Quận 12, TP. HCM</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Văn phòng BD<span class="caret"></span></a>
-                    <ul class="dropdown-menu drop-vanphong">
-                        <li><a href="#!">C04-05 Đường DA1-1<br />LCG Rubyland, KCN Mỹ Phước II – BC BD</a></li>
-                        <li><a href="#!">H10 Lý Thái Tổ, TP Mới Bình Dương<br />Phường Phú Hòa, TXTD1, Bình Dương</a></li>
-                        <li><a href="#!">32/1 Đại lộ Hữu Nghị, Khu CN VSIP1<br />Phường Bình Hòa, TX. Thuận An, Bình Dương</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Văn phòng Đồng Nai<span class="caret"></span></a>
-                    <ul class="dropdown-menu drop-vanphong">
-                        <li><a href="#!">100 KP. Bình Dương, P. Long Bình Tân,<br />Biên Hòa, Đồng Nai.</a></li>
-                    </ul>
-                </li>
-                @if(Auth::user())
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!">Xin chào {{Auth::user()->name}}<span class="caret"></span></a>
-                    <ul class="dropdown-menu drop-vanphong">
-                        <li><a href="#!" data-toggle="modal" data-target="#InfoUser">Thông tin cá nhân</a></li>
-                        <li><a href="#!" data-toggle="modal" data-target="#ChangePassword">Đổi mật khẩu</a></li>
-                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">Đăng xuất</a></li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </ul>
-                </li>
-                @endif
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="clearfix"></div>
 
-        <!---------------------Second Header---------------------->
-        <div id="responsive-barID" class="responsive-bar secondHeadPhoneFix">
-            <div style="float:left;">
-                <h4>0902 926 925</h4>
-                <h4>ihtgo.vn@gmail.com</h4>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{!! url('/'); !!}"><img class="logo-image" src="{{ URL::asset('public/Images/Index/logo.png') }}" alt="logo" title="logo" /></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="{{ Request::path() == '/' ? 'active' : '' }}"><a href="{!! url('/'); !!}"><strong>TRANG CHỦ</strong></a></li>
+                        <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>GIỚI THIỆU</strong></a></li>
+                        <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
+                        <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if(Auth::user())
+                        <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>ĐẶT GIAO HÀNG NGAY</strong></a></li>
+                        <li class="{{ Request::path() == 'don-hang' ? 'active' : '' }}"><a href="{!! url('don-hang'); !!}" id='don-hang'><strong>QUẢN LÝ ĐƠN HÀNG</strong></a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Xin chào {{Auth::user()->name}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#InfoUser">Thông tin cá nhân</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#ChangePassword">Đổi mật khẩu</a></li>
+                                <li><a class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                        </li>
+                        @else
+                        <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> ĐĂNG NHẬP</a></li>
+                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> ĐĂNG KÝ</a></li>
+                        @endif
+                    </ul>
+                </div>
             </div>
-            <h4 id="responsive-bar-menu" class="menu"><span class="glyphicon glyphicon-menu-hamburger"></span></h4>
-            <div style="clear:both;"></div>
-        </div>
-        <nav class="secondheader secondHeadPhoneFix">
-            <h1 class="brandlogo"><a href="{!! url('/'); !!}"><img class="logo-image" src="{{ URL::asset('public/Images/Index/logo.png') }}" alt="logo" title="logo" /></a></h1>
-            <ul class="header-link">
-                <li class="active"><a href="{!! url('/'); !!}"><strong>TRANG CHỦ</strong></a></li>
-                <li><a href="{!! url('gioi-thieu'); !!}">GIỚI THIỆU</a></li>
-                <li><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
-                <li><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
-                @if(Auth::user())
-                <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>ĐẶT GIAO HÀNG NGAY</strong></button></li>
-                <li><a class="btn btndatgiaohang" href="{!! url('don-hang'); !!}" id='don-hang'><strong>QUẢN LÝ ĐƠN HÀNG</strong></a></li>
-                @else
-                <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Login"><strong>ĐĂNG NHẬP</strong></button></li>
-                <li><button class="btn btndatgiaohang" data-toggle="modal" data-target="#Registered"><strong>ĐĂNG KÝ</strong></button></li>
-                @endif
-            </ul>
-            <div class="clearfix"></div>
         </nav>
+
     </header>
+
     <!--  Modal Dat hang-->
     @if(Auth::user())
     <div class="modal fade" id="DatHang" role="dialog">
@@ -126,7 +96,8 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">TẠO ĐƠN HÀNG MỚI</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">ĐẶT GIAO HÀNG</h4>
                     </div>
                     <div class="modal-body row">
                         <div class="col-md-6">
@@ -145,7 +116,6 @@
                                     <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="Số điện thoại người gửi(*)" value="{{Auth::user()->phone}}">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-province-id'></span>
                                 <div class="input-group">
@@ -155,7 +125,6 @@
                                         @foreach($province as $p)
                                         <option value="{{$p->province_id}}">{{$p->name}}</option>
                                         @endforeach
-
                                     </select>
                                 </div>
                             </div>
@@ -178,7 +147,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4>Thông tin người nhận(*)</h4>
+                            <h4>Thông tin người nhận(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-name'></span>
                                 <div class="input-group">
@@ -193,7 +162,6 @@
                                     <input type="tel" class="form-control" name="receive_phone" id="receive_phone" placeholder="Số điện thoại người nhận(*)">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-province-id'></span>
                                 <div class="input-group">
@@ -211,7 +179,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="receive_district_id" name="receive_district_id">
-                                        <option>Vui lòng chọn quận - huyện(*)</option>
+                                        <option value="0">Vui lòng chọn quận - huyện(*)</option>
                                     </select>
                                 </div>
                             </div>
@@ -297,17 +265,6 @@
                                 </label>
                             </div>
                             <div class="form-group col-md-6 col-sm-6">
-                                <label class="title-form">Loại xe:</label>
-                                <label class="container">Xe máy
-                                    <input type="radio" checked="checked" name="car_type" value="8">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Xe tải
-                                    <input type="radio" name="car_type" value="7">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="form-group col-md-6 col-sm-6">
                                 <label class="title-form">Trường hợp:</label>
                                 <label class="container">Giao nội tỉnh
                                     <input type="radio" checked="checked" name="car_option" value="1">
@@ -319,21 +276,6 @@
                                 </label>
                                 <label class="container">Giao chứng từ
                                     <input type="radio" name="car_option" value="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="form-group col-md-6 col-sm-6">
-                                <label class="title-form">Phương thức thanh toán</label>
-                                <label class="container">Tiền mặt
-                                    <input type="radio" checked="checked" name="payment_type" value="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Theo tháng
-                                    <input type="radio" name="payment_type" value="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Phương thức khác
-                                    <input type="radio" name="payment_type" value="3">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -351,11 +293,34 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btnSave" id="btnCreateOrder" disabled>LƯU</button>
+                        <button type="submit" class="btn btnSave" id="btnCreateOrder" disabled>LƯU</button>
                         <button type="button" class="btnClose" data-dismiss="modal">ĐÓNG</button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- Modal  history delivery-->
+    <div id="historyDelivery" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lịch sử người nhận gần nhất</h4>
+                </div>
+                <div class="modal-body formRadio">
+                    @foreach($receive as $r)
+                    <label class="container">{{$r->receive_name}}, {{$r->receive_phone}} : {{$r->receive_address}},{{$r->receive_district_name}},{{$r->receive_province_name}}
+                        <input type="radio" checked="checked" name="rdoHistoryDelivery" id="rdoHistoryDelivery" value="{{$r->id}}">
+                        <span class="checkmark"></span>
+                    </label>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">Chọn</button>
+                </div>
+            </div>
         </div>
     </div>
     @endif
@@ -366,6 +331,7 @@
                 <form method="POST" action="{{ route('login') }}" class='formModal' id='formLogin'>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">ĐĂNG NHẬP</h4>
                     </div>
                     <div class="modal-body ">
@@ -385,7 +351,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btnSave" id='btnLogin' disabled>ĐĂNG NHẬP</button>
+                        <button type="submit" class="btn btnSave" id='btnLogin' disabled>ĐĂNG NHẬP</button>
                     </div>
                 </form>
             </div>
@@ -398,6 +364,7 @@
                 <form method="POST" action="{{ url('register') }}" class='formModal' id='formRegister'>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">HÃY TRỞ THÀNH KHÁCH HÀNG IHTGO NGAY!</h4>
                     </div>
                     <div class="modal-body">
@@ -469,7 +436,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btnSave" id='btnRegister' disabled>LƯU</button>
+                        <button type="submit" class="btn btnSave" id='btnRegister' disabled>LƯU</button>
                     </div>
                 </form>
             </div>
@@ -483,6 +450,7 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">THÔNG TIN CÁ NHÂN</h4>
                     </div>
                     <div class="modal-body">
@@ -554,7 +522,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btnSave" id='btnInfoUser'>Lưu</button>
+                        <button type="submit" class="btn btnSave" id='btnInfoUser' disabled>Lưu</button>
                     </div>
                 </div>
             </form>
@@ -568,6 +536,7 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">ĐỔI MẬT KHẨU</h4>
                     </div>
                     <div class="modal-body">
@@ -594,7 +563,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btnSave" id='btnChangePassword' disabled>LƯU</button>
+                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>LƯU</button>
                     </div>
                 </div>
             </form>
@@ -657,17 +626,17 @@
                 </div>
                 <div class="col-md-3">
                     <ul class="list-unstyled">
-                        <li><a class="decNone" href="#!">Chính sách bảo mật</a></li>
-                        <li><a class="decNone" href="#!">Các điều khoản và điều kiện</a></li>
-                        <li><a class="decNone" href="#!">Tuyển dụng</a></li>
+                        <li><a class="decNone" href="javascript:void(0)">Chính sách bảo mật</a></li>
+                        <li><a class="decNone" href="javascript:void(0)">Các điều khoản và điều kiện</a></li>
+                        <li><a class="decNone" href="javascript:void(0)">Tuyển dụng</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <p><strong>HỆ THỐNG CHI NHÁNH</strong></p>
                     <ul class="list-unstyled">
-                        <li><a class="decNone" href="#!"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Hồ Chí Minh</a></li>
-                        <li><a class="decNone" href="#!"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Bình Dương</a></li>
-                        <li><a class="decNone" href="#!"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Đồng Nai</a></li>
+                        <li><a class="decNone" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Hồ Chí Minh</a></li>
+                        <li><a class="decNone" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Bình Dương</a></li>
+                        <li><a class="decNone" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Đồng Nai</a></li>
                     </ul>
                 </div>
             </div>

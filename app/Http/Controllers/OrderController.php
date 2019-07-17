@@ -60,4 +60,14 @@ class OrderController extends Controller
             return $ex;
         }
     }
+    //load histoy
+    public function loadHistoryDelivery($id)
+    {
+        try {
+            $res = Order::loadHistoryDelivery($id);
+            return $res;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
 }

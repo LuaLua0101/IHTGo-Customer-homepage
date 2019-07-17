@@ -33,7 +33,6 @@
             <div class="col-md-6">
                 <div class="list-group">
                     <span class="list-group-item active">Thông tin đơn hàng</span>
-                    <span class="list-group-item"><i class="fas fa-motorcycle"></i><span class="tltHeading">Loại xe:</span>{{$order->car_type}}</span>
                     <span class="list-group-item"><i class="fas fa-rocket"></i><span class="tltHeading">Giao hỏa tốc:</span>
                         @if($order->is_speed==1)
                         <span class="bage-success">Có</span>
@@ -47,15 +46,6 @@
                         <span class="bage-primary">Giao hàng ngoại tỉnh</span>
                         @endif
 
-                    </span>
-                    <span class="list-group-item"><i class="fas fa-money-check-alt"></i><span class="tltHeading">Phương thức thanh toán:</span>
-                        @if($order->payment_type=='1')
-                        <span class="bage-info">Tiền mặt</span>
-                        @elseif($order->payment_type=='2')
-                        <span class="bage-success">Theo tháng </span>
-                        @else
-                        <span class="bage-primary">Phương thức khác</span>
-                        @endif
                     </span>
                     <span class="list-group-item"><i class="fas fa-money-check-alt"></i><span class="tltHeading">Thanh toán:</span>
                         @if($order->is_payment==0)

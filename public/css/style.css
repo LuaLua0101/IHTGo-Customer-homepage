@@ -38,13 +38,14 @@
 }
 .btnSave {
     border-radius: 0%;
-    height: 2.5em;
+    height: 2.8em;
     border: 2px solid #ea3535;
     color: #ea3535;
     background: #fff;
     padding-left: 1em;
     padding-right: 1em;
     cursor: pointer !important;
+    margin-bottom: 2px;
 }
 .btnClose {
     border-radius: 0%;
@@ -55,6 +56,9 @@
     padding-left: 1em;
     padding-right: 1em;
     cursor: pointer !important;
+}
+.btnSave:hover {
+    color: #e50303;
 }
 .btnSave:hover,
 .btnClose:hover {
@@ -270,6 +274,98 @@ i {
 .pagination > .active > span:hover {
     background-color: #e50303 !important;
     border-color: #e50303 !important;
+}
+.navbar-brand .logo-image {
+    height: 4em;
+    margin-top: -1.6em;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:focus,
+.dropdown-menu > .active > a:hover {
+    background-image: linear-gradient(
+        to bottom,
+        #e50303 0,
+        #e50303 100%
+    ) !important;
+}
+.navbar-inverse {
+    background-image: linear-gradient(
+        to bottom,
+        #fff 0,
+        #f3f1f1 100%
+    ) !important;
+    border-radius: 0% !important;
+    height: 5em !important;
+    padding: 1em !important;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .open > a {
+    background-image: linear-gradient(
+        to bottom,
+        #690505 0,
+        #f31414 100%
+    ) !important;
+}
+.navbar-inverse .navbar-nav > li > a:focus,
+.navbar-inverse .navbar-nav > li > a:hover {
+    background-image: linear-gradient(
+        to bottom,
+        #690505 0,
+        #f31414 100%
+    ) !important;
+}
+.navbar-inverse {
+    background-color: #fff !important;
+    border-color: #e50303 !important;
+    box-shadow: 0 0 5px #e50303, 0 5px 10px rgb(229, 3, 3);
+}
+.dropdown-menu {
+    box-shadow: 0 0 5px #e50303, 0 5px 10px rgb(229, 3, 3) !important;
+}
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    background-image: linear-gradient(
+        to bottom,
+        #690505 0,
+        #f31414 100%
+    ) !important;
+}
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    color: #fff !important;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #000;
+}
+.collapse.in {
+    display: block;
+    box-shadow: 0 0 5px #e50303, 0 5px 10px rgb(229, 3, 3);
+    background: #faf9f9;
+    margin-top: 0.6em;
+}
+.collapse.in ul li a {
+    text-align: center;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: #e50303 !important;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #e50303 !important;
+}
+.navbar-inverse .navbar-toggle:hover {
+    background-color: #e50303 !important;
+}
+.navbar-inverse .navbar-toggle:hover > .icon-bar {
+    background-color: #fff !important;
+}
+
+#historyDelivery {
+    top: 10%;
+}
+#iconHistoryDelivery {
+    background: #ccc;
+    padding: 5px;
+    cursor: pointer;
 }
 /*  */
 @media (min-width: 768px) {

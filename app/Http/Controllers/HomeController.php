@@ -17,35 +17,65 @@ class HomeController extends Controller
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('index', ['customer' => $customer, 'company' => $company, 'province' => $province]);
+        $receive = Order::historyDelivery();
+        return view('index', [
+            'customer' => $customer,
+            'company' => $company,
+            'province' => $province,
+            'receive' => $receive
+        ]);
     }
     public function contact()
     {
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('contact', ['customer' => $customer, 'company' => $company, 'province' => $province]);
+        $receive = Order::historyDelivery();
+        return view('contact', [
+            'customer' => $customer,
+            'company' => $company,
+            'province' => $province,
+            'receive' => $receive
+        ]);
     }
     public function price_list()
     {
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('price-list', ['customer' => $customer, 'company' => $company, 'province' => $province]);
+        $receive = Order::historyDelivery();
+        return view('price-list', [
+            'customer' => $customer,
+            'company' => $company,
+            'province' => $province,
+            'receive' => $receive
+        ]);
     }
     public function news()
     {
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('news', ['customer' => $customer, 'company' => $company, 'province' => $province]);
+        $receive = Order::historyDelivery();
+        return view('news', [
+            'customer' => $customer,
+            'company' => $company,
+            'province' => $province,
+            'receive' => $receive
+        ]);
     }
     public function new_detail()
     {
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        return view('new-detail', ['customer' => $customer, 'company' => $company, 'province' => $province]);
+        $receive = Order::historyDelivery();
+        return view('new-detail', [
+            'customer' => $customer,
+            'company' => $company,
+            'province' => $province,
+            'receive' => $receive
+        ]);
     }
     public function order()
     {
@@ -60,7 +90,7 @@ class HomeController extends Controller
         $order_customer_cancel = Order::getList_Status(5);
         $order_iht_cancel = Order::getList_Status(6);
         $order_fail = Order::getList_Status(7);
-
+        $receive = Order::historyDelivery();
         $sum_order = 0;
         foreach ($order as $item) {
             $sum_order += $item->total_price;
@@ -76,7 +106,9 @@ class HomeController extends Controller
             'order_customer_cancel' => $order_customer_cancel,
             'order_iht_cancel' => $order_iht_cancel,
             'order_fail' => $order_fail,
-            'sum_order' => $sum_order, 'province' => $province
+            'sum_order' => $sum_order,
+            'province' => $province,
+            'receive' => $receive
         ]);
     }
     public function order_search(Request $request)
@@ -92,7 +124,7 @@ class HomeController extends Controller
         $order_customer_cancel = Order::getList_StatusSearch($request, 5);
         $order_iht_cancel = Order::getList_StatusSearch($request, 6);
         $order_fail = Order::getList_StatusSearch($request, 7);
-
+        $receive = Order::historyDelivery();
         $sum_order = 0;
         foreach ($order as $item) {
             $sum_order += $item->total_price;
@@ -108,7 +140,9 @@ class HomeController extends Controller
             'order_customer_cancel' => $order_customer_cancel,
             'order_iht_cancel' => $order_iht_cancel,
             'order_fail' => $order_fail,
-            'sum_order' => $sum_order, 'province' => $province
+            'sum_order' => $sum_order,
+            'province' => $province,
+            'receive' => $receive
         ]);
     }
     public function order_detail($id)
@@ -117,8 +151,14 @@ class HomeController extends Controller
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
         $order = Order::detail($id);
-
-        return view('order-detail', ['customer' => $customer, 'company' => $company, 'order' => $order, 'province' => $province]);
+        $receive = Order::historyDelivery();
+        return view('order-detail', [
+            'customer' => $customer,
+            'company' => $company,
+            'order' => $order,
+            'province' => $province,
+            'receive' => $receive
+        ]);
     }
 
     public function arrayPaginator($array, $request)
@@ -126,7 +166,6 @@ class HomeController extends Controller
         $page = Input::get('page', 1);
         $perPage = 10;
         $offset = ($page * $perPage) - $perPage;
-
         return new LengthAwarePaginator(
             array_slice($array, $offset, $perPage, true),
             count($array),
