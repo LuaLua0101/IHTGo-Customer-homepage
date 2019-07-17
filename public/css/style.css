@@ -297,6 +297,9 @@ i {
     border-radius: 0% !important;
     height: 5em !important;
     padding: 1em !important;
+    border-color: #9E9E9E !important;
+    box-shadow: 0 0 5px #9E9E9E, 0 5px 10px #9E9E9E;
+    background-color: #fff !important;
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .open > a {
@@ -313,11 +316,6 @@ i {
         #690505 0,
         #f31414 100%
     ) !important;
-}
-.navbar-inverse {
-    background-color: #fff !important;
-    border-color: #e50303 !important;
-    box-shadow: 0 0 5px #e50303, 0 5px 10px rgb(229, 3, 3);
 }
 .dropdown-menu {
     box-shadow: 0 0 5px #e50303, 0 5px 10px rgb(229, 3, 3) !important;

@@ -54,7 +54,6 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="{{ Request::path() == '/' ? 'active' : '' }}"><a href="{!! url('/'); !!}"><strong>TRANG CHỦ</strong></a></li>
                         <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>GIỚI THIỆU</strong></a></li>
                         <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
                         <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
@@ -263,7 +262,18 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <div class="form-group col-md-6 col-sm-6">
+                            <div class="form-group col-md-6">
+                                <label class="title-form">Người thanh toán:</label>
+                                <label class="container">Người nhận
+                                    <input type="radio" name="payer" value="1" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Người gửi
+                                    <input type="radio" name="payer" value="2">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-12 col-sm-12">
                                 <label class="title-form">Trường hợp:</label>
                                 <label class="container">Giao nội tỉnh
                                     <input type="radio" checked="checked" name="car_option" value="1">
@@ -275,17 +285,6 @@
                                 </label>
                                 <label class="container">Giao chứng từ
                                     <input type="radio" name="car_option" value="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="title-form">Người thanh toán:</label>
-                                <label class="container">Người nhận
-                                    <input type="radio" name="payer" value="1" checked="checked">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Người gửi
-                                    <input type="radio" name="payer" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>

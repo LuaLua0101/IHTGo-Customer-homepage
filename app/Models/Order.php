@@ -194,6 +194,9 @@ class Order
                     'receive_district_id' => $data->receive_district_id,
                     'take_money' => $data->take_money,
                     'weight' => $data->weight,
+                    'length'=>$data->length,
+                    'width'=>$data->width,
+                    'height'=>$data->height,
                 ]
             );
             ImageController::uploadImageOrder($data, $order_id);
