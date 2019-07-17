@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=yes" />
-    <link rel="shortcut icon" type="image/x-icon" href="/Content/Images/Index/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('public/Images/Index/logo.png') }}" />
 
     <!--------------------------------------Bootstrap CSS--------------------------------------------->
     <link href="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -68,9 +68,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#" data-toggle="modal" data-target="#InfoUser">Thông tin cá nhân</a></li>
                                 <li><a href="#" data-toggle="modal" data-target="#ChangePassword">Đổi mật khẩu</a></li>
-                                <li><a class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                <li><a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">Đăng xuất
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -652,7 +651,8 @@
             <i class="fa fa-2x fa-arrow-up" style="color:white"></i>
         </span>
     </div>
-
+    <a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button" title="Nhấn vào đây để trở về trang đầu" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+   
     <!---------------------------------Jquery JS------------------------------------------>
     <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
 

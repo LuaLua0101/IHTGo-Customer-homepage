@@ -20,43 +20,28 @@ $(function () {
     if (window.outerWidth <= 990) {
         $('.secondHeadPhoneFix').wrapAll("<div class='navbar navbar-fixed-top' />");
     }
-    /*
-    This object controls the nav bar. Implement the add and remove
-    action over the elements of the nav bar that we want to change.
-    type {{flagAdd: boolean, elements: string[], add: Function, remove: Function}}
-    */
-
-    /**
- * Function that manage the direction
- * of the scroll
- */
-
-    /**
-     * We have to do a first detectation of offset because the page
-     * could be load with scroll down set.
-     */
 
     //----------------------------------------------------
     //                      FOOTER
     //----------------------------------------------------
     //Scroll to top
-    $(document).on('scroll', function () {
-        offSetManager();
-        if ($(window).scrollTop() > 100) {
-            $('.scroll-top-wrapper').addClass('show');
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+            $('#back-to-top').fadeIn();
         } else {
-            $('.scroll-top-wrapper').removeClass('show');
+            $('#back-to-top').fadeOut();
         }
     });
-    //$(document).on("click", ".scroll-top-wrapper", scrollToTop);
-    $('.scroll-top-wrapper').on("click", scrollToTop);
-    function scrollToTop() {
-        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
-        element = $('body');
-        offset = element.offset();
-        offsetTop = offset.top;
-        $('html, body').animate({ scrollTop: offsetTop }, 600, 'linear');
-    }
+    // scroll body to 0px on click
+    $('#back-to-top').click(function () {
+        $('#back-to-top').tooltip('hide');
+        $('body,html').animate({
+            scrollTop: 0
+        }, 800);
+        return false;
+    });
+
+    $('#back-to-top').tooltip('show');
 
     //----------------------------------------------------
     //                      INDEX PAGE
