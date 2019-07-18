@@ -13,9 +13,9 @@ class LoginController extends Controller
     {
         try {
             // Nếu dữ liệu hợp lệ sẽ kiểm tra trong csdl
-            $email = $request->input('email');
+            $phone = $request->input('phone');
             $password = $request->input('password');
-            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            if (Auth::attempt(['phone' => $phone, 'password' => $password])) {
                 // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
                 if (Auth::user()->level == 3) {
                     return back()
@@ -28,7 +28,7 @@ class LoginController extends Controller
             } else {
                 // Kiểm tra không đúng sẽ hiển thị thông báo lỗi
                 return back()
-                ->with('error', 'Email hoặc mật khẩu không đúng!');
+                ->with('error', 'Số điện thoại hoặc mật khẩu không đúng!');
             }
             
         } catch (\Exception $ex) {

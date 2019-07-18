@@ -4,12 +4,16 @@
 Route::get('/', 'HomeController@index');
 // Đăng ký, đăng nhập, đăng xuất thành viên
 Route::post('register', 'Auth\RegisterController@postRegister');
+Route::get('checkExistEmail/{email?}', 'Auth\RegisterController@checkExistEmail');
+Route::get('checkExistPhone/{phone?}', 'Auth\RegisterController@checkExistPhone');
+
 Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@postLogin']);
 Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LogoutController@postLogout']);
 
 // chỉnh sửa,thay đổi password thành viên
 Route::post('edit-user', 'UserController@editUser');
 Route::post('change-password', 'UserController@changePassword');
+Route::get('checkExistPasswordCurrent/{password?}', 'UserController@checkExistPasswordCurrent');
 
 //trang hiển thị
 Route::get('gioi-thieu', 'HomeController@contact');

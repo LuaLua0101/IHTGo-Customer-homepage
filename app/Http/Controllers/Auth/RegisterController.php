@@ -2,58 +2,61 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\User;
+
 class RegisterController extends Controller
 {
 
-    protected function create(array $data)
+    protected function create(Request $data)
     {
         //thêm thông tin khách hàng vào bảng user
-        $res =  User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'password' => Hash::make($data['password']),
-            'activated' => '1',
-        ]);
+        $res =   DB::table(config('constants.USER_TABLE'))->insertGetId(
+            [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'password' => Hash::make($data['password']),
+                'activated' => '1',
+                'created_at' => date('Y-m-d h:i:s'),
+            ]
+        );
         //kiểm tra khách hàng thuộc cá nhân or công ty
-        if ($data['company_id']) {
+        if ($data['type']==2) {
             //kh công ty
-            $code=Customer::codeCustomer();          
+            $code = Customer::codeCustomer();
             DB::table(config('constants.CUSTOMER_TABLE'))->insert(
                 [
-                    'user_id' => $res->id,
+                    'user_id' => $res,
                     'type' => 2,
-                    'code'=>$code,
-                    'address'=>$data->address,
+                    'code' => $code,
+                    'address' => $data->address,
                     'company_id' => $data['company_id'],
                     'created_at' => date('Y-m-d h:i:s'),
                 ]
             );
-        }
-        else{
+        } else {
             //kh cá nhân
             DB::table(config('constants.CUSTOMER_TABLE'))->insert(
                 [
-                    'user_id' => $res->id,
+                    'user_id' => $res,
                     'type' => 1,
-                    'address'=>$data->address,
+                    'address' => $data->address,
                     'created_at' => date('Y-m-d h:i:s'),
                 ]
             );
         }
-        return $res;
+        return 200;
     }
     public function postRegister(Request $request)
     {
         // Dữ liệu vào hợp lệ sẽ thực hiện tạo người dùng dưới csdl
-        if ($this->create($request->all())) {
+        if (self::create($request)==200) {
             // Insert thành công sẽ hiển thị thông báo
             Session::flash('success', 'Đăng ký thành viên thành công!');
             return redirect('/');
@@ -62,5 +65,15 @@ class RegisterController extends Controller
             Session::flash('error', 'Đăng ký thành viên thất bại!');
             return redirect('/');
         }
+    }
+
+    //check exist validate email & phone
+    public function checkExistEmail($email)
+    {
+        return User::checkExistEmail($email);
+    }
+    public function checkExistPhone($phone)
+    {
+        return User::checkExistPhone($phone);
     }
 }

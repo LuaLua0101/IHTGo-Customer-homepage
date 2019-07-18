@@ -195,16 +195,16 @@ $(function () {
     });
     //------------------------Raymond edit----------------------
     //validate form login--------------
-    $("#email1").blur(function () {
-        var email = $.trim($("#email1").val());
-        if (email == '') {
-            $('#error-email1').text('Email không được trống');
-            $('#email1').focus();
-        } else if (!isEmail(email)) {
-            $('#error-email1').text('Email không đúng định dạng');
-            $('#email1').focus();
+    $("#phone1").blur(function () {
+        var phone = $.trim($("#phone1").val());
+        if (phone == '') {
+            $('#error-phone1').text('Số điện thoại không được trống');
+            $('#phone1').focus();
+        } else if (!checkPhoneNumber(phone)) {
+            $('#error-phone1').text('Số điện thoại không đúng định dạng');
+            $('#phone1').focus();
         } else {
-            $('#error-email1').text('');
+            $('#error-phone1').text('');
         }
     });
     $("#password1").blur(function () {
@@ -220,9 +220,9 @@ $(function () {
         }
     });
     $("#formLogin").keyup(function () {
-        var email = $.trim($("#email1").val());
+        var phone = $.trim($("#phone1").val());
         var password = $.trim($("#password1").val());
-        if (email != '' && password != '' && password.length > 5 && isEmail(email)) {
+        if (phone != '' && password != '' && password.length > 5 && checkPhoneNumber(phone)) {
             $('#btnLogin').prop("disabled", false);
         }
         else {
@@ -241,28 +241,62 @@ $(function () {
     });
     $("#email2").blur(function () {
         var email = $.trim($("#email2").val());
-        if (email == '') {
-            $('#error-email2').text('Email không được trống');
-            $('#email2').focus();
-        } else if (!isEmail(email)) {
-            $('#error-email2').text('Email không đúng định dạng');
-            $('#email2').focus();
-        } else {
-            $('#error-email2').text('');
-        }
+
+        $.ajax({
+            type: "GET",
+            url: 'checkExistEmail/' + email,
+            success: function (data) {
+                if (data != 200) {
+                    $('#error-email2').text('Email đã được sử dụng');
+                    $('#email2').focus();
+                } else {
+                    if (email == '') {
+                        $('#error-email2').text('Email không được trống');
+                        $('#email2').focus();
+                    } else if (!isEmail(email)) {
+                        $('#error-email2').text('Email không đúng định dạng');
+                        $('#email2').focus();
+                    } else {
+                        $('#error-email2').text('');
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+                console.log('jqXHR:');
+                console.log(jqXHR);
+            }
+        })
+
     });
     $("#phone2").blur(function () {
         var phone = $.trim($("#phone2").val());
-        if (phone == '') {
-            $('#error-phone2').text('Số điện thoại không được trống');
-            $('#phone2').focus();
-        } else if (!checkPhoneNumber(phone)) {
-            $('#error-phone2').text('Số điện thoại không đúng định dạng');
-            $('#phone2').focus();
-        }
-        else {
-            $('#error-phone2').text('');
-        }
+        $.ajax({
+            type: "GET",
+            url: 'checkExistPhone/' + phone,
+            success: function (data) {
+                if (data != 200) {
+                    $('#error-phone2').text('Số điện thoại đã được sử dụng');
+                    $('#phone2').focus();
+                } else {
+                    if (phone == '') {
+                        $('#error-phone2').text('Số điện thoại không được trống');
+                        $('#phone2').focus();
+                    } else if (!checkPhoneNumber(phone)) {
+                        $('#error-phone2').text('Số điện thoại không đúng định dạng');
+                        $('#phone2').focus();
+                    }
+                    else {
+                        $('#error-phone2').text('');
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+                console.log('jqXHR:');
+                console.log(jqXHR);
+            }
+        })
     });
     $("#password2").blur(function () {
         var password = $.trim($("#password2").val());
@@ -326,19 +360,6 @@ $(function () {
             $('#error-name3').text('');
         }
     });
-    $("#phone3").blur(function () {
-        var phone = $.trim($("#phone3").val());
-        if (phone == '') {
-            $('#error-phone3').text('Số điện thoại không được trống');
-            $('#phone3').focus();
-        } else if (!checkPhoneNumber(phone)) {
-            $('#error-phone3').text('Số điện thoại không đúng định dạng');
-            $('#phone3').focus();
-        }
-        else {
-            $('#error-phone3').text('');
-        }
-    });
     $("#address3").blur(function () {
         var name = $.trim($("#address3").val());
         if (name == '') {
@@ -351,14 +372,11 @@ $(function () {
     $("#formInfoUser").keyup(function () {
         var name = $.trim($("#name3").val());
         var address = $.trim($("#address3").val());
-        var phone = $.trim($("#phone3").val());
         var flag = 0;
-        if (name != '' && phone != '' && address != '') {
+        if (name != '' && address != '') {
             flag++;
         }
-        if (checkPhoneNumber(phone)) {
-            flag++;
-        } if (flag == 2) {
+        if (flag == 1) {
             $('#btnInfoUser').prop("disabled", false);
         }
         else {
@@ -368,15 +386,31 @@ $(function () {
     //validate form change password-----------
     $("#current-password4").blur(function () {
         var password = $.trim($("#current-password4").val());
-        if (password == '') {
-            $('#error-current-password4').text('Mật khẩu không được trống');
-            $('#current-password4').focus();
-        } else if (password.length < 6) {
-            $('#error-current-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-            $('#current-password4').focus();
-        } else {
-            $('#error-current-password4').text('');
-        }
+        $.ajax({
+            type: "GET",
+            url: 'checkExistPasswordCurrent/' + password,
+            success: function (data) {
+                if (data != 200) {
+                    $('#error-current-password4').text('Password không trùng khớp');
+                    $('#current-password4').focus();
+                } else {
+                    if (password == '') {
+                        $('#error-current-password4').text('Mật khẩu không được trống');
+                        $('#current-password4').focus();
+                    } else if (password.length < 6) {
+                        $('#error-current-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+                        $('#current-password4').focus();
+                    } else {
+                        $('#error-current-password4').text('');
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+                console.log('jqXHR:');
+                console.log(jqXHR);
+            }
+        })
     });
     $("#new-password4").blur(function () {
         var password = $.trim($("#new-password4").val());

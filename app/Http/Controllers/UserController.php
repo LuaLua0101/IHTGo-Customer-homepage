@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Session;
 
 class UserController extends Controller
 {
@@ -21,10 +20,10 @@ class UserController extends Controller
             }
             if ($user == 200 && $customer == 200) {
                 return back()
-                ->with('success', 'Thay đổi thông tin thành viên thành công!');
+                    ->with('success', 'Thay đổi thông tin thành viên thành công!');
             } else {
                 return back()
-                ->with('error', 'Thay đổi thông tin thành viên thất bại!');
+                    ->with('error', 'Thay đổi thông tin thành viên thất bại!');
             }
         } catch (\Exception $ex) {
             return $ex;
@@ -36,13 +35,17 @@ class UserController extends Controller
             $res = User::changePassword($request);
             if ($res == 200) {
                 return back()
-                ->with('success', 'Thay đổi mật khẩu thành viên thành công!');
+                    ->with('success', 'Thay đổi mật khẩu thành viên thành công!');
             } else {
                 return back()
-                ->with('success', 'Thay đổi mật khẩu thành viên thất bại!');
+                    ->with('error', 'Thay đổi mật khẩu thành viên thất bại!');
             }
         } catch (\Exception $ex) {
             return $ex;
         }
+    }
+    public function checkExistPasswordCurrent($password)
+    {
+        return User::checkExistPasswordCurrent($password);
     }
 }

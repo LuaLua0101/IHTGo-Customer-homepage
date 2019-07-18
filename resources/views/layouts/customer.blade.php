@@ -334,10 +334,10 @@
                     </div>
                     <div class="modal-body ">
                         <div class="form-group">
-                            <span class="text-danger" id='error-email1'></span>
+                            <span class="text-danger" id='error-phone1'></span>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" id='email1' name="email" placeholder="Email" required>
+                                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                                <input type="text" class="form-control" id='phone1' name="phone" placeholder="Số điện thoại của bạn" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -412,11 +412,11 @@
                             <div class="formRadio col-md-12">
                                 <label class="col-md-3">Loại khách hàng: </label>
                                 <label class="container col-md-2">Cá nhân
-                                    <input type="radio" checked="checked" name="radio" id='rdoPersonal'>
+                                    <input type="radio" checked="checked" name="type" id='rdoPersonal' value="1">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container col-md-3">Doanh nghiệp
-                                    <input type="radio" name="radio" id='rdoCompany'>
+                                    <input type="radio" name="type" id='rdoCompany' value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -456,14 +456,21 @@
                             <span class="text-danger" id='error-name3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên" name="name" id="name3" value="{{Auth::user()->name}}">
+                                <input type="text" class="form-control" placeholder="Họ và Tên" name="name" id="name3"  value="{{Auth::user()->name}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="text-danger" id='error-name3'></span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                                <input type="text" class="form-control" placeholder="Email"  disabled value="{{Auth::user()->email}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-phone3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="Số điện thoại" id='phone3' name="phone" value="{{Auth::user()->phone}}">
+                                <input type="tel" class="form-control" placeholder="Số điện thoại" disabled value="{{Auth::user()->phone}}">
                             </div>
                         </div>
                         <div class="form-group">
