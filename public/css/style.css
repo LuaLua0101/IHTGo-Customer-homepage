@@ -144,8 +144,8 @@ i {
 .formRadio .container {
     display: block;
     position: relative;
-    padding-left: 20px;
-    margin-bottom: 5px;
+    padding-left: 2em;
+    margin-bottom: 1em;
     cursor: pointer;
     font-size: 13px;
     -webkit-user-select: none;

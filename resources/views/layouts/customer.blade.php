@@ -140,7 +140,11 @@
                                 <span class="text-danger" id='error-sender-address'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
+                                    @if($customer==null)
                                     <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="Địa chỉ người gửi(*)">
+                                    @else
+                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="Địa chỉ người gửi(*)" value="{{$customer->address}}">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -273,7 +277,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <div class="form-group col-md-12 col-sm-12">
+                            <div class="form-group col-md-6 col-sm-12">
                                 <label class="title-form">Trường hợp:</label>
                                 <label class="container">Giao nội tỉnh
                                     <input type="radio" checked="checked" name="car_option" value="1">
@@ -288,6 +292,19 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
+                            @if($customer->type == 2)
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label class="title-form">Phương thức thanh toán:</label>
+                                <label class="container">Tiền mặt
+                                    <input type="radio" checked="checked" name="payment_type" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Ghi nợ
+                                    <input type="radio" name="payment_type" value="2">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -309,8 +326,8 @@
                 </div>
                 <div class="modal-body formRadio">
                     @foreach($receive as $r)
-                    <label class="container">{{$r->receive_name}}, {{$r->receive_phone}} : {{$r->receive_address}},{{$r->receive_district_name}},{{$r->receive_province_name}}
-                        <input type="radio" checked="checked" name="rdoHistoryDelivery" id="rdoHistoryDelivery" value="{{$r->id}}">
+                    <label class="container"><i class="fas fa-user"></i> {{$r->receive_name}} <i class="fas fa-phone"></i> {{$r->receive_phone}}  <i class="fas fa-map-marker-alt"></i> {{$r->receive_address}},{{$r->receive_district_name}},{{$r->receive_province_name}}
+                        <input type="radio" name="rdoHistoryDelivery" id="rdoHistoryDelivery" value="{{$r->id}}">
                         <span class="checkmark"></span>
                     </label>
                     @endforeach
@@ -456,14 +473,14 @@
                             <span class="text-danger" id='error-name3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên" name="name" id="name3"  value="{{Auth::user()->name}}">
+                                <input type="text" class="form-control" placeholder="Họ và Tên" name="name" id="name3" value="{{Auth::user()->name}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-name3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
-                                <input type="text" class="form-control" placeholder="Email"  disabled value="{{Auth::user()->email}}">
+                                <input type="text" class="form-control" placeholder="Email" disabled value="{{Auth::user()->email}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -658,7 +675,7 @@
         </span>
     </div>
     <a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button" title="Nhấn vào đây để trở về trang đầu" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
-   
+
     <!---------------------------------Jquery JS------------------------------------------>
     <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
 

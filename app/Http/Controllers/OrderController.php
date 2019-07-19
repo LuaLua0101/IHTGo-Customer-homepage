@@ -11,7 +11,6 @@ class OrderController extends Controller
     {
         try {
             $res = Order::create($request);
-
             if ($res == 200) {
                 return back()
                     ->with('success', 'Tạo mới đơn hàng thành công!');

@@ -169,13 +169,17 @@ class Order
                 [
                     'name' => $data->name,
                     'code' => self::codeOrder(),
-                    'car_option' => (int) $data->car_option,
+                    'car_option' => $data->car_option,
                     'status' => 1,
                     'is_payment' => 0,
                     'user_id' => $user_id,
                     'payer' => (int) $data->payer,
                     'is_speed' => $data->is_speed,
                     'created_at' => date('Y-m-d h:i:s'),
+                    'car_type' => 8,
+                    'payment_type' => isset($data->payment_type)
+                        && $data->payment_type !== "undefined"
+                        && $data->payment_type !== null ? $data->payment_type : '1',
                 ]
             );
             $order_detail = DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
@@ -194,9 +198,9 @@ class Order
                     'receive_district_id' => $data->receive_district_id,
                     'take_money' => $data->take_money,
                     'weight' => $data->weight,
-                    'length'=>$data->length,
-                    'width'=>$data->width,
-                    'height'=>$data->height,
+                    'length' => $data->length,
+                    'width' => $data->width,
+                    'height' => $data->height,
                 ]
             );
             ImageController::uploadImageOrder($data, $order_id);
@@ -230,12 +234,12 @@ class Order
     public static function historyDelivery()
     {
         $res = DB::select("select od.id,od.receive_name,od.receive_phone,od.receive_address,
-            IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
+        IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
         FROM orders o, order_details od
         WHERE o.id=od.order_id 
         ORDER BY o.id DESC
-                LIMIT 10");
+        LIMIT 10");
         return $res;
     }
     //load lịch sử thông tin người nhận 

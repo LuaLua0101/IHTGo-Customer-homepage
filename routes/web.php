@@ -17,6 +17,7 @@ Route::get('checkExistPasswordCurrent/{password?}', 'UserController@checkExistPa
 
 //trang hiển thị
 Route::get('gioi-thieu', 'HomeController@contact');
+Route::post('contact-us', 'HomeController@contactUs');
 Route::get('bang-gia', 'HomeController@price_list');
 Route::get('tin-tuc', 'HomeController@news');
 Route::get('noi-dung', 'HomeController@new_detail');

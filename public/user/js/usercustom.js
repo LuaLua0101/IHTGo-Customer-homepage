@@ -199,10 +199,8 @@ $(function () {
         var phone = $.trim($("#phone1").val());
         if (phone == '') {
             $('#error-phone1').text('Số điện thoại không được trống');
-            $('#phone1').focus();
         } else if (!checkPhoneNumber(phone)) {
             $('#error-phone1').text('Số điện thoại không đúng định dạng');
-            $('#phone1').focus();
         } else {
             $('#error-phone1').text('');
         }
@@ -211,10 +209,8 @@ $(function () {
         var password = $.trim($("#password1").val());
         if (password == '') {
             $('#error-password1').text('Mật khẩu không được trống');
-            $('#password1').focus();
         } else if (password.length < 6) {
             $('#error-password1').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-            $('#password1').focus();
         } else {
             $('#error-password1').text('');
         }
@@ -234,7 +230,6 @@ $(function () {
         var name = $.trim($("#name2").val());
         if (name == '') {
             $('#error-name2').text('Họ Tên không được trống');
-            $('#name2').focus();
         } else {
             $('#error-name2').text('');
         }
@@ -248,14 +243,11 @@ $(function () {
             success: function (data) {
                 if (data != 200) {
                     $('#error-email2').text('Email đã được sử dụng');
-                    $('#email2').focus();
                 } else {
                     if (email == '') {
                         $('#error-email2').text('Email không được trống');
-                        $('#email2').focus();
                     } else if (!isEmail(email)) {
                         $('#error-email2').text('Email không đúng định dạng');
-                        $('#email2').focus();
                     } else {
                         $('#error-email2').text('');
                     }
@@ -277,14 +269,11 @@ $(function () {
             success: function (data) {
                 if (data != 200) {
                     $('#error-phone2').text('Số điện thoại đã được sử dụng');
-                    $('#phone2').focus();
                 } else {
                     if (phone == '') {
                         $('#error-phone2').text('Số điện thoại không được trống');
-                        $('#phone2').focus();
                     } else if (!checkPhoneNumber(phone)) {
                         $('#error-phone2').text('Số điện thoại không đúng định dạng');
-                        $('#phone2').focus();
                     }
                     else {
                         $('#error-phone2').text('');
@@ -302,10 +291,8 @@ $(function () {
         var password = $.trim($("#password2").val());
         if (password == '') {
             $('#error-password2').text('Mật khẩu không được trống');
-            $('#password2').focus();
         } else if (password.length < 6) {
             $('#error-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-            $('#password2').focus();
         } else {
             $('#error-password2').text('');
         }
@@ -315,10 +302,8 @@ $(function () {
         var re_password = $.trim($("#re-password2").val());
         if (re_password == '') {
             $('#error-re-password2').text('Mật khẩu không được trống');
-            $('#re-password2').focus();
         } else if (re_password.length < 6) {
             $('#error-re-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-            $('#re-password2').focus();
         }
         else if (password != re_password) {
             $('#error-re-password2').text('Mật khẩu nhập lại không đúng');
@@ -355,7 +340,6 @@ $(function () {
         var name = $.trim($("#name3").val());
         if (name == '') {
             $('#error-name3').text('Họ Tên không được trống');
-            $('#name3').focus();
         } else {
             $('#error-name3').text('');
         }
@@ -364,7 +348,6 @@ $(function () {
         var name = $.trim($("#address3").val());
         if (name == '') {
             $('#error-address3').text('Địa chỉ không được trống');
-            $('#address3').focus();
         } else {
             $('#error-address3').text('');
         }
@@ -392,14 +375,11 @@ $(function () {
             success: function (data) {
                 if (data != 200) {
                     $('#error-current-password4').text('Password không trùng khớp');
-                    $('#current-password4').focus();
                 } else {
                     if (password == '') {
                         $('#error-current-password4').text('Mật khẩu không được trống');
-                        $('#current-password4').focus();
                     } else if (password.length < 6) {
                         $('#error-current-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-                        $('#current-password4').focus();
                     } else {
                         $('#error-current-password4').text('');
                     }
@@ -416,10 +396,8 @@ $(function () {
         var password = $.trim($("#new-password4").val());
         if (password == '') {
             $('#error-new-password4').text('Mật khẩu không được trống');
-            $('#new-password4').focus();
         } else if (password.length < 6) {
             $('#error-new-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-            $('#new-password4').focus();
         } else {
             $('#error-new-password4').text('');
         }
@@ -429,10 +407,8 @@ $(function () {
         var re_password = $.trim($("#re-password4").val());
         if (re_password == '') {
             $('#error-re-password4').text('Mật khẩu không được trống');
-            $('#re-password4').focus();
         } else if (re_password.length < 6) {
             $('#error-re-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
-            $('#re-password4').focus();
         }
         else if (password != re_password) {
             $('#error-re-password4').text('Mật khẩu nhập lại không đúng');
@@ -504,7 +480,6 @@ $(function () {
         var name = $.trim($("#sender_name").val());
         if (name == '') {
             $('#error-sender-name').text('Họ Tên không được trống');
-            $('#sender_name').focus();
         } else {
             $('#error-sender-name').text('');
         }
@@ -513,10 +488,8 @@ $(function () {
         var phone = $.trim($("#sender_phone").val());
         if (phone == '') {
             $('#error-sender-phone').text('Số điện thoại không được trống');
-            $('#sender_phone').focus();
         } else if (!checkPhoneNumber(phone)) {
             $('#error-sender-phone').text('Số điện thoại không đúng định dạng');
-            $('#sender_phone').focus();
         }
         else {
             $('#error-sender-phone').text('');
@@ -526,7 +499,6 @@ $(function () {
         var province = $.trim($("#sender_province_id").val());
         if (province == '' || province == 0) {
             $('#error-sender-province-id').text('Tỉnh-thành phố không được trống');
-            $('#sender_province_id').focus();
         } else {
             $('#error-sender-province-id').text('');
         }
@@ -535,16 +507,22 @@ $(function () {
         var district = $.trim($("#sender_district_id").val());
         if (district == '' || district == 0) {
             $('#error-sender-district-id').text('Quận - huyện không được trống');
-            $('#sender_district_id').focus();
         } else {
             $('#error-sender-district-id').text('');
+        }
+    });
+    $("#sender_address").blur(function () {
+        var address = $.trim($("#sender_address").val());
+        if (address == '') {
+            $('#error-sender-address').text('Địa chỉ không được trống');
+        } else {
+            $('#error-sender-address').text('');
         }
     });
     $("#receive_name").blur(function () {
         var name = $.trim($("#receive_name").val());
         if (name == '') {
             $('#error-receive-name').text('Họ Tên không được trống');
-            $('#receive_name').focus();
         } else {
             $('#error-receive-name').text('');
         }
@@ -553,10 +531,8 @@ $(function () {
         var phone = $.trim($("#receive_phone").val());
         if (phone == '') {
             $('#error-receive-phone').text('Số điện thoại không được trống');
-            $('#receive_phone').focus();
         } else if (!checkPhoneNumber(phone)) {
             $('#error-receive-phone').text('Số điện thoại không đúng định dạng');
-            $('#receive_phone').focus();
         } else {
             $('#error-receive-phone').text('');
         }
@@ -565,7 +541,6 @@ $(function () {
         var province = $.trim($("#receive_province_id").val());
         if (province == '' || province == 0) {
             $('#error-receive-province-id').text('Tỉnh-thành phố không được trống');
-            $('#receive_province_id').focus();
         } else {
             $('#error-receive-province-id').text('');
         }
@@ -574,16 +549,22 @@ $(function () {
         var district = $.trim($("#receive_district_id").val());
         if (district == '' || district == 0) {
             $('#error-receive-district-id').text('Quận - huyện không được trống');
-            $('#receive_district_id').focus();
         } else {
             $('#error-receive-district-id').text('');
+        }
+    });
+    $("#receive_address").blur(function () {
+        var address = $.trim($("#receive_address").val());
+        if (address == '') {
+            $('#error-receive-address').text('Địa chỉ không được trống');
+        } else {
+            $('#error-receive-address').text('');
         }
     });
     $("#length").blur(function () {
         var length = $.trim($("#length").val());
         if (length == '') {
             $('#error-size-order').text('Chiều dài không được trống');
-            $('#length').focus();
         } else {
             $('#error-size-order').text('');
         }
@@ -592,7 +573,6 @@ $(function () {
         var width = $.trim($("#width").val());
         if (width == '') {
             $('#error-size-order').text('Chiều rộng không được trống');
-            $('#width').focus();
         } else {
             $('#error-size-order').text('');
         }
@@ -601,10 +581,8 @@ $(function () {
         var weight = $.trim($("#weight").val());
         if (weight == '') {
             $('#error-weight-order').text('Trọng lượng không được trống');
-            $('#weight').focus();
         } else if (weight > 25) {
             $('#error-weight-order').text('Trọng lượng không được lớn hơn 25kg');
-            $('#weight').focus();
         }
         else {
             $('#error-weight-order').text('');
@@ -614,17 +592,19 @@ $(function () {
         var sender_name = $.trim($("#sender_name").val());
         var sender_phone = $.trim($("#sender_phone").val());
         var sender_province_id = $.trim($("#sender_province_id").val());
-        var sender_district_id = $.trim($("#sender_district_id").val());
+        var sender_address = $.trim($("#sender_address").val());
+        var sender_name = $.trim($("#sender_name").val());
         var receive_name = $.trim($("#receive_name").val());
         var receive_phone = $.trim($("#receive_phone").val());
         var receive_province_id = $("#receive_province_id").val();
         var receive_district_id = $("#receive_district_id").val();
+        var receive_address = $.trim($("#receive_address").val());
         var length = $.trim($("#length").val());
         var width = $.trim($("#width").val());
         var weight = $.trim($("#weight").val());
 
         var flag = 0;
-        if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_district_id != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_district_id != '' && length != '' && width != '' && weight != '') {
+        if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '' && length != '' && width != '' && weight != '') {
             flag++;
         }
         if (weight < 25) {
