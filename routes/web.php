@@ -1,4 +1,8 @@
 <?php
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
 
 // Sửa đường dẫn trang chủ mặc định
 Route::get('/', 'HomeController@index');

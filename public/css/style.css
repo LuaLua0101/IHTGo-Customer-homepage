@@ -332,6 +332,7 @@ i {
 }
 .navbar-inverse .navbar-nav > li > a {
     color: #000;
+    text-transform: uppercase;
 }
 .collapse.in {
     display: block;
@@ -380,10 +381,7 @@ i {
 .back-to-top:hover>span{
     color: #fff;
 }
-.input{
-    width: 100%;
-}
-
+.modal-title{text-transform: uppercase;}
 /*  */
 @media (min-width: 768px) {
     .modal-content {

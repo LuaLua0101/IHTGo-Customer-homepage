@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=yes" />
@@ -54,30 +54,34 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>GIỚI THIỆU</strong></a></li>
-                        <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>BẢNG GIÁ</strong></a></li>
-                        <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>TIN TỨC</strong></a></li>
+                        <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>{{ __('messages.about_us') }}</strong></a></li>
+                        <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>{{ __('messages.price_list') }}</strong></a></li>
+                        <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>{{ __('messages.news') }}</strong></a></li>
+                        <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i> EN</a></li>
+
+                        <li><a href="{{ url('locale/vi') }}"><i class="fa fa-language"></i> VI</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
-                        <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>ĐẶT GIAO HÀNG NGAY</strong></a></li>
-                        <li class="{{ Request::path() == 'don-hang' ? 'active' : '' }}"><a href="{!! url('don-hang'); !!}" id='don-hang'><strong>QUẢN LÝ ĐƠN HÀNG</strong></a></li>
+                        <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>{{ __('messages.create_order') }}</strong></a></li>
+                        <li class="{{ Request::path() == 'don-hang' ? 'active' : '' }}"><a href="{!! url('don-hang'); !!}" id='don-hang'><strong>{{ __('messages.order_management') }}</strong></a></li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Xin chào {{Auth::user()->name}}<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ __('messages.hello') }} {{Auth::user()->name}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#" data-toggle="modal" data-target="#InfoUser">Thông tin cá nhân</a></li>
-                                <li><a href="#" data-toggle="modal" data-target="#ChangePassword">Đổi mật khẩu</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#InfoUser">{{ __('messages.personal_information') }}</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#ChangePassword">{{ __('messages.change_password') }}</a></li>
                                 <li><a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">Đăng xuất
+                                                            document.getElementById('logout-form').submit();">{{ __('messages.log_out') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </li>
                         </li>
+
                         @else
-                        <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> ĐĂNG NHẬP</a></li>
-                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> ĐĂNG KÝ</a></li>
+                        <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> {{ __('messages.login') }}</a></li>
+                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> {{ __('messages.registration') }}</a></li>
                         @endif
                     </ul>
                 </div>
@@ -95,23 +99,23 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">ĐẶT GIAO HÀNG</h4>
+                        <h4 class="modal-title">{{ __('messages.create_order') }}</h4>
                     </div>
                     <div class="modal-body row">
                         <div class="col-md-6">
-                            <h4>Thông tin người gửi(*)</h4>
+                            <h4>{{ __('messages.sender_information') }}(*)</h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-name'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="Họ và Tên người gửi(*)" value="{{Auth::user()->name}}">
+                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="{{ __('messages.name') }}(*)" value="{{Auth::user()->name}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-phone'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="Số điện thoại người gửi(*)" value="{{Auth::user()->phone}}">
+                                    <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="{{ __('messages.phone') }}(*)" value="{{Auth::user()->phone}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -142,27 +146,27 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     @if($customer==null)
-                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="Địa chỉ người gửi(*)">
+                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="{{ __('messages.sender_address') }}(*)">
                                     @else
-                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="Địa chỉ người gửi(*)" value="{{$customer->address}}">
+                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="{{ __('messages.sender_address') }}(*)" value="{{$customer->address}}">
                                     @endif
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4>Thông tin người nhận(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
+                            <h4>{{ __('messages.receiver_information') }}(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-name'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                    <input type="text" class="form-control" name="receive_name" id="receive_name" placeholder="Họ và Tên người nhận(*)">
+                                    <input type="text" class="form-control" name="receive_name" id="receive_name" placeholder="{{ __('messages.name') }}(*)">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-phone'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="tel" class="form-control" name="receive_phone" id="receive_phone" placeholder="Số điện thoại người nhận(*)">
+                                    <input type="tel" class="form-control" name="receive_phone" id="receive_phone" placeholder="{{ __('messages.phone') }}(*)">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -190,38 +194,38 @@
                                 <span class="text-danger" id='error-receive-address'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                    <input type="text" class="form-control" id="receive_address" name="receive_address" placeholder="Địa chỉ người nhận(*)">
+                                    <input type="text" class="form-control" id="receive_address" name="receive_address" placeholder="{{ __('messages.receiver_address') }}(*)">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <h4>Thông tin đơn hàng(*)</h4>
+                            <h4>{{ __('messages.order_information') }}(*)</h4>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-box-open"></i></span>
-                                    <input type="text" class="form-control" placeholder="Tên đơn hàng" id="name" name="name">
+                                    <input type="text" class="form-control" placeholder="{{ __('messages.order_name') }}" id="name" name="name">
                                 </div>
                             </div>
-                            <label class="title-form">Kích thước (cm)= (Dài * Rộng * Cao)/5000</label> <span class="text-danger" id='error-size-order'></span>
+                            <label class="title-form">{{ __('messages.size') }} (cm)= ({{ __('messages.length') }} * {{ __('messages.width') }} * {{ __('messages.height') }})/5000</label> <span class="text-danger" id='error-size-order'></span>
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="text" class="form-control" placeholder="Dài(cm)*" id="length" name="length">
+                                        <input type="text" class="form-control" placeholder="{{ __('messages.length') }}(cm)*" id="length" name="length">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="text" class="form-control" placeholder="Rộng(cm)*" id="width" name="width">
+                                        <input type="text" class="form-control" placeholder="{{ __('messages.width') }}(cm)*" id="width" name="width">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="text" class="form-control" placeholder="Cao(cm)*" id="height" name="height">
+                                        <input type="text" class="form-control" placeholder="{{ __('messages.height') }}(cm)*" id="height" name="height">
                                     </div>
                                 </div>
                             </div>
@@ -229,25 +233,25 @@
                                 <span class="text-danger" id='error-weight-order'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
-                                    <input type="text" class="form-control" placeholder="Trọng lượng(< 25kg)*" id="weight" name="weight">
+                                    <input type="text" class="form-control" placeholder="{{ __('messages.weight') }}(< 25kg)*" id="weight" name="weight">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-hand-holding-usd"></i></span>
-                                    <input type="text" class="form-control" placeholder="Thu hộ(VND)" id="take_money" name="take_money">
+                                    <input type="text" class="form-control" placeholder="{{ __('messages.cash_on_delivery') }}(VND)" id="take_money" name="take_money">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="custom-file col-md-4">
-                                    <label>Ảnh đơn hàng:<span class="text-danger" id='error-image-order'></span></label>
+                                    <label>{{ __('messages.photo_order') }}:<span class="text-danger" id='error-image-order'></span></label>
                                     <div class="upload-btn-wrapper">
                                         <img id="img1" width="130" src="{{ URL::asset('public/images/Index/notfound.png') }}">
                                         <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-8">
-                                    <label>Ghi chú:<span class="text-danger" id='error-note-order'></span></label>
+                                    <label>{{ __('messages.note') }}:<span class="text-danger" id='error-note-order'></span></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
                                         <textarea class="form-control" rows="5" name="note"></textarea>
@@ -257,50 +261,50 @@
                         </div>
                         <div class="col-md-6 col-sm-12 formRadio">
                             <div class="form-group col-md-6 col-sm-6 ">
-                                <label class="title-form">Giao hỏa tốc:</label>
-                                <label class="container">Có
+                                <label class="title-form">{{ __('messages.express_delivery') }}:</label>
+                                <label class="container">{{ __('messages.yes') }}
                                     <input type="radio" checked="checked" name="is_speed" value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">Không
+                                <label class="container">{{ __('messages.no') }}
                                     <input type="radio" name="is_speed" value="0">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="title-form">Người thanh toán:</label>
-                                <label class="container">Người nhận
+                                <label class="title-form">{{ __('messages.payer') }}:</label>
+                                <label class="container">{{ __('messages.receicer') }}
                                     <input type="radio" name="payer" value="1" checked="checked">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">Người gửi
+                                <label class="container">{{ __('messages.sender') }}
                                     <input type="radio" name="payer" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="form-group col-md-6 col-sm-12">
-                                <label class="title-form">Trường hợp:</label>
-                                <label class="container">Giao nội tỉnh
+                                <label class="title-form">{{ __('messages.case') }}:</label>
+                                <label class="container">{{ __('messages.delivery_in_province') }}
                                     <input type="radio" checked="checked" name="car_option" value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">Giao ngoại tỉnh
+                                <label class="container">{{ __('messages.delivery_outside_province') }}
                                     <input type="radio" name="car_option" value="3">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">Giao chứng từ
+                                <label class="container">{{ __('messages.delivery_of_documents') }}
                                     <input type="radio" name="car_option" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             @if($customer->type == 2)
                             <div class="form-group col-md-6 col-sm-12">
-                                <label class="title-form">Phương thức thanh toán:</label>
-                                <label class="container">Tiền mặt
+                                <label class="title-form">{{ __('messages.payment_methods') }}:</label>
+                                <label class="container">{{ __('messages.cash') }}
                                     <input type="radio" checked="checked" name="payment_type" value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">Ghi nợ
+                                <label class="container">{{ __('messages.monthly') }}
                                     <input type="radio" name="payment_type" value="2">
                                     <span class="checkmark"></span>
                                 </label>
@@ -309,8 +313,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id="btnCreateOrder"  data-toggle="modal" data-target="#orderConfirmation" >LƯU</button>
-                        <button type="button" class="btnClose" data-dismiss="modal">ĐÓNG</button>
+                        <button type="submit" class="btn btnSave" id="btnCreateOrder" data-toggle="modal" data-target="#orderConfirmation">{{ __('messages.save') }}</button>
+                        <button type="button" class="btnClose" data-dismiss="modal">{{ __('messages.close') }}</button>
                     </div>
                 </div>
             </form>
@@ -323,7 +327,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Lịch sử người nhận gần nhất</h4>
+                    <h4 class="modal-title">{{ __('messages.the_latest_recipient_history') }}</h4>
                 </div>
                 <div class="modal-body formRadio">
                     @foreach($receive as $r)
@@ -334,7 +338,7 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">Chọn</button>
+                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">{{ __('messages.choose') }}</button>
                 </div>
             </div>
         </div>
@@ -366,26 +370,26 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">ĐĂNG NHẬP</h4>
+                        <h4 class="modal-title">{{ __('messages.login') }}</h4>
                     </div>
                     <div class="modal-body ">
                         <div class="form-group">
                             <span class="text-danger" id='error-phone1'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id='phone1' name="phone" placeholder="Số điện thoại của bạn" required>
+                                <input type="text" class="form-control" id='phone1' name="phone" placeholder="{{ __('messages.phone') }}" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-password1'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" id='password1' name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" id='password1' name="password" placeholder="{{ __('messages.password') }}" required>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnLogin' disabled>ĐĂNG NHẬP</button>
+                        <button type="submit" class="btn btnSave" id='btnLogin' disabled>{{ __('messages.login') }}</button>
                     </div>
                 </form>
             </div>
@@ -399,14 +403,14 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">HÃY TRỞ THÀNH KHÁCH HÀNG IHTGO NGAY!</h4>
+                        <h4 class="modal-title">{{ __('messages.become_a_ihtgo_customer_now') }}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <span class="text-danger" id='error-name2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên của bạn" id='name2' name='name' required>
+                                <input type="text" class="form-control" placeholder="{{ __('messages.name') }}" id='name2' name='name' required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -420,28 +424,28 @@
                             <span class="text-danger" id='error-phone2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="Số điện thoại của bạn" id='phone2' name=phone required>
+                                <input type="tel" class="form-control" placeholder="{{ __('messages.phone') }}" id='phone2' name=phone required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-password2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password" id="password2" required>
+                                <input type="password" class="form-control" placeholder="{{ __('messages.password') }}" name="password" id="password2" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-re-password2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name='re-password' id='re-password2' required>
+                                <input type="password" class="form-control" placeholder="{{ __('messages.confirm_password') }}" name='re-password' id='re-password2' required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-sender-address'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <input type="text" class="form-control" name="address" id="address" placeholder="Địa chỉ của bạn">
+                                <input type="text" class="form-control" name="address" id="address" placeholder="{{ __('messages.address') }}">
                             </div>
                         </div>
                         <div class=" row">
