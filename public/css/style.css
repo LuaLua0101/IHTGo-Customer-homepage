@@ -317,9 +317,7 @@ i {
         #f31414 100%
     ) !important;
 }
-.dropdown-menu {
-    box-shadow: 0 0 5px #e50303, 0 5px 10px rgb(229, 3, 3) !important;
-}
+
 .dropdown-menu > li > a:focus,
 .dropdown-menu > li > a:hover {
     background-image: linear-gradient(
@@ -357,7 +355,7 @@ i {
     background-color: #fff !important;
 }
 
-#historyDelivery {
+#historyDelivery, #orderConfirmation{
     top: 10%;
 }
 #iconHistoryDelivery {
@@ -382,6 +380,10 @@ i {
 .back-to-top:hover>span{
     color: #fff;
 }
+.input{
+    width: 100%;
+}
+
 /*  */
 @media (min-width: 768px) {
     .modal-content {

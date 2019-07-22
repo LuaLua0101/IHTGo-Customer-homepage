@@ -125,6 +125,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-district-id'></span>
@@ -308,7 +309,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id="btnCreateOrder" disabled>LƯU</button>
+                        <button type="submit" class="btn btnSave" id="btnCreateOrder"  data-toggle="modal" data-target="#orderConfirmation" >LƯU</button>
                         <button type="button" class="btnClose" data-dismiss="modal">ĐÓNG</button>
                     </div>
                 </div>
@@ -326,11 +327,29 @@
                 </div>
                 <div class="modal-body formRadio">
                     @foreach($receive as $r)
-                    <label class="container"><i class="fas fa-user"></i> {{$r->receive_name}} <i class="fas fa-phone"></i> {{$r->receive_phone}}  <i class="fas fa-map-marker-alt"></i> {{$r->receive_address}},{{$r->receive_district_name}},{{$r->receive_province_name}}
+                    <label class="container"><i class="fas fa-user"></i> {{$r->receive_name}} <i class="fas fa-phone"></i> {{$r->receive_phone}} <i class="fas fa-map-marker-alt"></i> {{$r->receive_address}},{{$r->receive_district_name}},{{$r->receive_province_name}}
                         <input type="radio" name="rdoHistoryDelivery" id="rdoHistoryDelivery" value="{{$r->id}}">
                         <span class="checkmark"></span>
                     </label>
                     @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">Chọn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal  Order confirmation-->
+    <div id="orderConfirmation" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">xác nhận đơn hàng</h4>
+                </div>
+                <div class="modal-body formRadio">
+                    <p>Đơn hàng thành công</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">Chọn</button>
@@ -697,12 +716,12 @@
     <!------------------------------------Custom JS---------------------------------------->
     <script src="{{ URL::asset('public/user/js/usercustom.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-</body>
+    <script>
+        function readURL(event, id) {
+            var output = document.getElementById('img' + id);
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }; <
+        /body>
 
-</html>
-<script>
-    function readURL(event, id) {
-        var output = document.getElementById('img' + id);
-        output.src = URL.createObjectURL(event.target.files[0]);
-    };
-</script>
+        <
+        /html>
