@@ -51,10 +51,7 @@
 /****************************/
 
 /************WORLD************/
-.container-fluid {
-    padding-right: 0%;
-    padding-left: 0%;
-}
+
 
 html, body {
     width: 100%;
@@ -67,7 +64,7 @@ body {
     -webkit-font-smoothing: subpixel-antialiased;
     color: #303030;
     font-family: 'Segoe UI';
-    font-size: 16px;
+    font-size: 15px;
     /*transform: scale(1);*/
 }
 

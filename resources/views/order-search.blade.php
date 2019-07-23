@@ -30,11 +30,10 @@
         </div>
     </div>
     <div class="h50px"></div>
-    <div class="container-fuild">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <ul class="nav nav-pills tab-order">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+        <ul class="nav nav-pills tab-order">
                     <li class="active"><a data-toggle="pill" href="#home" onclick="totalPriceAll();">{{ __('messages.all') }} ({{$order->total()}})</a></li>
                     <li><a data-toggle="pill" onclick="totalPrice(1);" href="#menu1">{{ __('messages.waiting') }} ({{$order_watting->total()}})</a></li>
                     <li><a data-toggle="pill" onclick="totalPrice(2);" href="#menu2">{{ __('messages.no_delivery') }}({{$order_no_delivery->total()}})</a></li>
@@ -44,7 +43,7 @@
                     <li><a data-toggle="pill" onclick="totalPrice(6);" href="#menu6">{{ __('messages.iht_cancel') }}({{$order_iht_cancel->total()}})</a></li>
                     <li><a data-toggle="pill" onclick="totalPrice(7);" href="#menu7">{{ __('messages.unsuccessful') }}({{$order_fail->total()}})</a></li>
                 </ul>
-                <div class="tab-content">
+            <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
                         {{ $order->links() }}
                         <table class="table table-striped">
@@ -694,18 +693,31 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-1"></div>
         </div>
+        <div class="col-md-1"></div>
     </div>
 </div>
 <script>
     //thay đổi tổng tiền trên trang list đơn hàng
     function totalPriceAll() {
+        //lấy giá trị url 
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                .exec(window.location.search);
+
+            return (results !== null) ? results[1] || 0 : false;
+        }
+        var end_date = $.urlParam('end_date');
+        var start_date = $.urlParam('start_date');
         $.ajax({
             type: "GET",
-            url: 'total-price-order-all',
+            url: 'total-price-order-all-search',
+            data: {
+                start_date: start_date,
+                end_date: end_date
+            },
             success: function(data) {
+                console.log(data);
                 $('#total-price').empty();
                 $('#total-price').html(' ' + formatCurrency(data));
             }
@@ -713,13 +725,25 @@
     }
 
     function totalPrice(id) {
+        //lấy giá trị url 
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                .exec(window.location.search);
+
+            return (results !== null) ? results[1] || 0 : false;
+        }
+        var end_date = $.urlParam('end_date');
+        var start_date = $.urlParam('start_date');
         $.ajax({
             type: "GET",
-            url: 'total-price-order',
+            url: 'total-price-order-search',
             data: {
-                id: id
+                id: id,
+                start_date: start_date,
+                end_date: end_date
             },
             success: function(data) {
+                console.log(data);
                 $('#total-price').empty();
                 $('#total-price').html(' ' + formatCurrency(data));
             }

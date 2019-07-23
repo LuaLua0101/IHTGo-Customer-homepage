@@ -14,7 +14,8 @@
                     Vui lòng điền thông tin chi tiết dưới đây và chúng tôi sẽ liên lạc với bạn sớm nhất<br />
                     Hoặc liên hệ trực tiếp với nhóm kinh doanh của chúng tôi theo số <strong>0902 926 925</strong>
                 </p>
-                <form action="/Home/About" enctype="multipart/form-data" method="post"><input name="__RequestVerificationToken" type="hidden" value="PXsBb7yVC1C6DN1Qtws51BWCw0P7yHtUTjprblNjs6_xvwB1bu2_K-1gX3wYLXzhj4VffCeAvnC8bND0sXqnTMF2vlhoRuIK4DuK6LwiPDg1" />
+                <form method="POST" action="{{ url('contact-us') }}" class='formModal'>
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="margin-auto contact-form">
                         <div class="validation-summary-valid form-group" data-valmsg-summary="true">
                             <ul>
@@ -23,17 +24,17 @@
                         </div>
                         <div class="form-group">
                             <label>Họ và tên <span class="text-danger">*</span> <span id="errorContactName" class="validateError"></span></label>
-                            <input class="form-control" type="text" id="contactName" name="contactName" placeholder="Họ và tên" maxlength="50" />
+                            <input class="form-control" type="text" id="contactName" name="name" placeholder="Họ và tên" maxlength="50" />
                         </div>
                         <div class="form-group">
                             <label>Tên doanh nghiệp</label>
-                            <input class="form-control" type="text" id="contactCompany" name="contactCompany" maxlength="250" placeholder="Vui lòng để lại tên cửa hàng / công ty / doanh nghiệp của bạn" />
+                            <input class="form-control" type="text" id="contactCompany" name="company" maxlength="250" placeholder="Vui lòng để lại tên cửa hàng / công ty / doanh nghiệp của bạn" />
                         </div>
                         <div class="form-group">
                             <label>Số điện thoại <span class="text-danger">*</span>
                                 <span id="errorContactPhone" class="validateError"></span></label>
                             <div class="input-group"><span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input class="form-control" id="contactPhone" name="contactPhone" data-inputmask="'alias':'number','mask':'+84 999 999 9999','placeholder':''" data-mask="" type="text" placeholder="+84" />
+                                <input class="form-control" id="contactPhone" name="phone" data-inputmask="'alias':'number','mask':'+84 999 999 9999','placeholder':''" data-mask="" type="text" placeholder="+84" />
 
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                             <label>Email <span class="text-danger">*</span> <span id="errorContactEmail" class="validateError"></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input class="form-control" id="contactEmail" name="contactEmail" type="text" placeholder="my@example.com" />
+                                <input class="form-control" id="contactEmail" name="email" type="text" placeholder="my@example.com" />
                             </div>
                         </div>
                         <div class="form-group center-text" style="margin-top: 7%;">
