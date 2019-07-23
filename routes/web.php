@@ -29,3 +29,15 @@ Route::get('don-hang', function () {
 Route::get('chi-tiet-don-hang', function () {
     return view('order-detail');
 });
+
+Route::get('/map', 'MapController@index');
+
+Route::get('/', function () {
+    $config = array();
+    $config['center'] = 'New York, USA';
+    GMaps::initialize($config);
+    $map = GMaps::create_map();
+
+    echo $map['js'];
+    echo $map['html'];
+});
