@@ -1,5 +1,5 @@
 <?php
-Route::get('locale/{locale}', function ($locale){
+Route::get('locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
@@ -33,15 +33,26 @@ Route::get('tim-don-hang', 'HomeController@order_search');
 Route::get('districtOfProvince/{province_id?}', 'DistrictController@districtOfProvince');
 Route::get('loadHistoryDelivery/{order_detail_id?}', 'OrderController@loadHistoryDelivery');
 //đơn hàng
-Route::get('total-price-order-all', 'OrderController@totalPriceAll');//ajax
-Route::get('total-price-order', 'OrderController@totalPrice');//ajax
-Route::get('total-price-order-all-search', 'OrderController@totalPriceAllSearch');//ajax
-Route::get('total-price-order-search', 'OrderController@totalPriceSearch');//ajax
+Route::get('total-price-order-all', 'OrderController@totalPriceAll'); //ajax
+Route::get('total-price-order', 'OrderController@totalPrice'); //ajax
+Route::get('total-price-order-all-search', 'OrderController@totalPriceAllSearch'); //ajax
+Route::get('total-price-order-search', 'OrderController@totalPriceSearch'); //ajax
 Route::post('create-order', 'OrderController@create');
 
 //xóa cache
-Route::get('/clear-cache', function() {
+Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
 
+Route::get('/map', 'MapController@index');
+
+Route::get('/', function () {
+    $config = array();
+    $config['center'] = 'New York, USA';
+    GMaps::initialize($config);
+    $map = GMaps::create_map();
+
+    echo $map['js'];
+    echo $map['html'];
+});
