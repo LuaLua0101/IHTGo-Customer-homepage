@@ -174,12 +174,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-<<<<<<< HEAD
         FarhanWazir\GoogleMaps\GMapsServiceProvider::class,
-=======
         Intervention\Image\ImageServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
->>>>>>> deb2fd518ed50a5ca8e0207c78736d91558b4ed5
     ],
 
     /*

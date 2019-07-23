@@ -44,15 +44,3 @@ Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
-
-Route::get('/map', 'MapController@index');
-
-Route::get('/', function () {
-    $config = array();
-    $config['center'] = 'New York, USA';
-    GMaps::initialize($config);
-    $map = GMaps::create_map();
-
-    echo $map['js'];
-    echo $map['html'];
-});
