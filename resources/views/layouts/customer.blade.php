@@ -57,9 +57,11 @@
                         <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>{{ __('messages.about_us') }}</strong></a></li>
                         <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>{{ __('messages.price_list') }}</strong></a></li>
                         <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>{{ __('messages.news') }}</strong></a></li>
-                        <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i> EN</a></li>
-
+                        @if(app()->getLocale()=='vi')
+                        <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i>EN</a></li>
+                        @else
                         <li><a href="{{ url('locale/vi') }}"><i class="fa fa-language"></i> VI</a></li>
+                        @endif
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
@@ -123,7 +125,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="sender_province_id" name="sender_province_id">
-                                        <option value="0">Vui lòng chọn tỉnh - thành phố(*)</option>
+                                        <option value="0">{{ __('messages.please_select_province_city') }}(*)</option>
                                         @foreach($province as $p)
                                         <option value="{{$p->province_id}}">{{$p->name}}</option>
                                         @endforeach
@@ -136,7 +138,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="sender_district_id" name="sender_district_id">
-                                        <option>Vui lòng chọn quận - huyện(*)</option>
+                                        <option>{{ __('messages.please_select_district') }}(*)</option>
 
                                     </select>
                                 </div>
@@ -174,7 +176,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="receive_province_id" name="receive_province_id">
-                                        <option>Vui lòng chọn tỉnh - thành phố(*)</option>
+                                        <option>{{ __('messages.please_select_province_city') }}(*)</option>
                                         @foreach($province as $p)
                                         <option value="{{$p->province_id}}">{{$p->name}}</option>
                                         @endforeach
@@ -186,7 +188,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="receive_district_id" name="receive_district_id">
-                                        <option value="0">Vui lòng chọn quận - huyện(*)</option>
+                                        <option value="0">{{ __('messages.please_select_district') }}(*)</option>
                                     </select>
                                 </div>
                             </div>
@@ -450,19 +452,19 @@
                         </div>
                         <div class=" row">
                             <div class="formRadio col-md-12">
-                                <label class="col-md-3">Loại khách hàng: </label>
-                                <label class="container col-md-2">Cá nhân
+                                <label class="col-md-3">{{ __('messages.customer_type') }}: </label>
+                                <label class="container col-md-2">{{ __('messages.personal') }}
                                     <input type="radio" checked="checked" name="type" id='rdoPersonal' value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container col-md-3">Doanh nghiệp
+                                <label class="container col-md-3">{{ __('messages.company') }}
                                     <input type="radio" name="type" id='rdoCompany' value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group" id="listCompany">
-                            <label>Danh sách công ty:</label>
+                            <label>{{ __('messages.list_of_companies') }}:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" style="width: 100%" id="company_id" name="company_id">
@@ -474,7 +476,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnRegister' disabled>LƯU</button>
+                        <button type="submit" class="btn btnSave" id='btnRegister' disabled>{{ __('messages.save') }}</button>
                     </div>
                 </form>
             </div>
@@ -489,14 +491,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">THÔNG TIN CÁ NHÂN</h4>
+                        <h4 class="modal-title">{{ __('messages.personal_information') }}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <span class="text-danger" id='error-name3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="Họ và Tên" name="name" id="name3" value="{{Auth::user()->name}}">
+                                <input type="text" class="form-control" placeholder="{{__('messages.name') }}" name="name" id="name3" value="{{Auth::user()->name}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -510,7 +512,7 @@
                             <span class="text-danger" id='error-phone3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="Số điện thoại" disabled value="{{Auth::user()->phone}}">
+                                <input type="tel" class="form-control" placeholder="{{__('messages.phone') }}" disabled value="{{Auth::user()->phone}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -518,21 +520,20 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                 @if($customer==null)
-                                <input type="text" class="form-control" name="address" id="address3" placeholder="Địa chỉ" value="">
+                                <input type="text" class="form-control" name="address" id="address3" placeholder="{{__('messages.address') }}" value="">
                                 @else
-                                <input type="text" class="form-control" name="address" id="address3" placeholder="Địa chỉ" value="{{$customer->address}}">
+                                <input type="text" class="form-control" name="address" id="address3" placeholder="{{__('messages.address') }}" value="{{$customer->address}}">
                                 @endif
                             </div>
                         </div>
 
                         <div class=" row">
                             <div class="formRadio col-md-12">
-                                <label class="col-md-3">Loại khách hàng: </label>
-                                <label class="container col-md-2">Cá nhân
+                                <label class="container col-md-2">{{__('messages.personal') }}
                                     <input type="radio" name="radio" {{($customer->type == 1) ? 'checked' :null}} id='rdoPersonal2'>
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container col-md-3">Doanh nghiệp
+                                <label class="container col-md-3">{{__('messages.company') }}
                                     <input type="radio" name="radio" {{($customer->type == 2) ? 'checked' :null}} id='rdoCompany2'>
                                     <span class="checkmark"></span>
                                 </label>
@@ -540,7 +541,7 @@
                         </div>
                         @if($customer->type == 2 )
                         <div class="form-group" id="listCompany2">
-                            <label>Danh sách công ty:</label>
+                            <label>{{ __('messages.list_of_companies') }}:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
@@ -552,7 +553,7 @@
                         </div>
                         @else
                         <div class="form-group" id="listCompany2" style="display:none">
-                            <label>Danh sách công ty:</label>
+                            <label>{{__('messages.list_of_companies') }}:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
@@ -560,14 +561,13 @@
                                     <option value="{{$c->id}}">{{$c->name}}</option>
                                     @endforeach
                                 </select>
-
                             </div>
                         </div>
                         @endif
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnInfoUser' disabled>Lưu</button>
+                        <button type="submit" class="btn btnSave" id='btnInfoUser' disabled>{{__('messages.save') }}</button>
                     </div>
                 </div>
             </form>
@@ -582,33 +582,33 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">ĐỔI MẬT KHẨU</h4>
+                        <h4 class="modal-title">{{__('messages.change_password') }}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Mật khẩu hiện tại:<span class="text-danger" id='error-current-password4'></span></label>
+                            <label>{{__('messages.current_password') }}:<span class="text-danger" id='error-current-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="Mật khẩu hiện tại">
+                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="{{__('messages.current_password') }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Mật khẩu mới:<span class="text-danger" id='error-new-password4'></span></label>
+                            <label>{{__('messages.password') }}:<span class="text-danger" id='error-new-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="Mật khẩu mới">
+                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="{{__('messages.password') }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Xác nhận mật khẩu:<span class="text-danger" id='error-re-password4'></span></label>
+                            <label>{{__('messages.confirm_password') }}:<span class="text-danger" id='error-re-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="Xác nhận mật khẩu">
+                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="{{__('messages.confirm_password') }}">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>LƯU</button>
+                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>{{__('messages.save') }}</button>
                     </div>
                 </div>
             </form>
@@ -662,11 +662,11 @@
         <div class="container-fluid footer-middle">
             <div class="w100">
                 <div class="col-md-6 footMid1stCol">
-                    <p class="text-uppercase"><strong>IHT GO một thành viên của IHT LOGISTICS co., LTD</strong></p>
+                    <p class="text-uppercase"><strong>IHT Go</strong></p>
                     <ul class="list-unstyled">
-                        <li>Địa chỉ: số 8 Bà Triệu, Tòa nhà THÀNH AN, P.12, Q.5, TP.HCM</li>
-                        <li>ĐT: (028) 38380888</li>
-                        <li>MST: 0310212371</li>
+                        <li>{{__('messages.address') }}: {{__('messages.address_hcm_8_ba_trieu') }}</li>
+                        <li>{{__('messages.phone') }}: (028) 38380888</li>
+                        <li>{{__('messages.tax_code') }}: 0310212371</li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -677,12 +677,69 @@
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <p><strong>HỆ THỐNG CHI NHÁNH</strong></p>
-                    <ul class="list-unstyled">
-                        <li><a class="decNone" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Hồ Chí Minh</a></li>
-                        <li><a class="decNone" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Bình Dương</a></li>
-                        <li><a class="decNone" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span> Chi nhánh kho Đồng Nai</a></li>
-                    </ul>
+                    <p class="text-uppercase"><strong> {{__('messages.branch_system') }}</strong></p>
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        {{__('messages.hcm_branch') }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">{{__('messages.address_hcm_8_ba_trieu') }}</li>
+                                        <li class="list-group-item">{{__('messages.address_hcm_6') }}</li>
+                                        <li class="list-group-item">{{__('messages.address_hcm_12') }}</li>
+                                        <li class="list-group-item">{{__('messages.address_hcm_binh_chanh') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        {{__('messages.bd_branch') }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                <ul class="list-group">
+                                        <li class="list-group-item">{{__('messages.address_bd_my_phuoc') }}</li>
+                                        <li class="list-group-item">{{__('messages.address_bd_td1') }}</li>
+                                        <li class="list-group-item">{{__('messages.address_bd_thuan_an') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        {{__('messages.dn_branch') }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                <ul class="list-group">
+                                        <li class="list-group-item">{{__('messages.address_dn_bien_hoa') }}</li>
+                                        <li class="list-group-item">{{__('messages.address_dn_nhon_trach') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- panel-group -->
                 </div>
             </div>
         </div>
@@ -720,12 +777,22 @@
     <!------------------------------------Custom JS---------------------------------------->
     <script src="{{ URL::asset('public/user/js/usercustom.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-    <script>
-        function readURL(event, id) {
-            var output = document.getElementById('img' + id);
-            output.src = URL.createObjectURL(event.target.files[0]);
-        }; <
-        /body>
 
-        <
-        /html>
+</body>
+
+</html>
+<script>
+    function readURL(event, id) {
+        var output = document.getElementById('img' + id);
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    function toggleIcon(e) {
+        $(e.target)
+            .prev('.panel-heading')
+            .find(".more-less")
+            .toggleClass('glyphicon-plus glyphicon-minus');
+    }
+    $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+    $('.panel-group').on('shown.bs.collapse', toggleIcon);
+</script>

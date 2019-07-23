@@ -666,7 +666,6 @@ $(function () {
             url: 'districtOfProvince/' + Id,
             success: function (data) {
                 $("#receive_district_id").empty();
-                $("#receive_district_id").append("<option value ='0'>Vui lòng chọn quận - huyện(*) </option>");
                 data.forEach(function (item) {
                     $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
                 })
@@ -686,7 +685,6 @@ $(function () {
             url: 'districtOfProvince/' + Id,
             success: function (data) {
                 $("#sender_district_id").empty();
-                $("#sender_district_id").append("<option value ='0'>Vui lòng chọn quận - huyện(*) </option>");
                 data.forEach(function (item) {
                     $("#sender_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
                 })
@@ -739,7 +737,6 @@ $(function () {
                         url: 'districtOfProvince/' + Id,
                         success: function (data) {
                             $("#receive_district_id").empty();
-                            // $("#receive_district_id").append("<option value ='0'>Vui lòng chọn quận - huyện(*) </option>");
                             data.forEach(function (item) {
                                 $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
                             });
