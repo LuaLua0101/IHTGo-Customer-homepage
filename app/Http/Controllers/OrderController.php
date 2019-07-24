@@ -69,4 +69,9 @@ class OrderController extends Controller
             return $ex;
         }
     }
+    public function printOrder($id)
+    {
+        $order = Order::detail($id);
+        return view('print-order')->with('order', $order);;
+    }
 }

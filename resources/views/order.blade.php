@@ -50,6 +50,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>{{ __('messages.code_orders') }}</th>
                                     <th>{{ __('messages.order_name') }}</th>
                                     <th>{{ __('messages.status') }}</th>
@@ -63,7 +64,8 @@
                             <tbody>
                                 @foreach($order as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="print-order/id={{$o->id}}" target="_blank"> <i class="fas fa-print"></i></a></td>
+                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}" >
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>

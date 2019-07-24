@@ -38,6 +38,8 @@ Route::get('total-price-order', 'OrderController@totalPrice'); //ajax
 Route::get('total-price-order-all-search', 'OrderController@totalPriceAllSearch'); //ajax
 Route::get('total-price-order-search', 'OrderController@totalPriceSearch'); //ajax
 Route::post('create-order', 'OrderController@create');
+//print
+Route::get('print-order/id={order_id?}','OrderController@printOrder');
 
 //xóa cache
 Route::get('/clear-cache', function () {

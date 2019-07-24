@@ -232,43 +232,9 @@
             <!--END Three Col IHT Service-->
         </div>
         <div class="clearfix"></div>
-
-        <!------------------Price List------------------->
-        <div class="pricelist-section">
-            <div class="w100 center-text" style="padding-bottom: 1%;">
-                <h2 class="col-sm-12" style="margin-bottom: -1%"><span style="font-size: 24px;"><strong>BẢNG GIÁ DỊCH VỤ</strong></span></h2>
-            </div>
-            <div class="h20px"></div>
-            <div class="carousel slide" id="pricelist-carousel-slide" data-ride="carousel" data-interval="5000" data-pause="hover">
-                <!--Indicator-->
-                <ol class="carousel-indicators">
-                    <li data-target="#pricelist-carousel-slide" data-slide-to="0" class="active"></li>
-                    <li data-target="#pricelist-carousel-slide" data-slide-to="1"></li>
-                    <li data-target="#pricelist-carousel-slide" data-slide-to="2"></li>
-
-                </ol>
-                <!--Wrapper for slide-->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="public/Images/FileUpload/images/TrangChu/pricelist1-2.png" alt="bangbaogia" title="bangbaogia" />
-                    </div>
-                    <div class="item">
-                        <img src="public/Images/FileUpload/images/TrangChu/pricelist2.png" alt="bangbaogia" title="bangbaogia" />
-                    </div>
-                    <div class="item">
-                        <img src="public/Images/FileUpload/images/TrangChu/pricelist3-2.png" alt="bangbaogia" title="bangbaogia" />
-                    </div>
-
-
-                </div>
-                <!--Left & Right control-->
-
-            </div>
-        </div>
         <!--END Price List------------------->
         <!-------------------User Guide--------------------->
         <div class="container">
-            <div class="h50px"></div>
             <div class="row-fluid center-text">
                 <h2><span class="text-uppercase" style="font-size: 24px;"><strong>hướng dẫn sử dụng app</strong></span></h2>
             </div>
