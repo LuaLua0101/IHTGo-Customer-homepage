@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\ImageController;
+use App\Models\District;
 use Request;
 
 class Order
@@ -165,6 +166,48 @@ class Order
     {
         try {
             $user_id = Auth::user()->id;
+            $ship_money = 0;
+            //delivery_of_documents 
+            $district = District::findDistrict($data->receive_district_id);
+            if ($data->car_option == '2') {
+                if ($district->publish_2 == 1) {
+                    $ship_money = 70000;
+                } else {
+                    $ship_money = 140000;
+                }
+            } else {
+                $delivery_in_province = 70000;
+                $delivery_outside_province = 140000;
+                $weight = $data->weight;
+                $length = $data->length;
+                $width = $data->width;
+                $height = $data->height;
+                $size = ($length * $width * $height) / 5000;
+                //delivery_in_province
+                if ($data->car_option == '1') {
+                    if ($weight > 25) {
+                        $ship_money = ($weight * 3000) + $delivery_in_province;
+                    } else {
+                        if ($size < 25 || $size == 25) {
+                            $ship_money = $delivery_in_province;
+                        } else {
+                            $ship_money = ($size * 3) + $delivery_in_province;
+                        }
+                    }
+                }
+                //delivery_outside_province
+                if ($data->car_option == '3') {
+                    if ($weight > 25) {
+                        $ship_money = ($weight * 3000) + $delivery_outside_province;
+                    } else {
+                        if ($size < 25 || $size == 25) {
+                            $ship_money = $delivery_outside_province;
+                        } else {
+                            $ship_money = ($size * 3) + $delivery_outside_province;
+                        }
+                    }
+                }
+            }
             $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
                 [
                     'name' => $data->name,
@@ -180,6 +223,7 @@ class Order
                     'payment_type' => isset($data->payment_type)
                         && $data->payment_type !== "undefined"
                         && $data->payment_type !== null ? $data->payment_type : '1',
+                    'total_price' => $ship_money,
                 ]
             );
             $order_detail = DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(

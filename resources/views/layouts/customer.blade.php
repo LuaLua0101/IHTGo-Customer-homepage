@@ -54,9 +54,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>{{ __('messages.about_us') }}</strong></a></li>
-                        <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>{{ __('messages.price_list') }}</strong></a></li>
-                        <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>{{ __('messages.news') }}</strong></a></li>
+                        <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>@lang('messages.about_us')</strong></a></li>
+                        <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>@lang('messages.price_list') </strong></a></li>
+                        <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>@lang('messages.news')</strong></a></li>
                         @if(app()->getLocale()=='vi')
                         <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i>EN</a></li>
                         @else
@@ -65,15 +65,15 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
-                        <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>{{ __('messages.create_order') }}</strong></a></li>
-                        <li class="{{ Request::path() == 'don-hang' ? 'active' : '' }}"><a href="{!! url('don-hang'); !!}" id='don-hang'><strong>{{ __('messages.order_management') }}</strong></a></li>
+                        <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>@lang('messages.create_order') </strong></a></li>
+                        <li class="{{ Request::path() == 'don-hang' ? 'active' : '' }}"><a href="{!! url('don-hang'); !!}" id='don-hang'><strong>@lang('messages.order_management') </strong></a></li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ __('messages.hello') }} {{Auth::user()->name}}<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">@lang('messages.hello') {{Auth::user()->name}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#" data-toggle="modal" data-target="#InfoUser">{{ __('messages.personal_information') }}</a></li>
-                                <li><a href="#" data-toggle="modal" data-target="#ChangePassword">{{ __('messages.change_password') }}</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#InfoUser">@lang('messages.personal_information') </a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#ChangePassword">@lang('messages.change_password')</a></li>
                                 <li><a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">{{ __('messages.log_out') }}
+                                                            document.getElementById('logout-form').submit();">@lang('messages.log_out')
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -82,8 +82,8 @@
                         </li>
 
                         @else
-                        <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> {{ __('messages.login') }}</a></li>
-                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> {{ __('messages.registration') }}</a></li>
+                        <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> @lang('messages.login') </a></li>
+                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> @lang('messages.registration') </a></li>
                         @endif
                     </ul>
                 </div>
@@ -101,23 +101,23 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{ __('messages.create_order') }}</h4>
+                        <h4 class="modal-title">@lang('messages.create_order')</h4>
                     </div>
                     <div class="modal-body row">
                         <div class="col-md-6">
-                            <h4>{{ __('messages.sender_information') }}(*)</h4>
+                            <h4>@lang('messages.sender_information') (*)</h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-name'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="{{ __('messages.name') }}(*)" value="{{Auth::user()->name}}">
+                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="@lang('messages.name')(*)" value="{{Auth::user()->name}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-phone'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="tel" class="form-control" name="sender_phone" id="sender_phone" placeholder="{{ __('messages.phone') }}(*)" value="{{Auth::user()->phone}}">
+                                    <input type="number" class="form-control" name="sender_phone" id="sender_phone" placeholder="@lang('messages.phone') (*)" value="{{Auth::user()->phone}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,7 +125,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="sender_province_id" name="sender_province_id">
-                                        <option value="0">{{ __('messages.please_select_province_city') }}(*)</option>
+                                        <option value="0">@lang('messages.please_select_province_city') (*)</option>
                                         @foreach($province as $p)
                                         <option value="{{$p->province_id}}">{{$p->name}}</option>
                                         @endforeach
@@ -138,7 +138,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="sender_district_id" name="sender_district_id">
-                                        <option>{{ __('messages.please_select_district') }}(*)</option>
+                                        <option>@lang('messages.please_select_district') (*)</option>
 
                                     </select>
                                 </div>
@@ -148,27 +148,27 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     @if($customer==null)
-                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="{{ __('messages.sender_address') }}(*)">
+                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="@lang('messages.sender_address') (*)">
                                     @else
-                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="{{ __('messages.sender_address') }}(*)" value="{{$customer->address}}">
+                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="@lang('messages.sender_address') (*)" value="{{$customer->address}}">
                                     @endif
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4>{{ __('messages.receiver_information') }}(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
+                            <h4>@lang('messages.receiver_information')(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-name'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                    <input type="text" class="form-control" name="receive_name" id="receive_name" placeholder="{{ __('messages.name') }}(*)">
+                                    <input type="text" class="form-control" name="receive_name" id="receive_name" placeholder="@lang('messages.name') (*)">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-phone'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="tel" class="form-control" name="receive_phone" id="receive_phone" placeholder="{{ __('messages.phone') }}(*)">
+                                    <input type="number" class="form-control" name="receive_phone" id="receive_phone" placeholder="@lang('messages.phone') (*)">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -176,7 +176,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="receive_province_id" name="receive_province_id">
-                                        <option>{{ __('messages.please_select_province_city') }}(*)</option>
+                                        <option>@lang('messages.please_select_province_city')(*)</option>
                                         @foreach($province as $p)
                                         <option value="{{$p->province_id}}">{{$p->name}}</option>
                                         @endforeach
@@ -188,7 +188,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="receive_district_id" name="receive_district_id">
-                                        <option value="0">{{ __('messages.please_select_district') }}(*)</option>
+                                        <option value="0">@lang('messages.please_select_district') (*)</option>
                                     </select>
                                 </div>
                             </div>
@@ -196,64 +196,63 @@
                                 <span class="text-danger" id='error-receive-address'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                    <input type="text" class="form-control" id="receive_address" name="receive_address" placeholder="{{ __('messages.receiver_address') }}(*)">
+                                    <input type="text" class="form-control" id="receive_address" name="receive_address" placeholder="@lang('messages.receiver_address') (*)">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <h4>{{ __('messages.order_information') }}(*)</h4>
+                            <h4>@lang('messages.order_information') (*)</h4>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-box-open"></i></span>
-                                    <input type="text" class="form-control" placeholder="{{ __('messages.order_name') }}" id="name" name="name">
+                                    <input type="text" class="form-control" placeholder="@lang('messages.order_name') " id="name" name="name">
                                 </div>
                             </div>
-                            <label class="title-form">{{ __('messages.size') }} (cm)= ({{ __('messages.length') }} * {{ __('messages.width') }} * {{ __('messages.height') }})/5000</label> <span class="text-danger" id='error-size-order'></span>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4" id='form-length'>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="text" class="form-control" placeholder="{{ __('messages.length') }}(cm)*" id="length" name="length">
+                                        <input type="number" class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4" id='form-width'>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="text" class="form-control" placeholder="{{ __('messages.width') }}(cm)*" id="width" name="width">
+                                        <input type="number" class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4" id='form-height'>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="text" class="form-control" placeholder="{{ __('messages.height') }}(cm)*" id="height" name="height">
+                                        <input type="number" class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id='form-weight'>
                                 <span class="text-danger" id='error-weight-order'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
-                                    <input type="text" class="form-control" placeholder="{{ __('messages.weight') }}(< 25kg)*" id="weight" name="weight">
+                                    <input type="text" class="form-control" placeholder="@lang('messages.weight') *" id="weight" name="weight">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-hand-holding-usd"></i></span>
-                                    <input type="text" class="form-control" placeholder="{{ __('messages.cash_on_delivery') }}(VND)" id="take_money" name="take_money">
+                                    <input type="number" class="form-control" placeholder="@lang('messages.cash_on_delivery') (VND)" id="take_money" name="take_money">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="custom-file col-md-4">
-                                    <label>{{ __('messages.photo_order') }}:<span class="text-danger" id='error-image-order'></span></label>
+                                    <label>@lang('messages.photo_order') :<span class="text-danger" id='error-image-order'></span></label>
                                     <div class="upload-btn-wrapper">
                                         <img id="img1" width="130" src="{{ URL::asset('public/images/Index/notfound.png') }}">
                                         <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-8">
-                                    <label>{{ __('messages.note') }}:<span class="text-danger" id='error-note-order'></span></label>
+                                    <label>@lang('messages.note') :<span class="text-danger" id='error-note-order'></span></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
                                         <textarea class="form-control" rows="5" name="note"></textarea>
@@ -263,50 +262,50 @@
                         </div>
                         <div class="col-md-6 col-sm-12 formRadio">
                             <div class="form-group col-md-6 col-sm-6 ">
-                                <label class="title-form">{{ __('messages.express_delivery') }}:</label>
-                                <label class="container">{{ __('messages.yes') }}
+                                <label class="title-form">@lang('messages.express_delivery') :</label>
+                                <label class="container">@lang('messages.yes')
                                     <input type="radio" checked="checked" name="is_speed" value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">{{ __('messages.no') }}
+                                <label class="container">@lang('messages.no')
                                     <input type="radio" name="is_speed" value="0">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="title-form">{{ __('messages.payer') }}:</label>
-                                <label class="container">{{ __('messages.receicer') }}
+                                <label class="title-form">@lang('messages.payer') :</label>
+                                <label class="container">@lang('messages.receicer')
                                     <input type="radio" name="payer" value="1" checked="checked">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">{{ __('messages.sender') }}
+                                <label class="container">@lang('messages.sender')
                                     <input type="radio" name="payer" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="form-group col-md-6 col-sm-12">
-                                <label class="title-form">{{ __('messages.case') }}:</label>
-                                <label class="container">{{ __('messages.delivery_in_province') }}
-                                    <input type="radio" checked="checked" name="car_option" value="1">
+                                <label class="title-form">@lang('messages.case') :</label>
+                                <label class="container">@lang('messages.delivery_in_province')
+                                    <input type="radio" checked="checked" name="car_option" value="1" id='delivery_in_province'>
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">{{ __('messages.delivery_outside_province') }}
-                                    <input type="radio" name="car_option" value="3">
+                                <label class="container">@lang('messages.delivery_outside_province')
+                                    <input type="radio" name="car_option" value="3" id='delivery_outside_province'>
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">{{ __('messages.delivery_of_documents') }}
-                                    <input type="radio" name="car_option" value="2">
+                                <label class="container">@lang('messages.delivery_of_documents')
+                                    <input type="radio" name="car_option" value="2" id='delivery_of_documents'>
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             @if($customer->type == 2)
                             <div class="form-group col-md-6 col-sm-12">
-                                <label class="title-form">{{ __('messages.payment_methods') }}:</label>
-                                <label class="container">{{ __('messages.cash') }}
+                                <label class="title-form">@lang('messages.payment_methods') :</label>
+                                <label class="container">@lang('messages.cash')
                                     <input type="radio" checked="checked" name="payment_type" value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container">{{ __('messages.monthly') }}
+                                <label class="container">@lang('messages.monthly')
                                     <input type="radio" name="payment_type" value="2">
                                     <span class="checkmark"></span>
                                 </label>
@@ -315,8 +314,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id="btnCreateOrder" data-toggle="modal" data-target="#orderConfirmation">{{ __('messages.save') }}</button>
-                        <button type="button" class="btnClose" data-dismiss="modal">{{ __('messages.close') }}</button>
+                        <button type="submit" class="btn btnSave" id="btnCreateOrder">@lang('messages.save') </button>
+                        <button type="button" class="btnClose" data-dismiss="modal">@lang('messages.close') </button>
                     </div>
                 </div>
             </form>
@@ -329,7 +328,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ __('messages.the_latest_recipient_history') }}</h4>
+                    <h4 class="modal-title">@lang('messages.the_latest_recipient_history') </h4>
                 </div>
                 <div class="modal-body formRadio">
                     @foreach($receive as $r)
@@ -340,29 +339,12 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">{{ __('messages.choose') }}</button>
+                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">@lang('messages.choose') </button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal  Order confirmation-->
-    <div id="orderConfirmation" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">xác nhận đơn hàng</h4>
-                </div>
-                <div class="modal-body formRadio">
-                    <p>Đơn hàng thành công</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">Chọn</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     @endif
     <!-- Modal login-->
     <div class="modal fade" id="Login" role="dialog">
@@ -372,26 +354,26 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{ __('messages.login') }}</h4>
+                        <h4 class="modal-title">@lang('messages.login') </h4>
                     </div>
                     <div class="modal-body ">
                         <div class="form-group">
                             <span class="text-danger" id='error-phone1'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id='phone1' name="phone" placeholder="{{ __('messages.phone') }}" required>
+                                <input type="text" class="form-control" id='phone1' name="phone" placeholder="@lang('messages.phone') " required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-password1'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" id='password1' name="password" placeholder="{{ __('messages.password') }}" required>
+                                <input type="password" class="form-control" id='password1' name="password" placeholder="@lang('messages.password') " required>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnLogin' disabled>{{ __('messages.login') }}</button>
+                        <button type="submit" class="btn btnSave" id='btnLogin' disabled>@lang('messages.login') </button>
                     </div>
                 </form>
             </div>
@@ -405,14 +387,14 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{ __('messages.become_a_ihtgo_customer_now') }}</h4>
+                        <h4 class="modal-title">@lang('messages.become_a_ihtgo_customer_now') </h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <span class="text-danger" id='error-name2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="{{ __('messages.name') }}" id='name2' name='name' required>
+                                <input type="text" class="form-control" placeholder="@lang('messages.name') " id='name2' name='name' required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -426,45 +408,45 @@
                             <span class="text-danger" id='error-phone2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="{{ __('messages.phone') }}" id='phone2' name=phone required>
+                                <input type="tel" class="form-control" placeholder="@lang('messages.phone') " id='phone2' name=phone required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-password2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="{{ __('messages.password') }}" name="password" id="password2" required>
+                                <input type="password" class="form-control" placeholder="@lang('messages.password') " name="password" id="password2" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-re-password2'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" class="form-control" placeholder="{{ __('messages.confirm_password') }}" name='re-password' id='re-password2' required>
+                                <input type="password" class="form-control" placeholder="@lang('messages.confirm_password') " name='re-password' id='re-password2' required>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="text-danger" id='error-sender-address'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                <input type="text" class="form-control" name="address" id="address" placeholder="{{ __('messages.address') }}">
+                                <input type="text" class="form-control" name="address" id="address" placeholder="@lang('messages.address') ">
                             </div>
                         </div>
                         <div class=" row">
                             <div class="formRadio col-md-12">
-                                <label class="col-md-3">{{ __('messages.customer_type') }}: </label>
-                                <label class="container col-md-2">{{ __('messages.personal') }}
+                                <label class="col-md-3">@lang('messages.customer_type') : </label>
+                                <label class="container col-md-2">@lang('messages.personal')
                                     <input type="radio" checked="checked" name="type" id='rdoPersonal' value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container col-md-3">{{ __('messages.company') }}
+                                <label class="container col-md-3">@lang('messages.company')
                                     <input type="radio" name="type" id='rdoCompany' value="2">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group" id="listCompany">
-                            <label>{{ __('messages.list_of_companies') }}:</label>
+                            <label>@lang('messages.list_of_companies') :</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" style="width: 100%" id="company_id" name="company_id">
@@ -476,7 +458,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnRegister' disabled>{{ __('messages.save') }}</button>
+                        <button type="submit" class="btn btnSave" id='btnRegister' disabled>@lang('messages.save') </button>
                     </div>
                 </form>
             </div>
@@ -491,14 +473,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{ __('messages.personal_information') }}</h4>
+                        <h4 class="modal-title">@lang('messages.personal_information') </h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <span class="text-danger" id='error-name3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="{{__('messages.name') }}" name="name" id="name3" value="{{Auth::user()->name}}">
+                                <input type="text" class="form-control" placeholder="@lang('messages.name')" name="name" id="name3" value="{{Auth::user()->name}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -512,7 +494,7 @@
                             <span class="text-danger" id='error-phone3'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" class="form-control" placeholder="{{__('messages.phone') }}" disabled value="{{Auth::user()->phone}}">
+                                <input type="tel" class="form-control" placeholder="@lang('messages.phone') " disabled value="{{Auth::user()->phone}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -520,20 +502,20 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                 @if($customer==null)
-                                <input type="text" class="form-control" name="address" id="address3" placeholder="{{__('messages.address') }}" value="">
+                                <input type="text" class="form-control" name="address" id="address3" placeholder="@lang('messages.address') " value="">
                                 @else
-                                <input type="text" class="form-control" name="address" id="address3" placeholder="{{__('messages.address') }}" value="{{$customer->address}}">
+                                <input type="text" class="form-control" name="address" id="address3" placeholder="@lang('messages.address') " value="{{$customer->address}}">
                                 @endif
                             </div>
                         </div>
 
                         <div class=" row">
                             <div class="formRadio col-md-12">
-                                <label class="container col-md-2">{{__('messages.personal') }}
+                                <label class="container col-md-2">@lang('messages.personal')
                                     <input type="radio" name="radio" {{($customer->type == 1) ? 'checked' :null}} id='rdoPersonal2'>
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container col-md-3">{{__('messages.company') }}
+                                <label class="container col-md-3">@lang('messages.company')
                                     <input type="radio" name="radio" {{($customer->type == 2) ? 'checked' :null}} id='rdoCompany2'>
                                     <span class="checkmark"></span>
                                 </label>
@@ -541,7 +523,7 @@
                         </div>
                         @if($customer->type == 2 )
                         <div class="form-group" id="listCompany2">
-                            <label>{{ __('messages.list_of_companies') }}:</label>
+                            <label>@lang('messages.list_of_companies') :</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
@@ -553,7 +535,7 @@
                         </div>
                         @else
                         <div class="form-group" id="listCompany2" style="display:none">
-                            <label>{{__('messages.list_of_companies') }}:</label>
+                            <label>@lang('messages.list_of_companies') :</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-building"></i></span>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
@@ -567,7 +549,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnInfoUser' disabled>{{__('messages.save') }}</button>
+                        <button type="submit" class="btn btnSave" id='btnInfoUser' disabled>@lang('messages.save') </button>
                     </div>
                 </div>
             </form>
@@ -582,33 +564,33 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{__('messages.change_password') }}</h4>
+                        <h4 class="modal-title">@lang('messages.change_password') }}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>{{__('messages.current_password') }}:<span class="text-danger" id='error-current-password4'></span></label>
+                            <label>@lang('messages.current_password') }}:<span class="text-danger" id='error-current-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="{{__('messages.current_password') }}">
+                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="@lang('messages.current_password') }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{__('messages.password') }}:<span class="text-danger" id='error-new-password4'></span></label>
+                            <label>@lang('messages.password') }}:<span class="text-danger" id='error-new-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="{{__('messages.password') }}">
+                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="@lang('messages.password') }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{__('messages.confirm_password') }}:<span class="text-danger" id='error-re-password4'></span></label>
+                            <label>@lang('messages.confirm_password') }}:<span class="text-danger" id='error-re-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="{{__('messages.confirm_password') }}">
+                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="@lang('messages.confirm_password') }}">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>{{__('messages.save') }}</button>
+                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>@lang('messages.save') }}</button>
                     </div>
                 </div>
             </form>
@@ -664,9 +646,9 @@
                 <div class="col-md-6 footMid1stCol">
                     <p class="text-uppercase"><strong>IHT Go</strong></p>
                     <ul class="list-unstyled">
-                        <li>{{__('messages.address') }}: {{__('messages.address_hcm_8_ba_trieu') }}</li>
-                        <li>{{__('messages.phone') }}: (028) 38380888</li>
-                        <li>{{__('messages.tax_code') }}: 0310212371</li>
+                        <li>@lang('messages.address') : @lang('messages.address_hcm_8_ba_trieu') </li>
+                        <li>@lang('messages.phone') : (028) 38380888</li>
+                        <li>@lang('messages.tax_code') : 0310212371</li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -677,7 +659,7 @@
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <p class="text-uppercase"><strong> {{__('messages.branch_system') }}</strong></p>
+                    <p class="text-uppercase"><strong> @lang('messages.branch_system') </strong></p>
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
                         <div class="panel panel-default">
@@ -685,17 +667,17 @@
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
-                                        {{__('messages.hcm_branch') }}
+                                        @lang('messages.hcm_branch')
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     <ul class="list-group">
-                                        <li class="list-group-item">{{__('messages.address_hcm_8_ba_trieu') }}</li>
-                                        <li class="list-group-item">{{__('messages.address_hcm_6') }}</li>
-                                        <li class="list-group-item">{{__('messages.address_hcm_12') }}</li>
-                                        <li class="list-group-item">{{__('messages.address_hcm_binh_chanh') }}</li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_8_ba_trieu') }}">@lang('messages.address_hcm_8_ba_trieu') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_6') }}">@lang('messages.address_hcm_6') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_12') }}">@lang('messages.address_hcm_12') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_binh_chanh') }}">@lang('messages.address_hcm_binh_chanh') </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -705,16 +687,16 @@
                                 <h4 class="panel-title">
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
-                                        {{__('messages.bd_branch') }}
+                                        @lang('messages.bd_branch')
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                 <div class="panel-body">
-                                <ul class="list-group">
-                                        <li class="list-group-item">{{__('messages.address_bd_my_phuoc') }}</li>
-                                        <li class="list-group-item">{{__('messages.address_bd_td1') }}</li>
-                                        <li class="list-group-item">{{__('messages.address_bd_thuan_an') }}</li>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_bd_my_phuoc') ">@lang('messages.address_bd_my_phuoc') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_bd_td1') ">@lang('messages.address_bd_td1') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_bd_thuan_an') ">@lang('messages.address_bd_thuan_an') </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -725,15 +707,15 @@
                                 <h4 class="panel-title">
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
-                                        {{__('messages.dn_branch') }}
+                                        @lang('messages.dn_branch')
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                 <div class="panel-body">
-                                <ul class="list-group">
-                                        <li class="list-group-item">{{__('messages.address_dn_bien_hoa') }}</li>
-                                        <li class="list-group-item">{{__('messages.address_dn_nhon_trach') }}</li>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_dn_bien_hoa') ">@lang('messages.address_dn_bien_hoa') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_dn_nhon_trach')">@lang('messages.address_dn_nhon_trach') </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -755,7 +737,26 @@
         </span>
     </div>
     <a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button" title="Nhấn vào đây để trở về trang đầu" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
-
+    <script>
+        var error_name = <?php echo json_encode(@lang('messages.error_name'));?>;
+        var error_phone = '@lang('messages.error_phone')';
+        var error_check_phone = '@lang('messages.error_check_phone')';
+        var error_phone_has_been_used = '@lang('messages.error_phone_has_been_used')';
+        var error_email = '@lang('messages.error_email')';
+        var error_check_email = '@lang('messages.error_check_email')';
+        var error_email_has_been_used = '@lang('messages.error_email_has_been_used')';
+        var error_password = '@lang('messages.error_password')';
+        var error_re_password = '@lang('messages.error_re_password')';
+        var error_current_password = '@lang('messages.error_current_password')';
+        var error_length_password = '@lang('messages.error_length_password')';
+        var error_address = '@lang('messages.error_address')';
+        var error_province = '@lang('messages.error_province')';
+        var error_district = '@lang('messages.error_district')';
+        var error_length = '@lang('messages.error_length')';
+        var error_width = '@lang('messages.error_width')';
+        var error_height = '@lang('messages.error_height')';
+        var error_weight = '@lang('messages.error_weight')';
+    </script>
     <!---------------------------------Jquery JS------------------------------------------>
     <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
 
@@ -781,6 +782,7 @@
 </body>
 
 </html>
+
 <script>
     function readURL(event, id) {
         var output = document.getElementById('img' + id);

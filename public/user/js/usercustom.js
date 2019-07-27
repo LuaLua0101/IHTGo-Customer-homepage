@@ -194,13 +194,14 @@ $(function () {
         }
     });
     //------------------------Raymond edit----------------------
+
     //validate form login--------------
     $("#phone1").blur(function () {
         var phone = $.trim($("#phone1").val());
         if (phone == '') {
-            $('#error-phone1').text('Số điện thoại không được trống');
+            $('#error-phone1').text(error_phone);
         } else if (!checkPhoneNumber(phone)) {
-            $('#error-phone1').text('Số điện thoại không đúng định dạng');
+            $('#error-phone1').text(error_check_phone);
         } else {
             $('#error-phone1').text('');
         }
@@ -208,9 +209,9 @@ $(function () {
     $("#password1").blur(function () {
         var password = $.trim($("#password1").val());
         if (password == '') {
-            $('#error-password1').text('Mật khẩu không được trống');
+            $('#error-password1').text(error_password);
         } else if (password.length < 6) {
-            $('#error-password1').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#error-password1').text(error_re_password);
         } else {
             $('#error-password1').text('');
         }
@@ -229,7 +230,7 @@ $(function () {
     $("#name2").blur(function () {
         var name = $.trim($("#name2").val());
         if (name == '') {
-            $('#error-name2').text('Họ Tên không được trống');
+            $('#error-name2').text(error_name);
         } else {
             $('#error-name2').text('');
         }
@@ -242,12 +243,12 @@ $(function () {
             url: 'checkExistEmail/' + email,
             success: function (data) {
                 if (data != 200) {
-                    $('#error-email2').text('Email đã được sử dụng');
+                    $('#error-email2').text(error_email_has_been_used);
                 } else {
                     if (email == '') {
-                        $('#error-email2').text('Email không được trống');
+                        $('#error-email2').text(error_email);
                     } else if (!isEmail(email)) {
-                        $('#error-email2').text('Email không đúng định dạng');
+                        $('#error-email2').text(error_check_email);
                     } else {
                         $('#error-email2').text('');
                     }
@@ -271,9 +272,9 @@ $(function () {
                     $('#error-phone2').text('Số điện thoại đã được sử dụng');
                 } else {
                     if (phone == '') {
-                        $('#error-phone2').text('Số điện thoại không được trống');
+                        $('#error-phone2').text('Vui lòng nhập số điện thoại');
                     } else if (!checkPhoneNumber(phone)) {
-                        $('#error-phone2').text('Số điện thoại không đúng định dạng');
+                        $('#error-phone2').text('Vui lòng nhập số điện thoại hợp lệ(vd: 0912345678)');
                     }
                     else {
                         $('#error-phone2').text('');
@@ -290,7 +291,7 @@ $(function () {
     $("#password2").blur(function () {
         var password = $.trim($("#password2").val());
         if (password == '') {
-            $('#error-password2').text('Mật khẩu không được trống');
+            $('#error-password2').text('Vui lòng nhập mật khẩu');
         } else if (password.length < 6) {
             $('#error-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
         } else {
@@ -301,7 +302,7 @@ $(function () {
         var password = $.trim($("#password2").val());
         var re_password = $.trim($("#re-password2").val());
         if (re_password == '') {
-            $('#error-re-password2').text('Mật khẩu không được trống');
+            $('#error-re-password2').text('Vui lòng nhập mật khẩu');
         } else if (re_password.length < 6) {
             $('#error-re-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
         }
@@ -339,7 +340,7 @@ $(function () {
     $("#name3").blur(function () {
         var name = $.trim($("#name3").val());
         if (name == '') {
-            $('#error-name3').text('Họ Tên không được trống');
+            $('#error-name3').text('Vui lòng nhập Họ & Tên');
         } else {
             $('#error-name3').text('');
         }
@@ -347,7 +348,7 @@ $(function () {
     $("#address3").blur(function () {
         var name = $.trim($("#address3").val());
         if (name == '') {
-            $('#error-address3').text('Địa chỉ không được trống');
+            $('#error-address3').text('Vui lòng nhập địa chỉ');
         } else {
             $('#error-address3').text('');
         }
@@ -377,7 +378,7 @@ $(function () {
                     $('#error-current-password4').text('Password không trùng khớp');
                 } else {
                     if (password == '') {
-                        $('#error-current-password4').text('Mật khẩu không được trống');
+                        $('#error-current-password4').text('Vui lòng nhập mật khẩu');
                     } else if (password.length < 6) {
                         $('#error-current-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
                     } else {
@@ -395,7 +396,7 @@ $(function () {
     $("#new-password4").blur(function () {
         var password = $.trim($("#new-password4").val());
         if (password == '') {
-            $('#error-new-password4').text('Mật khẩu không được trống');
+            $('#error-new-password4').text('Vui lòng nhập mật khẩu');
         } else if (password.length < 6) {
             $('#error-new-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
         } else {
@@ -406,7 +407,7 @@ $(function () {
         var password = $.trim($("#new-password4").val());
         var re_password = $.trim($("#re-password4").val());
         if (re_password == '') {
-            $('#error-re-password4').text('Mật khẩu không được trống');
+            $('#error-re-password4').text('Vui lòng nhập mật khẩu');
         } else if (re_password.length < 6) {
             $('#error-re-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
         }
@@ -479,7 +480,7 @@ $(function () {
     $("#sender_name").blur(function () {
         var name = $.trim($("#sender_name").val());
         if (name == '') {
-            $('#error-sender-name').text('Họ Tên không được trống');
+            $('#error-sender-name').text(sendername);
         } else {
             $('#error-sender-name').text('');
         }
@@ -487,9 +488,9 @@ $(function () {
     $("#sender_phone").blur(function () {
         var phone = $.trim($("#sender_phone").val());
         if (phone == '') {
-            $('#error-sender-phone').text('Số điện thoại không được trống');
+            $('#error-sender-phone').text('Vui lòng nhập số điện thoại');
         } else if (!checkPhoneNumber(phone)) {
-            $('#error-sender-phone').text('Số điện thoại không đúng định dạng');
+            $('#error-sender-phone').text('Vui lòng nhập số điện thoại hợp lệ(vd: 0912345678)');
         }
         else {
             $('#error-sender-phone').text('');
@@ -498,7 +499,7 @@ $(function () {
     $("#sender_province_id").blur(function () {
         var province = $.trim($("#sender_province_id").val());
         if (province == '' || province == 0) {
-            $('#error-sender-province-id').text('Tỉnh-thành phố không được trống');
+            $('#error-sender-province-id').text('Vui lòng nhập Tỉnh-Thành Phố');
         } else {
             $('#error-sender-province-id').text('');
         }
@@ -506,7 +507,7 @@ $(function () {
     $("#sender_district_id").blur(function () {
         var district = $.trim($("#sender_district_id").val());
         if (district == '' || district == 0) {
-            $('#error-sender-district-id').text('Quận - huyện không được trống');
+            $('#error-sender-district-id').text('Vui lòng nhập Quận-Huyện');
         } else {
             $('#error-sender-district-id').text('');
         }
@@ -514,7 +515,7 @@ $(function () {
     $("#sender_address").blur(function () {
         var address = $.trim($("#sender_address").val());
         if (address == '') {
-            $('#error-sender-address').text('Địa chỉ không được trống');
+            $('#error-sender-address').text('Vui lòng nhập địa chỉ');
         } else {
             $('#error-sender-address').text('');
         }
@@ -522,7 +523,7 @@ $(function () {
     $("#receive_name").blur(function () {
         var name = $.trim($("#receive_name").val());
         if (name == '') {
-            $('#error-receive-name').text('Họ Tên không được trống');
+            $('#error-receive-name').text('Vui lòng nhập Họ & Tên');
         } else {
             $('#error-receive-name').text('');
         }
@@ -530,9 +531,9 @@ $(function () {
     $("#receive_phone").blur(function () {
         var phone = $.trim($("#receive_phone").val());
         if (phone == '') {
-            $('#error-receive-phone').text('Số điện thoại không được trống');
+            $('#error-receive-phone').text('Vui lòng nhập số điện thoại');
         } else if (!checkPhoneNumber(phone)) {
-            $('#error-receive-phone').text('Số điện thoại không đúng định dạng');
+            $('#error-receive-phone').text('Vui lòng nhập số điện thoại hợp lệ(vd: 0912345678)');
         } else {
             $('#error-receive-phone').text('');
         }
@@ -540,7 +541,7 @@ $(function () {
     $("#receive_province_id").blur(function () {
         var province = $.trim($("#receive_province_id").val());
         if (province == '' || province == 0) {
-            $('#error-receive-province-id').text('Tỉnh-thành phố không được trống');
+            $('#error-receive-province-id').text('Vui lòng nhập Tỉnh-Thành Phố');
         } else {
             $('#error-receive-province-id').text('');
         }
@@ -548,7 +549,7 @@ $(function () {
     $("#receive_district_id").blur(function () {
         var district = $.trim($("#receive_district_id").val());
         if (district == '' || district == 0) {
-            $('#error-receive-district-id').text('Quận - huyện không được trống');
+            $('#error-receive-district-id').text('Vui lòng nhập Quận-Huyện');
         } else {
             $('#error-receive-district-id').text('');
         }
@@ -556,7 +557,7 @@ $(function () {
     $("#receive_address").blur(function () {
         var address = $.trim($("#receive_address").val());
         if (address == '') {
-            $('#error-receive-address').text('Địa chỉ không được trống');
+            $('#error-receive-address').text('Vui lòng nhập địa chỉ');
         } else {
             $('#error-receive-address').text('');
         }
@@ -564,7 +565,7 @@ $(function () {
     $("#length").blur(function () {
         var length = $.trim($("#length").val());
         if (length == '') {
-            $('#error-size-order').text('Chiều dài không được trống');
+            $('#error-size-order').text('Vui lòng nhập chiều dài');
         } else {
             $('#error-size-order').text('');
         }
@@ -572,20 +573,9 @@ $(function () {
     $("#width").blur(function () {
         var width = $.trim($("#width").val());
         if (width == '') {
-            $('#error-size-order').text('Chiều rộng không được trống');
+            $('#error-size-order').text('Vui lòng nhập chiều rộng');
         } else {
             $('#error-size-order').text('');
-        }
-    });
-    $("#weight").blur(function () {
-        var weight = $.trim($("#weight").val());
-        if (weight == '') {
-            $('#error-weight-order').text('Trọng lượng không được trống');
-        } else if (weight > 25) {
-            $('#error-weight-order').text('Trọng lượng không được lớn hơn 25kg');
-        }
-        else {
-            $('#error-weight-order').text('');
         }
     });
     $("#formCreateOrder").change(function () {
@@ -599,26 +589,24 @@ $(function () {
         var receive_province_id = $("#receive_province_id").val();
         var receive_district_id = $("#receive_district_id").val();
         var receive_address = $.trim($("#receive_address").val());
-        var length = $.trim($("#length").val());
-        var width = $.trim($("#width").val());
-        var weight = $.trim($("#weight").val());
-
-        var flag = 0;
-        if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '' && length != '' && width != '' && weight != '') {
-            flag++;
+        if ($("#delivery_in_province").is(":checked")) {
+            $("#receive_province_id").val(sender_province_id);
         }
-        if (weight < 25) {
+        if ($("#delivery_outside_province").is(":checked")) {
+        }
+        var flag = 0;
+        if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '') {
             flag++;
         }
         if (checkPhoneNumber(sender_phone) && checkPhoneNumber(receive_phone)) {
             flag++;
         }
-        if (flag == 3) {
-            $('#btnCreateOrder').prop("disabled", false);
-        }
-        else {
-            $('#btnCreateOrder').prop("disabled", true);
-        }
+        // if (flag == 3) {
+        //     $('#btnCreateOrder').prop("disabled", false);
+        // }
+        // else {
+        //     $('#btnCreateOrder').prop("disabled", true);
+        // }
     });
 
     //validate email-----------
@@ -762,5 +750,23 @@ $(function () {
             }
         })
     });
-
+    //
+    $('#delivery_of_documents').change(function () {
+        $('#form-length').css('display', 'none');
+        $('#form-width').css('display', 'none');
+        $('#form-height').css('display', 'none');
+        $('#form-weight').css('display', 'none');
+    });
+    $('#delivery_in_province').change(function () {
+        $('#form-length').css('display', 'block');
+        $('#form-width').css('display', 'block');
+        $('#form-height').css('display', 'block');
+        $('#form-weight').css('display', 'block');
+    });
+    $('#delivery_outside_province').change(function () {
+        $('#form-length').css('display', 'block');
+        $('#form-width').css('display', 'block');
+        $('#form-height').css('display', 'block');
+        $('#form-weight').css('display', 'block');
+    });
 });
