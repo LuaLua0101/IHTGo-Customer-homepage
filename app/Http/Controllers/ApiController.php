@@ -64,7 +64,7 @@ class ApiController extends Controller
         }
 
         $user = Auth::user();
-        Device::sendMsgToDevice('eruXegJvFHg:APA91bEYwi85EFxglSQUaVokO8PTT3bAa2_gt260k0uURT53U205hG_igCz-WnhCkFaSziNCnRIVB8QF4tQBEvLcNm6xC57Q_R7s_UVdpOyda9ZGOwZhY8YLQ4Ha5MJXUDJlbVF99CoM', '13' . '34', []);
+        Device::sendMsgToDevice('euebX8Iv8Ac:APA91bF1dyWEGmjr1bGBMMxVy8COlKV60FvGLeaYN2wCFPALG-feASd0Iupd2lYbzyCDj907EJ1bm6g6559nTVpCUfpky7xt11V_aN4fe2zJctIW1ePihFj8qBfXYLS70k7RdKr2WLA5', '13' . '34', []);
         return response()->json([
             'token' => 'Bearer ' . $jwt_token,
             'id' => $user->id,
