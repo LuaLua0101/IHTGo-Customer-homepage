@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterAuthRequest;
 use App\Models\Device;
 use App\Models\District;
 use App\Models\Driver;
@@ -226,6 +225,16 @@ class ApiController extends Controller
     {
         try {
             Device::updateFcm(Auth::user()->id, $req->fcm);
+            return response()->json(200);
+        } catch (\Exception $e) {
+            return response()->json(e);
+        }
+    }
+
+    public function updateCustomerFCM(Request $req)
+    {
+        try {
+            Device::updateFcm($req->id, $req->fcm);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
