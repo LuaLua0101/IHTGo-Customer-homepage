@@ -298,7 +298,7 @@ class Order extends Model
     }
 
     //NAD
-    public static function detail($id)
+    public static function orderDetail($id)
     {
         $res = DB::table('orders')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')

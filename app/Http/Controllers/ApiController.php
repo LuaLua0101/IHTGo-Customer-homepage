@@ -184,7 +184,7 @@ class ApiController extends Controller
 
     public function detail($id)
     {
-        $order = Order::detail($id);
+        $order = Order::orderDetail($id);
         $sender_province = Province::where('province_id', $order->sender_province_id)->first();
         $sender_dist = District::find($order->sender_district_id);
         $receive_province = Province::where('province_id', $order->receive_province_id)->first();

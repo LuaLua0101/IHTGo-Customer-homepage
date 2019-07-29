@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
 
