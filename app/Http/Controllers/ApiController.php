@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterAuthRequest;
+use App\Models\District;
 use App\Models\Driver;
+use App\Models\Fcm;
+use App\Models\Order;
+use App\Models\Province;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -151,6 +155,76 @@ class ApiController extends Controller
             return response()->json($driver);
         } catch (\Exception $e) {
             return response()->json(['code' => 500]);
+        }
+    }
+
+    public function loadOrders(Request $req)
+    {
+        $page = $req->page ? $req->page : 0;
+        $type = $req->type ? $req->type : 0;
+        $driver = Driver::where('user_id', $this->jwt->user()->id)->firstOrFail();
+        if ($type == 0) {
+            $orders = Order::getAllOrderByDriver($driver->id, $page);
+        } else if ($type == 4) {
+            $orders = Order::getFinishOrderByDriver($driver->id, $page);
+        } else {
+            $orders = Order::getPendingOrderByDriver($driver->id, $page);
+        }
+        foreach ($orders as $order) {
+            $order->created_at = date("d-m-Y", strtotime($order->created_at));
+        }
+        return response()->json($orders);
+    }
+
+    public function getOrder(Request $req)
+    {
+        $order = Order::getOrderById($req->order_id);
+        return response()->json($order);
+    }
+
+    public function detail($id)
+    {
+        $order = Order::detail($id);
+        $sender_province = Province::where('province_id', $order->sender_province_id)->first();
+        $sender_dist = District::find($order->sender_district_id);
+        $receive_province = Province::where('province_id', $order->receive_province_id)->first();
+        $receive_dist = District::find($order->receive_district_id);
+
+        $order->sender_province_id = $sender_province ? $sender_province->name : '';
+        $order->sender_district_id = $sender_dist ? $sender_dist->name : '';
+        $order->receive_province_id = $receive_province ? $receive_province->name : '';
+        $order->receive_district_id = $receive_dist ? $receive_dist->name : '';
+        $order->created_at = date("d-m-Y", strtotime($order->created_at));
+        return response()->json($order);
+    }
+
+    public function startShipping($id)
+    {
+        try {
+            $order = Order::find($id);
+            $order->status = 3;
+            $order->save();
+            return response()->json(200);
+        } catch (\Exception $e) {return response()->json(e);}
+    }
+
+    public function finishShipping($id)
+    {
+        try {
+            $order = Order::find($id);
+            $order->status = 4;
+            $order->save();
+            return response()->json(200);
+        } catch (\Exception $e) {return response()->json(e);}
+    }
+
+    public function updateFCM(Request $req)
+    {
+        try {
+            Fcm::updateFcm($this->jwt->user()->id, $req->fcm);
+            return response()->json(200);
+        } catch (\Exception $e) {
+            return response()->json(e);
         }
     }
 }

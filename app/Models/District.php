@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Request;
 
-class District
+class District extends Model
 {
+    protected $table = "districts";
     //hiển thị danh sách quận/huyện theo id của tỉnh/thành phố
     public static function districtOfProvince($id)
     {
