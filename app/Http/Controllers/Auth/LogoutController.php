@@ -16,7 +16,7 @@ class LogoutController extends Controller
     public function postLogout()
     {
         Auth::logout();
-        Session::flash('success', 'Đăng xuất thành công');
+        Session::flash('success', __('messages.logout_success'));
         return redirect('/');
     }
 }

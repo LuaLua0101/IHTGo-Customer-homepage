@@ -413,7 +413,25 @@ i {
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
     border-top-color: #EEEEEE;
 }
-
+.service_ihtgo img{
+    width: 8em;
+}
+.service_ihtgo .col-md-4{
+    text-align: center;
+}
+.service_ihtgo p{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-weight: bold;
+}
+.tltHeadingUppercase{
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+#delivery_of_documents{
+    padding-left: 1.5em;
+}
 /*  */
 @media (min-width: 768px) {
     .modal-content {

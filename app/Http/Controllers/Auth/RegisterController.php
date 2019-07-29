@@ -58,11 +58,11 @@ class RegisterController extends Controller
         // Dữ liệu vào hợp lệ sẽ thực hiện tạo người dùng dưới csdl
         if (self::create($request)==200) {
             // Insert thành công sẽ hiển thị thông báo
-            Session::flash('success', 'Đăng ký thành viên thành công!');
+            Session::flash('success', __('messages.register_success'));
             return redirect('/');
         } else {
             // Insert thất bại sẽ hiển thị thông báo lỗi
-            Session::flash('error', 'Đăng ký thành viên thất bại!');
+            Session::flash('error', __('messages.register_fail'));
             return redirect('/');
         }
     }

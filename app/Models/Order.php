@@ -113,7 +113,6 @@ class Order
         return $res;
     }
 
-
     //hiển thị tổng tiền đơn hàng theo trạng thái đơn
     public static function totalPriceAll()
     {
@@ -167,9 +166,11 @@ class Order
         try {
             $user_id = Auth::user()->id;
             $ship_money = 0;
+            $car_option = 0;
             //delivery_of_documents 
             $district = District::findDistrict($data->receive_district_id);
             if ($data->car_option == '2') {
+                $car_option = 2;
                 if ($district->publish_2 == 1) {
                     $ship_money = 70000;
                 } else {
@@ -184,7 +185,8 @@ class Order
                 $height = $data->height;
                 $size = ($length * $width * $height) / 5000;
                 //delivery_in_province
-                if ($data->car_option == '1') {
+                if ($data->sender_province_id == $data->receive_province_id) {
+                    $car_option = 1;
                     if ($weight > 25) {
                         $ship_money = ($weight * 3000) + $delivery_in_province;
                     } else {
@@ -196,7 +198,8 @@ class Order
                     }
                 }
                 //delivery_outside_province
-                if ($data->car_option == '3') {
+                if ($data->sender_province_id != $data->receive_province_id) {
+                    $car_option = 3;
                     if ($weight > 25) {
                         $ship_money = ($weight * 3000) + $delivery_outside_province;
                     } else {
@@ -212,7 +215,7 @@ class Order
                 [
                     'name' => $data->name,
                     'code' => self::codeOrder(),
-                    'car_option' => $data->car_option,
+                    'car_option' => $car_option,
                     'status' => 1,
                     'is_payment' => 0,
                     'user_id' => $user_id,
@@ -226,7 +229,7 @@ class Order
                     'total_price' => $ship_money,
                 ]
             );
-            $order_detail = DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
+            DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
                 [
                     'order_id' => $order_id,
                     'sender_name' => $data->sender_name,

@@ -13,10 +13,10 @@ class OrderController extends Controller
             $res = Order::create($request);
             if ($res == 200) {
                 return back()
-                    ->with('success', 'Tạo mới đơn hàng thành công!');
+                    ->with('success', __('messages.create_order_success'));
             } else {
                 return back()
-                    ->with('error', 'Tạo mới đơn hàng thành công!');
+                    ->with('error', __('messages.create_order_fail'));
             }
         } catch (\Exception $ex) {
             return $ex;

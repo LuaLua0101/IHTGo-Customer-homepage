@@ -16,23 +16,23 @@ class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
 
-    public function register(RegisterAuthRequest $request)
-    {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+    // public function register(RegisterAuthRequest $request)
+    // {
+    //     $user = new User();
+    //     $user->name = $request->name;
+    //     $user->email = $request->email;
+    //     $user->password = bcrypt($request->password);
+    //     $user->save();
 
-        if ($this->loginAfterSignUp) {
-            return $this->login($request);
-        }
+    //     if ($this->loginAfterSignUp) {
+    //         return $this->login($request);
+    //     }
 
-        return response()->json([
-            'success' => true,
-            'data' => $user,
-        ], 200);
-    }
+    //     return response()->json([
+    //         'success' => true,
+    //         'data' => $user,
+    //     ], 200);
+    // }
 
     public function login(Request $request)
     {
