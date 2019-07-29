@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Models\Permission;
+use DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -18,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','activated','phone',
+        'name', 'email', 'password', 'activated', 'phone',
     ];
 
     /**
@@ -38,7 +39,7 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-   /**
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -47,7 +48,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
- 
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
@@ -56,5 +57,20 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function hasPermission(Permission $permission)
+    {
+        $role = DB::table('user_role')->where('user_id', Auth::user()->id)->first();
+
+        if (!$role) {
+            return false;
+        }
+
+        $res = DB::table('role_permission')
+            ->where('role_id', $role->role_id)
+            ->where('permission_id', $permission->id)
+            ->first();
+        return $res ? true : false;
     }
 }
