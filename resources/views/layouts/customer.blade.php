@@ -203,7 +203,7 @@
                         <div class="col-md-12">
                             <h4>@lang('messages.order_information') (*)</h4>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-box-open"></i></span>
@@ -212,35 +212,39 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4" id='form-length'>
+                                    <label>@lang('messages.length')(cm)*:</label>
+                                    <label class="text-danger" id='error-length-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
+                                        <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4" id='form-width'>
+                                    <label>@lang('messages.width')(cm)*:</label><label class="text-danger" id='error-width-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
+                                        <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4" id='form-height'>
+                                    <label>@lang('messages.height')(cm)*:</label><label class="text-danger" id='error-height-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
+                                        <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group" id='form-weight'>
-                                <span class="text-danger" id='error-weight-order'></span>
+                                <label>@lang('messages.weight')(kg)*:</label> <span class="text-danger" id='error-weight-order'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
-                                    <input type="text" class="form-control" placeholder="@lang('messages.weight') *" id="weight" name="weight">
+                                    <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.weight') (*)" id="weight" name="weight">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-hand-holding-usd"></i></span>
-                                    <input type="number" class="form-control" placeholder="@lang('messages.cash_on_delivery') (VND)" id="take_money" name="take_money">
+                                    <input type="number" step="any" class="form-control" placeholder="@lang('messages.cash_on_delivery') (VND)" id="take_money" name="take_money">
                                 </div>
                             </div>
                             <div class="row">
@@ -260,19 +264,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 formRadio">
-                            <div class="form-group col-md-6 col-sm-6 ">
-                                <label class="title-form">@lang('messages.express_delivery') :</label>
-                                <label class="container">@lang('messages.yes')
-                                    <input type="radio" checked="checked" name="is_speed" value="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">@lang('messages.no')
-                                    <input type="radio" name="is_speed" value="0">
-                                    <span class="checkmark"></span>
-                                </label>
+                        <div class="col-md-4 col-sm-12 formRadio">
+                            <div class="form-group col-md-12 formCheckBox">
+                                <div class="checkbox  checkbox-success ">
+                                    <label><input type="checkbox" name="is_speed" value="1">@lang('messages.express_delivery')</label>
+                                </div>
+                                <div class="checkbox ">
+                                    <label><input class="label-text" type="checkbox" id='ckbdelivery_of_documents' value="2">@lang('messages.delivery_of_documents')</label>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <label class="title-form">@lang('messages.payer') :</label>
                                 <label class="container">@lang('messages.receicer')
                                     <input type="radio" name="payer" value="1" checked="checked">
@@ -283,14 +284,8 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label class="title-form">@lang('messages.case') :</label>
-                                <div class="checkbox " id="delivery_of_documents">
-                                    <label><input type="checkbox" id='ckbdelivery_of_documents' value="2">@lang('messages.delivery_of_documents')</label>
-                                </div>
-                            </div>
                             @if($customer->type == 2)
-                            <div class="form-group col-md-6 col-sm-12">
+                            <div class="form-group col-md-12">
                                 <label class="title-form">@lang('messages.payment_methods') :</label>
                                 <label class="container">@lang('messages.cash')
                                     <input type="radio" checked="checked" name="payment_type" value="1">
@@ -305,7 +300,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id="btnCreateOrder">@lang('messages.save') </button>
+                        <button type="submit" class="btn btnSave" id="btnCreateOrder" disabled>@lang('messages.save') </button>
                         <button type="button" class="btnClose" data-dismiss="modal">@lang('messages.close') </button>
                     </div>
                 </div>
@@ -352,7 +347,7 @@
                             <span class="text-danger" id='error-phone1'></span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id='phone1' name="phone" placeholder="@lang('messages.phone') " required>
+                                <input type="number" class="form-control" id='phone1' name="phone" placeholder="@lang('messages.phone') " required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -729,42 +724,24 @@
     </div>
     <a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button" title="Nhấn vào đây để trở về trang đầu" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
     <script>
-        var error_name = '@lang('
-        messages.error_name ')';
-        var error_phone = '@lang('
-        messages.error_phone ')';
-        var error_check_phone = '@lang('
-        messages.error_check_phone ')';
-        var error_phone_has_been_used = '@lang('
-        messages.error_phone_has_been_used ')';
-        var error_email = '@lang('
-        messages.error_email ')';
-        var error_check_email = '@lang('
-        messages.error_check_email ')';
-        var error_email_has_been_used = '@lang('
-        messages.error_email_has_been_used ')';
-        var error_password = '@lang('
-        messages.error_password ')';
-        var error_re_password = '@lang('
-        messages.error_re_password ')';
-        var error_current_password = '@lang('
-        messages.error_current_password ')';
-        var error_length_password = '@lang('
-        messages.error_length_password ')';
-        var error_address = '@lang('
-        messages.error_address ')';
-        var error_province = '@lang('
-        messages.error_province ')';
-        var error_district = '@lang('
-        messages.error_district ')';
-        var error_length = '@lang('
-        messages.error_length ')';
-        var error_width = '@lang('
-        messages.error_width ')';
-        var error_height = '@lang('
-        messages.error_height ')';
-        var error_weight = '@lang('
-        messages.error_weight ')';
+        var error_name = "@lang('messages.error_name')";
+        var error_phone = "@lang('messages.error_phone')";
+        var error_check_phone = "@lang('messages.error_check_phone')";
+        var error_phone_has_been_used = "@lang('messages.error_phone_has_been_used')";
+        var error_email = "@lang('messages.error_email')";
+        var error_check_email = "@lang('messages.error_check_email')";
+        var error_email_has_been_used = "@lang('messages.error_email_has_been_used')";
+        var error_password = "@lang('messages.error_password')";
+        var error_re_password = "@lang('messages.error_re_password')";
+        var error_current_password = "@lang('messages.error_current_password')";
+        var error_length_password = "@lang('messages.error_length_password')";
+        var error_address = "@lang('messages.error_address')";
+        var error_province = "@lang('messages.error_province')";
+        var error_district = "@lang('messages.error_district')";
+        var error_length = "@lang('messages.error_length')";
+        var error_width = "@lang('messages.error_width')";
+        var error_height = "@lang('messages.error_height')";
+        var error_weight = "@lang('messages.error_weight')";
     </script>
     <!---------------------------------Jquery JS------------------------------------------>
     <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>

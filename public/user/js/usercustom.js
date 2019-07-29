@@ -480,7 +480,7 @@ $(function () {
     $("#sender_name").blur(function () {
         var name = $.trim($("#sender_name").val());
         if (name == '') {
-            $('#error-sender-name').text(sendername);
+            $('#error-sender-name').text(error_name);
         } else {
             $('#error-sender-name').text('');
         }
@@ -565,17 +565,33 @@ $(function () {
     $("#length").blur(function () {
         var length = $.trim($("#length").val());
         if (length == '') {
-            $('#error-size-order').text(error_length);
+            $('#error-length-order').text(error_length);
         } else {
-            $('#error-size-order').text('');
+            $('#error-length-order').text('');
         }
     });
     $("#width").blur(function () {
         var width = $.trim($("#width").val());
         if (width == '') {
-            $('#error-size-order').text(error_width);
+            $('#error-width-order').text(error_width);
         } else {
-            $('#error-size-order').text('');
+            $('#error-width-order').text('');
+        }
+    });
+    $("#height").blur(function () {
+        var height = $.trim($("#height").val());
+        if (height == '') {
+            $('#error-height-order').text(error_height);
+        } else {
+            $('#error-height-order').text('');
+        }
+    });
+    $("#weight").blur(function () {
+        var weight = $.trim($("#weight").val());
+        if (weight == '') {
+            $('#error-weight-order').text(error_weight);
+        } else {
+            $('#error-weight-order').text('');
         }
     });
     $("#formCreateOrder").change(function () {
@@ -589,19 +605,22 @@ $(function () {
         var receive_province_id = $("#receive_province_id").val();
         var receive_district_id = $("#receive_district_id").val();
         var receive_address = $.trim($("#receive_address").val());
+        var length = $.trim($("#length").val());
+        var width = $.trim($("#width").val());
+        var height = $.trim($("#height").val());
         var flag = 0;
-        if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '') {
+        if (length != '' && width != '' && height != '' && sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '') {
             flag++;
         }
         if (checkPhoneNumber(sender_phone) && checkPhoneNumber(receive_phone)) {
             flag++;
         }
-        // if (flag == 3) {
-        //     $('#btnCreateOrder').prop("disabled", false);
-        // }
-        // else {
-        //     $('#btnCreateOrder').prop("disabled", true);
-        // }
+        if (flag == 2) {
+            $('#btnCreateOrder').prop("disabled", false);
+        }
+        else {
+            $('#btnCreateOrder').prop("disabled", true);
+        }
     });
 
     //validate email-----------
@@ -748,15 +767,21 @@ $(function () {
     //
     $('#ckbdelivery_of_documents').change(function () {
         if ($(this).is(":checked")) {
+            $('#length').val('1');
+            $('#width').val('1');
+            $('#height').val('1');
+            $('#weight').val('1');
             $('#form-length').css('display', 'none');
             $('#form-width').css('display', 'none');
             $('#form-height').css('display', 'none');
             $('#form-weight').css('display', 'none');
+
         } else {
             $('#form-length').css('display', 'block');
             $('#form-width').css('display', 'block');
             $('#form-height').css('display', 'block');
             $('#form-weight').css('display', 'block');
+
         }
     });
 });

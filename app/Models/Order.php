@@ -170,6 +170,13 @@ class Order extends Model
             $user_id = Auth::user()->id;
             $ship_money = 0;
             $car_option = 0;
+            $is_speed = 0;
+            $length = ($data->length > 1 || $data->length != null) ? $data->length : 1;
+            $width =($data->width > 1 || $data->width != null) ? $data->width : 1;
+            $height = ($data->height > 1 || $data->height != null) ? $data->height : 1;
+            $weight =($data->weight > 1 || $data->weight != null) ? $data->weight : 1;
+            $size = ($length * $width * $height) / 5000;
+
             //delivery_of_documents 
             $district = District::findDistrict($data->receive_district_id);
             if ($data->car_option == '2') {
@@ -182,11 +189,6 @@ class Order extends Model
             } else {
                 $delivery_in_province = 70000;
                 $delivery_outside_province = 140000;
-                $weight = $data->weight;
-                $length = $data->length;
-                $width = $data->width;
-                $height = $data->height;
-                $size = ($length * $width * $height) / 5000;
                 //delivery_in_province
                 if ($data->sender_province_id == $data->receive_province_id) {
                     $car_option = 1;
@@ -214,6 +216,10 @@ class Order extends Model
                     }
                 }
             }
+            if ($data->is_speed == '1') {
+                $is_speed = 1;
+                $ship_money = $ship_money * 2;
+            }
             $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
                 [
                     'name' => $data->name,
@@ -223,12 +229,12 @@ class Order extends Model
                     'is_payment' => 0,
                     'user_id' => $user_id,
                     'payer' => (int) $data->payer,
-                    'is_speed' => $data->is_speed,
+                    'is_speed' => $is_speed,
                     'created_at' => date('Y-m-d h:i:s'),
                     'car_type' => 8,
                     'payment_type' => isset($data->payment_type)
-                    && $data->payment_type !== "undefined"
-                    && $data->payment_type !== null ? $data->payment_type : '1',
+                        && $data->payment_type !== "undefined"
+                        && $data->payment_type !== null ? $data->payment_type : '1',
                     'total_price' => $ship_money,
                 ]
             );
@@ -272,7 +278,7 @@ class Order extends Model
         if ($date == $date_old) {
             $code = substr($code->code, 11);
             $code = ++$code;
-            $code = date('Ymd') . '000'+$code;
+            $code = date('Ymd') . '000' + $code;
             $res = 'IHT' . $code;
         } else {
             $res = 'IHT' . date('Ymd') . '001';
@@ -319,7 +325,8 @@ class Order extends Model
             ->where(function ($query) {
                 $query->where('orders.status', '2')
                     ->orWhere('orders.status', '3')
-                    ->orWhere('orders.status', '4');})
+                    ->orWhere('orders.status', '4');
+            })
             ->skip($page)
             ->orderBy('id', 'desc')
             ->take(10)
@@ -342,7 +349,8 @@ class Order extends Model
             ->where('deliveries.driver_id', $id)
             ->where(function ($query) {
                 $query->where('orders.status', '2')
-                    ->orWhere('orders.status', '3');})
+                    ->orWhere('orders.status', '3');
+            })
             ->skip($page)
             ->orderBy('id', 'desc')
             ->take(10)
