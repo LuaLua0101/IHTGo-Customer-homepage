@@ -3,7 +3,7 @@
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
 
-Route::group(['middleware' => 'auth.jwt'], function () {
+Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     // Route::get('verify', 'ApiController@verify')->middleware(['can:delete-company2']);
     Route::get('verify', 'ApiController@verify');
     Route::get('logout', 'ApiController@logout');
