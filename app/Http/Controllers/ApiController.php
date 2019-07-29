@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterAuthRequest;
+use App\Models\Device;
 use App\Models\District;
 use App\Models\Driver;
-use App\Models\FcmDevice;
 use App\Models\Order;
 use App\Models\Province;
 use App\User;
@@ -64,7 +64,7 @@ class ApiController extends Controller
         }
 
         $user = Auth::user();
-        FcmDevice::sendMsgToDevice('eruXegJvFHg:APA91bEYwi85EFxglSQUaVokO8PTT3bAa2_gt260k0uURT53U205hG_igCz-WnhCkFaSziNCnRIVB8QF4tQBEvLcNm6xC57Q_R7s_UVdpOyda9ZGOwZhY8YLQ4Ha5MJXUDJlbVF99CoM', '13' . '34', []);
+        Device::sendMsgToDevice('eruXegJvFHg:APA91bEYwi85EFxglSQUaVokO8PTT3bAa2_gt260k0uURT53U205hG_igCz-WnhCkFaSziNCnRIVB8QF4tQBEvLcNm6xC57Q_R7s_UVdpOyda9ZGOwZhY8YLQ4Ha5MJXUDJlbVF99CoM', '13' . '34', []);
         return response()->json([
             'token' => 'Bearer ' . $jwt_token,
             'id' => $user->id,
@@ -221,7 +221,7 @@ class ApiController extends Controller
     public function updateFCM(Request $req)
     {
         try {
-            FcmDevice::updateFcm(Auth::user()->id, $req->fcm);
+            Device::updateFcm(Auth::user()->id, $req->fcm);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);

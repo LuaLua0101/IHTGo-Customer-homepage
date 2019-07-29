@@ -9,7 +9,7 @@ use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 
-class FcmDevice extends Model
+class Device extends Model
 {
     protected $table = "devices";
 
