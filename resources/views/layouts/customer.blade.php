@@ -738,7 +738,7 @@
     </div>
     <a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button" title="Nhấn vào đây để trở về trang đầu" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
     <script>
-        var error_name = <?php echo json_encode(@lang('messages.error_name'));?>;
+        var error_name = '@lang('messages.error_name')';
         var error_phone = '@lang('messages.error_phone')';
         var error_check_phone = '@lang('messages.error_check_phone')';
         var error_phone_has_been_used = '@lang('messages.error_phone_has_been_used')';

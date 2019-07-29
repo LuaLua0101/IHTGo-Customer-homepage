@@ -269,12 +269,12 @@ $(function () {
             url: 'checkExistPhone/' + phone,
             success: function (data) {
                 if (data != 200) {
-                    $('#error-phone2').text('Số điện thoại đã được sử dụng');
+                    $('#error-phone2').text(error_phone_has_been_used);
                 } else {
                     if (phone == '') {
-                        $('#error-phone2').text('Vui lòng nhập số điện thoại');
+                        $('#error-phone2').text(error_phone);
                     } else if (!checkPhoneNumber(phone)) {
-                        $('#error-phone2').text('Vui lòng nhập số điện thoại hợp lệ(vd: 0912345678)');
+                        $('#error-phone2').text(error_check_phone);
                     }
                     else {
                         $('#error-phone2').text('');
@@ -291,9 +291,9 @@ $(function () {
     $("#password2").blur(function () {
         var password = $.trim($("#password2").val());
         if (password == '') {
-            $('#error-password2').text('Vui lòng nhập mật khẩu');
+            $('#error-password2').text(error_password);
         } else if (password.length < 6) {
-            $('#error-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#error-password2').text(error_length_password);
         } else {
             $('#error-password2').text('');
         }
@@ -302,12 +302,12 @@ $(function () {
         var password = $.trim($("#password2").val());
         var re_password = $.trim($("#re-password2").val());
         if (re_password == '') {
-            $('#error-re-password2').text('Vui lòng nhập mật khẩu');
+            $('#error-re-password2').text(error_password);
         } else if (re_password.length < 6) {
-            $('#error-re-password2').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#error-re-password2').text(error_length_password);
         }
         else if (password != re_password) {
-            $('#error-re-password2').text('Mật khẩu nhập lại không đúng');
+            $('#error-re-password2').text(error_current_password);
         } else {
             $('#error-re-password2').text('');
         }
@@ -340,7 +340,7 @@ $(function () {
     $("#name3").blur(function () {
         var name = $.trim($("#name3").val());
         if (name == '') {
-            $('#error-name3').text('Vui lòng nhập Họ & Tên');
+            $('#error-name3').text(error_name);
         } else {
             $('#error-name3').text('');
         }
@@ -348,7 +348,7 @@ $(function () {
     $("#address3").blur(function () {
         var name = $.trim($("#address3").val());
         if (name == '') {
-            $('#error-address3').text('Vui lòng nhập địa chỉ');
+            $('#error-address3').text(error_address);
         } else {
             $('#error-address3').text('');
         }
@@ -375,12 +375,12 @@ $(function () {
             url: 'checkExistPasswordCurrent/' + password,
             success: function (data) {
                 if (data != 200) {
-                    $('#error-current-password4').text('Password không trùng khớp');
+                    $('#error-current-password4').text(error_re_password);
                 } else {
                     if (password == '') {
-                        $('#error-current-password4').text('Vui lòng nhập mật khẩu');
+                        $('#error-current-password4').text(error_password);
                     } else if (password.length < 6) {
-                        $('#error-current-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+                        $('#error-current-password4').text(error_length_password);
                     } else {
                         $('#error-current-password4').text('');
                     }
@@ -396,9 +396,9 @@ $(function () {
     $("#new-password4").blur(function () {
         var password = $.trim($("#new-password4").val());
         if (password == '') {
-            $('#error-new-password4').text('Vui lòng nhập mật khẩu');
+            $('#error-new-password4').text(error_password);
         } else if (password.length < 6) {
-            $('#error-new-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#error-new-password4').text(error_length_password);
         } else {
             $('#error-new-password4').text('');
         }
@@ -407,12 +407,12 @@ $(function () {
         var password = $.trim($("#new-password4").val());
         var re_password = $.trim($("#re-password4").val());
         if (re_password == '') {
-            $('#error-re-password4').text('Vui lòng nhập mật khẩu');
+            $('#error-re-password4').text(error_password);
         } else if (re_password.length < 6) {
-            $('#error-re-password4').text('Mật khẩu phải phải lớn hơn 6 ký tự');
+            $('#error-re-password4').text(error_length_password);
         }
         else if (password != re_password) {
-            $('#error-re-password4').text('Mật khẩu nhập lại không đúng');
+            $('#error-re-password4').text(error_current_password);
         } else {
             $('#error-re-password4').text('');
         }
@@ -488,9 +488,9 @@ $(function () {
     $("#sender_phone").blur(function () {
         var phone = $.trim($("#sender_phone").val());
         if (phone == '') {
-            $('#error-sender-phone').text('Vui lòng nhập số điện thoại');
+            $('#error-sender-phone').text(error_phone);
         } else if (!checkPhoneNumber(phone)) {
-            $('#error-sender-phone').text('Vui lòng nhập số điện thoại hợp lệ(vd: 0912345678)');
+            $('#error-sender-phone').text(error_check_phone);
         }
         else {
             $('#error-sender-phone').text('');
@@ -499,7 +499,7 @@ $(function () {
     $("#sender_province_id").blur(function () {
         var province = $.trim($("#sender_province_id").val());
         if (province == '' || province == 0) {
-            $('#error-sender-province-id').text('Vui lòng nhập Tỉnh-Thành Phố');
+            $('#error-sender-province-id').text(error_province);
         } else {
             $('#error-sender-province-id').text('');
         }
@@ -507,7 +507,7 @@ $(function () {
     $("#sender_district_id").blur(function () {
         var district = $.trim($("#sender_district_id").val());
         if (district == '' || district == 0) {
-            $('#error-sender-district-id').text('Vui lòng nhập Quận-Huyện');
+            $('#error-sender-district-id').text(error_district);
         } else {
             $('#error-sender-district-id').text('');
         }
@@ -515,7 +515,7 @@ $(function () {
     $("#sender_address").blur(function () {
         var address = $.trim($("#sender_address").val());
         if (address == '') {
-            $('#error-sender-address').text('Vui lòng nhập địa chỉ');
+            $('#error-sender-address').text(error_address);
         } else {
             $('#error-sender-address').text('');
         }
@@ -523,7 +523,7 @@ $(function () {
     $("#receive_name").blur(function () {
         var name = $.trim($("#receive_name").val());
         if (name == '') {
-            $('#error-receive-name').text('Vui lòng nhập Họ & Tên');
+            $('#error-receive-name').text(error_name);
         } else {
             $('#error-receive-name').text('');
         }
@@ -531,9 +531,9 @@ $(function () {
     $("#receive_phone").blur(function () {
         var phone = $.trim($("#receive_phone").val());
         if (phone == '') {
-            $('#error-receive-phone').text('Vui lòng nhập số điện thoại');
+            $('#error-receive-phone').text(error_phone);
         } else if (!checkPhoneNumber(phone)) {
-            $('#error-receive-phone').text('Vui lòng nhập số điện thoại hợp lệ(vd: 0912345678)');
+            $('#error-receive-phone').text(error_check_phone);
         } else {
             $('#error-receive-phone').text('');
         }
@@ -541,7 +541,7 @@ $(function () {
     $("#receive_province_id").blur(function () {
         var province = $.trim($("#receive_province_id").val());
         if (province == '' || province == 0) {
-            $('#error-receive-province-id').text('Vui lòng nhập Tỉnh-Thành Phố');
+            $('#error-receive-province-id').text(error_province);
         } else {
             $('#error-receive-province-id').text('');
         }
@@ -549,7 +549,7 @@ $(function () {
     $("#receive_district_id").blur(function () {
         var district = $.trim($("#receive_district_id").val());
         if (district == '' || district == 0) {
-            $('#error-receive-district-id').text('Vui lòng nhập Quận-Huyện');
+            $('#error-receive-district-id').text(error_district);
         } else {
             $('#error-receive-district-id').text('');
         }
@@ -557,7 +557,7 @@ $(function () {
     $("#receive_address").blur(function () {
         var address = $.trim($("#receive_address").val());
         if (address == '') {
-            $('#error-receive-address').text('Vui lòng nhập địa chỉ');
+            $('#error-receive-address').text(error_address);
         } else {
             $('#error-receive-address').text('');
         }
@@ -565,7 +565,7 @@ $(function () {
     $("#length").blur(function () {
         var length = $.trim($("#length").val());
         if (length == '') {
-            $('#error-size-order').text('Vui lòng nhập chiều dài');
+            $('#error-size-order').text(error_length);
         } else {
             $('#error-size-order').text('');
         }
@@ -573,7 +573,7 @@ $(function () {
     $("#width").blur(function () {
         var width = $.trim($("#width").val());
         if (width == '') {
-            $('#error-size-order').text('Vui lòng nhập chiều rộng');
+            $('#error-size-order').text(error_width);
         } else {
             $('#error-size-order').text('');
         }
