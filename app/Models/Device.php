@@ -13,6 +13,13 @@ class Device extends Model
 {
     protected $table = "devices";
 
+    public static function getToken($userId)
+    {
+        $device = DB::table('devices')
+            ->where('user_id', $userId)->first();
+        return $device->fcm;
+    }
+
     public static function updateFcm($user_id, $fcm)
     {
         if (DB::table('devices')

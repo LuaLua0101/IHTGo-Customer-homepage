@@ -64,7 +64,7 @@ class ApiController extends Controller
         }
 
         $user = Auth::user();
-        Device::sendMsgToDevice('euebX8Iv8Ac:APA91bF1dyWEGmjr1bGBMMxVy8COlKV60FvGLeaYN2wCFPALG-feASd0Iupd2lYbzyCDj907EJ1bm6g6559nTVpCUfpky7xt11V_aN4fe2zJctIW1ePihFj8qBfXYLS70k7RdKr2WLA5', '13' . '34', []);
+        // Device::sendMsgToDevice('euebX8Iv8Ac:APA91bF1dyWEGmjr1bGBMMxVy8COlKV60FvGLeaYN2wCFPALG-feASd0Iupd2lYbzyCDj907EJ1bm6g6559nTVpCUfpky7xt11V_aN4fe2zJctIW1ePihFj8qBfXYLS70k7RdKr2WLA5', '13' . '34', []);
         return response()->json([
             'token' => 'Bearer ' . $jwt_token,
             'id' => $user->id,
@@ -204,6 +204,8 @@ class ApiController extends Controller
             $order = Order::find($id);
             $order->status = 3;
             $order->save();
+            //send notify to customer
+            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đang trên đường giao', []);
             return response()->json(200);
         } catch (\Exception $e) {return response()->json(e);}
     }
@@ -214,6 +216,8 @@ class ApiController extends Controller
             $order = Order::find($id);
             $order->status = 4;
             $order->save();
+            //send notify to customer
+            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đã được giao thành công', []);
             return response()->json(200);
         } catch (\Exception $e) {return response()->json(e);}
     }
