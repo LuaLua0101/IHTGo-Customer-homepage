@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterAuthRequest;
+use App\Models\Device;
+use App\Models\District;
 use App\Models\Driver;
+use App\Models\Order;
+use App\Models\Province;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -60,7 +64,7 @@ class ApiController extends Controller
         }
 
         $user = Auth::user();
-
+        // Device::sendMsgToDevice('euebX8Iv8Ac:APA91bF1dyWEGmjr1bGBMMxVy8COlKV60FvGLeaYN2wCFPALG-feASd0Iupd2lYbzyCDj907EJ1bm6g6559nTVpCUfpky7xt11V_aN4fe2zJctIW1ePihFj8qBfXYLS70k7RdKr2WLA5', '13' . '34', []);
         return response()->json([
             'token' => 'Bearer ' . $jwt_token,
             'id' => $user->id,
@@ -121,7 +125,7 @@ class ApiController extends Controller
     public function changePassword(Request $req)
     {
         try {
-            if (JWTAuth::attempt(['phone' => $this->jwt->user()->phone, 'password' => $req->old_pwd])) {
+            if (JWTAuth::attempt(['phone' => Auth::user()->phone, 'password' => $req->old_pwd])) {
                 $user = User::find(Auth::user()->id);
                 $user->password = Hash::make($req->new_pwd);
                 $user->save();
@@ -151,6 +155,80 @@ class ApiController extends Controller
             return response()->json($driver);
         } catch (\Exception $e) {
             return response()->json(['code' => 500]);
+        }
+    }
+
+    public function loadOrders(Request $req)
+    {
+        $page = $req->page ? $req->page : 0;
+        $type = $req->type ? $req->type : 0;
+        $driver = Driver::where('user_id', Auth::user()->id)->firstOrFail();
+        if ($type == 0) {
+            $orders = Order::getAllOrderByDriver($driver->id, $page);
+        } else if ($type == 4) {
+            $orders = Order::getFinishOrderByDriver($driver->id, $page);
+        } else {
+            $orders = Order::getPendingOrderByDriver($driver->id, $page);
+        }
+        foreach ($orders as $order) {
+            $order->created_at = date("d-m-Y", strtotime($order->created_at));
+        }
+        return response()->json($orders);
+    }
+
+    public function getOrder(Request $req)
+    {
+        $order = Order::getOrderById($req->order_id);
+        return response()->json($order);
+    }
+
+    public function detail($id)
+    {
+        $order = Order::orderDetail($id);
+        $sender_province = Province::where('province_id', $order->sender_province_id)->first();
+        $sender_dist = District::find($order->sender_district_id);
+        $receive_province = Province::where('province_id', $order->receive_province_id)->first();
+        $receive_dist = District::find($order->receive_district_id);
+
+        $order->sender_province_id = $sender_province ? $sender_province->name : '';
+        $order->sender_district_id = $sender_dist ? $sender_dist->name : '';
+        $order->receive_province_id = $receive_province ? $receive_province->name : '';
+        $order->receive_district_id = $receive_dist ? $receive_dist->name : '';
+        $order->created_at = date("d-m-Y", strtotime($order->created_at));
+        return response()->json($order);
+    }
+
+    public function startShipping($id)
+    {
+        try {
+            $order = Order::find($id);
+            $order->status = 3;
+            $order->save();
+            //send notify to customer
+            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đang trên đường giao', []);
+            return response()->json(200);
+        } catch (\Exception $e) {return response()->json(e);}
+    }
+
+    public function finishShipping($id)
+    {
+        try {
+            $order = Order::find($id);
+            $order->status = 4;
+            $order->save();
+            //send notify to customer
+            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đã được giao thành công', []);
+            return response()->json(200);
+        } catch (\Exception $e) {return response()->json(e);}
+    }
+
+    public function updateFCM(Request $req)
+    {
+        try {
+            Device::updateFcm(Auth::user()->id, $req->fcm);
+            return response()->json(200);
+        } catch (\Exception $e) {
+            return response()->json(e);
         }
     }
 }

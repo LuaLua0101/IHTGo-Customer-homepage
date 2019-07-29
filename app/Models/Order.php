@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\ImageController;
 use App\Models\District;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Request;
 
-class Order
+class Order extends Model
 {
+    protected $table = "orders";
+
     //hàm phân trang
     public static function paginateArray($data, $perPage = 15)
     {
@@ -87,7 +90,7 @@ class Order
               IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
               IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
               FROM orders o, order_details od
-              WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status AND '$start_date' < o.created_at AND o.created_at < '$end_date' 
+              WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status AND '$start_date' < o.created_at AND o.created_at < '$end_date'
               ORDER BY o.id DESC")
             );
             return $res;
@@ -224,8 +227,8 @@ class Order
                     'created_at' => date('Y-m-d h:i:s'),
                     'car_type' => 8,
                     'payment_type' => isset($data->payment_type)
-                        && $data->payment_type !== "undefined"
-                        && $data->payment_type !== null ? $data->payment_type : '1',
+                    && $data->payment_type !== "undefined"
+                    && $data->payment_type !== null ? $data->payment_type : '1',
                     'total_price' => $ship_money,
                 ]
             );
@@ -260,16 +263,16 @@ class Order
     //tạo giá trị code đơn hàng
     public static function codeOrder()
     {
-        $code = DB::select(DB::raw("select o.code 
+        $code = DB::select(DB::raw("select o.code
             FROM orders o
             ORDER BY o.id DESC
             LIMIT 1"))[0];
-        $date =   date('Ymd');
+        $date = date('Ymd');
         $date_old = (string) substr($code->code, 3, -3);
         if ($date == $date_old) {
             $code = substr($code->code, 11);
             $code = ++$code;
-            $code = date('Ymd') . '000' + $code;
+            $code = date('Ymd') . '000'+$code;
             $res = 'IHT' . $code;
         } else {
             $res = 'IHT' . date('Ymd') . '001';
@@ -277,19 +280,19 @@ class Order
         return $res;
     }
 
-    //lịch sử thông tin người nhận 
+    //lịch sử thông tin người nhận
     public static function historyDelivery()
     {
         $res = DB::select("select od.id,od.receive_name,od.receive_phone,od.receive_address,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
         FROM orders o, order_details od
-        WHERE o.id=od.order_id 
+        WHERE o.id=od.order_id
         ORDER BY o.id DESC
         LIMIT 10");
         return $res;
     }
-    //load lịch sử thông tin người nhận 
+    //load lịch sử thông tin người nhận
     public static function loadHistoryDelivery($id)
     {
         if (Request::ajax()) {
@@ -297,4 +300,67 @@ class Order
             return $res;
         }
     }
+
+    //NAD
+    public static function orderDetail($id)
+    {
+        $res = DB::table('orders')
+            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.id', $id)
+            ->first();
+        return $res;
+    }
+
+    public static function getAllOrderByDriver($id, $page)
+    {
+        $res = DB::table('orders')
+            ->join('deliveries', 'orders.id', '=', 'deliveries.order_id')
+            ->where('deliveries.driver_id', $id)
+            ->where(function ($query) {
+                $query->where('orders.status', '2')
+                    ->orWhere('orders.status', '3')
+                    ->orWhere('orders.status', '4');})
+            ->skip($page)
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get(['orders.id', 'orders.name', 'orders.status', 'orders.total_price', 'orders.is_speed', 'orders.car_option', 'orders.created_at']);
+        return $res;
+    }
+
+    public static function getOrderById($id)
+    {
+        $res = DB::table('orders')
+            ->where('id', $id)
+            ->first(['id', 'name', 'status', 'total_price', 'is_speed', 'car_option', 'created_at']);
+        return $res;
+    }
+
+    public static function getPendingOrderByDriver($id, $page)
+    {
+        $res = DB::table('orders')
+            ->join('deliveries', 'orders.id', '=', 'deliveries.order_id')
+            ->where('deliveries.driver_id', $id)
+            ->where(function ($query) {
+                $query->where('orders.status', '2')
+                    ->orWhere('orders.status', '3');})
+            ->skip($page)
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get(['orders.id', 'orders.name', 'orders.status', 'orders.total_price', 'orders.is_speed', 'orders.car_option', 'orders.created_at']);
+        return $res;
+    }
+
+    public static function getFinishOrderByDriver($id, $page)
+    {
+        $res = DB::table('orders')
+            ->join('deliveries', 'orders.id', '=', 'deliveries.order_id')
+            ->where('deliveries.driver_id', $id)
+            ->where('orders.status', '4')
+            ->skip($page)
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get(['orders.id', 'orders.name', 'orders.status', 'orders.total_price', 'orders.is_speed', 'orders.car_option', 'orders.created_at']);
+        return $res;
+    }
+    //====================
 }
