@@ -125,7 +125,7 @@ class ApiController extends Controller
     public function changePassword(Request $req)
     {
         try {
-            if (JWTAuth::attempt(['phone' => $this->jwt->user()->phone, 'password' => $req->old_pwd])) {
+            if (JWTAuth::attempt(['phone' => Auth::user()->phone, 'password' => $req->old_pwd])) {
                 $user = User::find(Auth::user()->id);
                 $user->password = Hash::make($req->new_pwd);
                 $user->save();
@@ -162,7 +162,7 @@ class ApiController extends Controller
     {
         $page = $req->page ? $req->page : 0;
         $type = $req->type ? $req->type : 0;
-        $driver = Driver::where('user_id', $this->jwt->user()->id)->firstOrFail();
+        $driver = Driver::where('user_id', Auth::user()->id)->firstOrFail();
         if ($type == 0) {
             $orders = Order::getAllOrderByDriver($driver->id, $page);
         } else if ($type == 4) {
@@ -221,7 +221,7 @@ class ApiController extends Controller
     public function updateFCM(Request $req)
     {
         try {
-            Fcm::updateFcm($this->jwt->user()->id, $req->fcm);
+            Fcm::updateFcm(Auth::user()->id, $req->fcm);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
