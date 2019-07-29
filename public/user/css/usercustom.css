@@ -615,12 +615,6 @@ footer {
         /*position: absolute;
     clip: rect(0px, 0px, 0px,0px);*/
     }
-/****three Col IHT Service****/
-.three-col-iht-service-text {
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-}
 
 .three-col-serv-wrap .three-col-serv-in-2 .three-col-serv-in-2-in {
     padding-bottom: 2%;
@@ -648,6 +642,7 @@ footer {
 
 .whyChooseText {
     font-size: 16px;
+    text-transform: uppercase;
 }
 
 .octopus-image img {
@@ -676,7 +671,7 @@ footer {
         padding: 20%;
         height: inherit;
     }
-
+.single-item-text p{width: 50%}
 .octopusSectionPhone {
     display: none;
 }

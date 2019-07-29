@@ -19,16 +19,16 @@ class LoginController extends Controller
                 // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
                 if (Auth::user()->level == 3) {
                     return back()
-                    ->with('success', 'Đăng nhập thành công!');
+                    ->with('success', __('messages.login_success'));
                 }else{
                     Auth::logout();
                     return back()
-                    ->with('error', 'Bạn không được phân quyền đăng nhập!');
+                    ->with('error', __('messages.login_not_authorized'));
                 }
             } else {
                 // Kiểm tra không đúng sẽ hiển thị thông báo lỗi
                 return back()
-                ->with('error', 'Số điện thoại hoặc mật khẩu không đúng!');
+                ->with('error', __('messages.login_fail'));
             }
             
         } catch (\Exception $ex) {

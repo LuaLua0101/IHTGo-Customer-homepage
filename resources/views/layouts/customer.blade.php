@@ -285,18 +285,9 @@
                             </div>
                             <div class="form-group col-md-6 col-sm-12">
                                 <label class="title-form">@lang('messages.case') :</label>
-                                <label class="container">@lang('messages.delivery_in_province')
-                                    <input type="radio" checked="checked" name="car_option" value="1" id='delivery_in_province'>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">@lang('messages.delivery_outside_province')
-                                    <input type="radio" name="car_option" value="3" id='delivery_outside_province'>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">@lang('messages.delivery_of_documents')
-                                    <input type="radio" name="car_option" value="2" id='delivery_of_documents'>
-                                    <span class="checkmark"></span>
-                                </label>
+                                <div class="checkbox " id="delivery_of_documents">
+                                    <label><input type="checkbox" id='ckbdelivery_of_documents' value="2">@lang('messages.delivery_of_documents')</label>
+                                </div>
                             </div>
                             @if($customer->type == 2)
                             <div class="form-group col-md-6 col-sm-12">
@@ -738,24 +729,42 @@
     </div>
     <a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button" title="Nhấn vào đây để trở về trang đầu" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
     <script>
-        var error_name = '@lang('messages.error_name')';
-        var error_phone = '@lang('messages.error_phone')';
-        var error_check_phone = '@lang('messages.error_check_phone')';
-        var error_phone_has_been_used = '@lang('messages.error_phone_has_been_used')';
-        var error_email = '@lang('messages.error_email')';
-        var error_check_email = '@lang('messages.error_check_email')';
-        var error_email_has_been_used = '@lang('messages.error_email_has_been_used')';
-        var error_password = '@lang('messages.error_password')';
-        var error_re_password = '@lang('messages.error_re_password')';
-        var error_current_password = '@lang('messages.error_current_password')';
-        var error_length_password = '@lang('messages.error_length_password')';
-        var error_address = '@lang('messages.error_address')';
-        var error_province = '@lang('messages.error_province')';
-        var error_district = '@lang('messages.error_district')';
-        var error_length = '@lang('messages.error_length')';
-        var error_width = '@lang('messages.error_width')';
-        var error_height = '@lang('messages.error_height')';
-        var error_weight = '@lang('messages.error_weight')';
+        var error_name = '@lang('
+        messages.error_name ')';
+        var error_phone = '@lang('
+        messages.error_phone ')';
+        var error_check_phone = '@lang('
+        messages.error_check_phone ')';
+        var error_phone_has_been_used = '@lang('
+        messages.error_phone_has_been_used ')';
+        var error_email = '@lang('
+        messages.error_email ')';
+        var error_check_email = '@lang('
+        messages.error_check_email ')';
+        var error_email_has_been_used = '@lang('
+        messages.error_email_has_been_used ')';
+        var error_password = '@lang('
+        messages.error_password ')';
+        var error_re_password = '@lang('
+        messages.error_re_password ')';
+        var error_current_password = '@lang('
+        messages.error_current_password ')';
+        var error_length_password = '@lang('
+        messages.error_length_password ')';
+        var error_address = '@lang('
+        messages.error_address ')';
+        var error_province = '@lang('
+        messages.error_province ')';
+        var error_district = '@lang('
+        messages.error_district ')';
+        var error_length = '@lang('
+        messages.error_length ')';
+        var error_width = '@lang('
+        messages.error_width ')';
+        var error_height = '@lang('
+        messages.error_height ')';
+        var error_weight = '@lang('
+        messages.error_weight ')';
     </script>
     <!---------------------------------Jquery JS------------------------------------------>
     <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>

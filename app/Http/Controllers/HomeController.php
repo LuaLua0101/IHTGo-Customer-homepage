@@ -52,10 +52,10 @@ class HomeController extends Controller
                 ]
             );
             return back()
-                    ->with('success', 'Bạn đã gửi thông tin thành công!');
+                    ->with('success', __('messages.contact_us_success'));
         } catch (\Throwable $th) {
             return back()
-            ->with('error', 'Thông tin liên hệ bị lỗi! Vui lòng kiểm tra lại!');
+            ->with('error', __('messages.contact_us_fail'));
         }
         
     }

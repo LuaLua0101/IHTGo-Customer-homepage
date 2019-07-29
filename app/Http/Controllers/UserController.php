@@ -20,10 +20,10 @@ class UserController extends Controller
             }
             if ($user == 200 && $customer == 200) {
                 return back()
-                    ->with('success', 'Thay đổi thông tin thành viên thành công!');
+                    ->with('success', __('messages.change_info_success'));
             } else {
                 return back()
-                    ->with('error', 'Thay đổi thông tin thành viên thất bại!');
+                    ->with('error', __('messages.change_info_fail'));
             }
         } catch (\Exception $ex) {
             return $ex;
@@ -35,10 +35,10 @@ class UserController extends Controller
             $res = User::changePassword($request);
             if ($res == 200) {
                 return back()
-                    ->with('success', 'Thay đổi mật khẩu thành viên thành công!');
+                    ->with('success', __('messages.change_password_success'));
             } else {
                 return back()
-                    ->with('error', 'Thay đổi mật khẩu thành viên thất bại!');
+                    ->with('error', __('messages.change_password_fail'));
             }
         } catch (\Exception $ex) {
             return $ex;

@@ -589,11 +589,6 @@ $(function () {
         var receive_province_id = $("#receive_province_id").val();
         var receive_district_id = $("#receive_district_id").val();
         var receive_address = $.trim($("#receive_address").val());
-        if ($("#delivery_in_province").is(":checked")) {
-            $("#receive_province_id").val(sender_province_id);
-        }
-        if ($("#delivery_outside_province").is(":checked")) {
-        }
         var flag = 0;
         if (sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '') {
             flag++;
@@ -751,22 +746,17 @@ $(function () {
         })
     });
     //
-    $('#delivery_of_documents').change(function () {
-        $('#form-length').css('display', 'none');
-        $('#form-width').css('display', 'none');
-        $('#form-height').css('display', 'none');
-        $('#form-weight').css('display', 'none');
-    });
-    $('#delivery_in_province').change(function () {
-        $('#form-length').css('display', 'block');
-        $('#form-width').css('display', 'block');
-        $('#form-height').css('display', 'block');
-        $('#form-weight').css('display', 'block');
-    });
-    $('#delivery_outside_province').change(function () {
-        $('#form-length').css('display', 'block');
-        $('#form-width').css('display', 'block');
-        $('#form-height').css('display', 'block');
-        $('#form-weight').css('display', 'block');
+    $('#ckbdelivery_of_documents').change(function () {
+        if ($(this).is(":checked")) {
+            $('#form-length').css('display', 'none');
+            $('#form-width').css('display', 'none');
+            $('#form-height').css('display', 'none');
+            $('#form-weight').css('display', 'none');
+        } else {
+            $('#form-length').css('display', 'block');
+            $('#form-width').css('display', 'block');
+            $('#form-height').css('display', 'block');
+            $('#form-weight').css('display', 'block');
+        }
     });
 });
