@@ -54,9 +54,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="{{ Request::path() == 'gioi-thieu' ? 'active' : '' }}"><a href="{!! url('gioi-thieu'); !!}"><strong>@lang('messages.about_us')</strong></a></li>
-                        <li class="{{ Request::path() == 'bang-gia' ? 'active' : '' }}"><a href="{!! url('bang-gia'); !!}"><strong>@lang('messages.price_list') </strong></a></li>
-                        <li class="{{ Request::path() == 'tin-tuc' ? 'active' : '' }}"><a href="{!! url('tin-tuc'); !!}"><strong>@lang('messages.news')</strong></a></li>
+                        <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a href="{!! url('contact'); !!}"><strong>@lang('messages.about_us')</strong></a></li>
+                        <li class="{{ Request::path() == 'price-list' ? 'active' : '' }}"><a href="{!! url('price-list'); !!}"><strong>@lang('messages.price_list') </strong></a></li>
+                        <!-- <li class="{{ Request::path() == 'news' ? 'active' : '' }}"><a href="{!! url('news'); !!}"><strong>@lang('messages.news')</strong></a></li> -->
                         @if(app()->getLocale()=='vi')
                         <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i>EN</a></li>
                         @else
@@ -66,7 +66,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
                         <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>@lang('messages.create_order') </strong></a></li>
-                        <li class="{{ Request::path() == 'don-hang' ? 'active' : '' }}"><a href="{!! url('don-hang'); !!}" id='don-hang'><strong>@lang('messages.order_management') </strong></a></li>
+                        <li class="{{ Request::path() == 'order' ? 'active' : '' }}"><a href="{!! url('order'); !!}" id='don-hang'><strong>@lang('messages.order_management') </strong></a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">@lang('messages.hello') {{Auth::user()->name}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -606,9 +606,9 @@
                 <div class="col-md-8 col-md-push-2">
                     <div class="imgcont-headtitle">
                         <h2 data-aos="fade-down">
-                            <span style="font-weight:700;">TẢI NGAY ỨNG DỤNG</span><span> IHT GO</span>
+                            <span style="font-weight:700;">@lang('messages.download_now_IHTGo_app')</span>
                         </h2>
-                        <p data-aos="fade-up">Tải và cài đặt ứng dụng IHT GO <br /> trên Google Play và App Store, Web App</p>
+                        <p data-aos="fade-up">@lang('messages.download_now_IHTGo_app_detail')</p>
                     </div>
                 </div>
                 <div class="w100 col-md-12 imgcont-icon">
@@ -639,9 +639,9 @@
                 </div>
                 <div class="col-md-3">
                     <ul class="list-unstyled">
-                        <li><a class="decNone" href="javascript:void(0)">Chính sách bảo mật</a></li>
-                        <li><a class="decNone" href="javascript:void(0)">Các điều khoản và điều kiện</a></li>
-                        <li><a class="decNone" href="javascript:void(0)">Tuyển dụng</a></li>
+                        <li><a class="decNone" href="javascript:void(0)">@lang('messages.privacy_policy')</a></li>
+                        <li><a class="decNone" href="javascript:void(0)">@lang('messages.terms_and_conditions')</a></li>
+                        <li><a class="decNone" href="javascript:void(0)">@lang('messages.recruitment')</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">

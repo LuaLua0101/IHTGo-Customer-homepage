@@ -172,9 +172,9 @@ class Order extends Model
             $car_option = 0;
             $is_speed = 0;
             $length = ($data->length > 1 || $data->length != null) ? $data->length : 1;
-            $width =($data->width > 1 || $data->width != null) ? $data->width : 1;
+            $width = ($data->width > 1 || $data->width != null) ? $data->width : 1;
             $height = ($data->height > 1 || $data->height != null) ? $data->height : 1;
-            $weight =($data->weight > 1 || $data->weight != null) ? $data->weight : 1;
+            $weight = ($data->weight > 1 || $data->weight != null) ? $data->weight : 1;
             $size = ($length * $width * $height) / 5000;
 
             //delivery_of_documents 

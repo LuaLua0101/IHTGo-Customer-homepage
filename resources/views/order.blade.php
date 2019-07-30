@@ -8,7 +8,7 @@
         </div>
         <div class="h50px"></div>
         <div class=" form-search-order ">
-            <form method="GET" action="{{ url('tim-don-hang')}}" class='formModal' id='formSearchOrder'>
+            <form method="GET" action="{{ url('order-search')}}" class='formModal' id='formSearchOrder'>
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="form-inline ">
                     <div class="form-group">
@@ -65,7 +65,7 @@
                                 @foreach($order as $o)
                                 <tr>
                                     <td><a href="print-order/id={{$o->id}}" target="_blank"> <i class="fas fa-print"></i></a></td>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}" >
+                                    <td><a href="order-detail/id={{$o->id}}" >
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -147,7 +147,7 @@
                             <tbody>
                                 @foreach($order_watting as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -228,7 +228,7 @@
                             <tbody>
                                 @foreach($order_no_delivery as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -309,7 +309,7 @@
                             <tbody>
                                 @foreach($order_beging_delivery as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -390,7 +390,7 @@
                             <tbody>
                                 @foreach($order_done_delivery as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -470,7 +470,7 @@
                             <tbody>
                                 @foreach($order_customer_cancel as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -551,7 +551,7 @@
                             <tbody>
                                 @foreach($order_iht_cancel as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>
@@ -632,7 +632,7 @@
                             <tbody>
                                 @foreach($order_fail as $o)
                                 <tr>
-                                    <td><a href="chi-tiet-don-hang/id={{$o->id}}">
+                                    <td><a href="order-detail/id={{$o->id}}">
                                             <!-- Giao hỏa tốc -->
                                             @if($o->is_speed==1)
                                             <i class="fas fa-rocket"></i>

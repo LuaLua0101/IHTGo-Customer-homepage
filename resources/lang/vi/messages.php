@@ -28,6 +28,7 @@ return [
     'automatic_cost_calculation_detail' => ' Khách hàng sẽ biết được chi phí vận chuyển khi tài xế đến nhận và giao hàng',
     'container_holds_heat' => 'Thùng giữ nhiệt',
     'container_holds_heat_detail' => 'Giúp hàng hóa được giao đảm bảo an toàn trên mọi cung đường',
+    'user_manual' => 'Hướng dẫn sử dụng',
     //page order
     'title_order' => 'ĐƠN HÀNG',
     'date_start' => 'Ngày bắt đầu',
@@ -108,8 +109,15 @@ return [
     'personal' => 'Cá nhân',
     'company' => 'Công ty',
     'list_of_companies' => 'Danh sách công ty',
-
+    //page contact
+    'contact_us'=>'Liên hệ với chúng tôi',
+    'contact_us_detail'=>'Vui lòng điền thông tin chi tiết dưới đây và chúng tôi sẽ liên lạc với bạn sớm nhất<br/> Hoặc liên hệ trực tiếp với nhóm kinh doanh của chúng tôi theo số <strong> 0902 926 925</strong>',
+    "company_name"=>"Tên doanh nghiệp",
+    'company_detail'=>'Vui lòng để lại tên cửa hàng/công ty/doanh nghiệp của bạn',
+    'submit'=>'Gửi',
     //footer
+    'download_now_IHTGo_app' => 'Tải ngay ứng dụng IHTGo',
+    'download_now_IHTGo_app_detail' => 'Tải và cài đặt ứng dụng IHT Go trên Google Play và App Store',
     'branch_system' => 'Hệ thống chi nhánh',
     'hcm_branch' => 'Chi nhánh Hồ Chí Minh',
     'bd_branch' => 'Chi nhánh Bình Dương',
@@ -124,7 +132,9 @@ return [
     'address_dn_bien_hoa' => '100 kp Bình Dương, Phường Long Bình Tân, Biên Hòa',
     'address_dn_nhon_trach' => '48C, Đường Tôn Đức Thắng, ẤP 3, Hiệp Phước, Nhơn Trạch',
     'tax_code' => 'Mã số thuế',
-
+    'privacy_policy'=>'Chính sách bảo mật',
+    'terms_and_conditions'=>'Các điều khoản và điều kiện',
+    'recruitment'=>'Tuyển dụng',
     //validate value
     'error_name' => 'Vui lòng nhập họ & tên',
     'error_phone' => 'Vui lòng nhập số điện thoại',

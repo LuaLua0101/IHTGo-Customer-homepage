@@ -198,7 +198,7 @@
     <!-------------------User Guide--------------------->
     <div class="container">
         <div class="row-fluid center-text">
-            <h2><span class="text-uppercase" style="font-size: 24px;"><strong>hướng dẫn sử dụng app</strong></span></h2>
+            <h2><span class="text-uppercase" style="font-size: 24px;"><strong>@lang('messages.user_manual')</strong></span></h2>
         </div>
         <div class="user-guide-wrap">
             <div class="user-guide owl-carousel owl-theme animated">
