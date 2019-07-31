@@ -26,6 +26,9 @@ Route::get('price-list', 'HomeController@price_list');
 Route::get('news', 'HomeController@news');
 Route::get('new-detail', 'HomeController@new_detail');
 Route::get('order', 'HomeController@order');
+Route::post('loadOrder', 'HomeController@loadOrder');
+Route::get('order/status={id?}', 'HomeController@orderStatus');
+Route::post('loadOrder_Status', 'HomeController@loadOrder_Status');
 Route::get('order-detail/id={id?}', 'HomeController@order_detail');
 Route::get('order-search', 'HomeController@order_search');
 

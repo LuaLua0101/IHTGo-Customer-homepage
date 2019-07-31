@@ -24,4 +24,9 @@ class District extends Model
         $res = DB::table(config('constants.DISTRICT_TABLE'))->where(['id' => $id])->first();
         return $res;
     }
+    public static function getList()
+    {
+        $res = DB::table(config('constants.DISTRICT_TABLE'))->where('publish', 1)->get();
+        return $res;
+    }
 }
