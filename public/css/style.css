@@ -28,16 +28,6 @@
 .modal-footer button i {
     padding-right: 0.5em;
 }
-.btn-danger {
-    background: #e50303 !important;
-    border-radius: 0% !important;
-}
-.btn-danger:hover {
-    background: #ea3535 !important;
-}
-.btn-default {
-    color: #9e9e9e !important;
-}
 .modal-content label {
     font-size: 13px;
     font-weight: 400;
