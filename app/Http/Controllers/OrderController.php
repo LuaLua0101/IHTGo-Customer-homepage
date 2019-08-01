@@ -9,6 +9,7 @@ class OrderController extends Controller
 {
     public function create(Request $request)
     {
+        dd($request);
         try {
             $res = Order::create($request);
             if ($res == 200) {

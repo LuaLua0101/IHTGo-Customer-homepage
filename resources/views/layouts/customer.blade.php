@@ -80,7 +80,6 @@
                                     </form>
                                 </li>
                         </li>
-
                         @else
                         <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> @lang('messages.login') </a></li>
                         <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> @lang('messages.registration') </a></li>
@@ -95,7 +94,7 @@
     @if(Auth::user())
     <div class="modal fade" id="DatHang" role="dialog">
         <div class="modal-dialog modal-lg">
-            <form method="POST" action="{{ url('create-order') }}" class='formModal' id='formCreateOrder' enctype="multipart/form-data">
+            <form method="POST" action="{{ url('/create-order') }}" class='formModal' id='formCreateOrder' enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -215,21 +214,21 @@
                                     <label class="text-danger" id='error-length-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
+                                        <input type="number" min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-4" id='form-width'>
                                     <label>@lang('messages.width')(cm)*:</label><label class="text-danger" id='error-width-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
+                                        <input type="number"  min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-4" id='form-height'>
                                     <label>@lang('messages.height')(cm)*:</label><label class="text-danger" id='error-height-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
+                                        <input type="number"  min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +236,7 @@
                                 <label>@lang('messages.weight')(kg)*:</label> <span class="text-danger" id='error-weight-order'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
-                                    <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.weight') (*)" id="weight" name="weight">
+                                    <input type="number"  min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.weight') (*)" id="weight" name="weight">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -299,9 +298,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="btnCreateOrder" disabled>@lang('messages.save')</button>
-                        <button type="button" class="btn btn-secondary">@lang('messages.close')</button>
-                        <button type="button" class="btn btn-secondary">Secondary</button>
+                        <button type="submit" class="btn btn-danger" id="btnCreateOrder" disabled>@lang('messages.save')</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('messages.close')</button>
                     </div>
                 </div>
             </form>
@@ -325,7 +323,7 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btnSave" id="btnHistoryDelivery" data-dismiss="modal">@lang('messages.choose') </button>
+                    <button type="button" class="btn btn-danger" id="btnHistoryDelivery" data-dismiss="modal">@lang('messages.choose') </button>
                 </div>
             </div>
         </div>

@@ -335,6 +335,7 @@ class Order extends Model
     //hiển thị tổng tiền đơn hàng theo trạng thái đơn
     public static function create($data)
     {
+        dd($data);
         try {
             $user_id = Auth::user()->id;
             $ship_money = 0;
