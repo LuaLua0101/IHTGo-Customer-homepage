@@ -25,19 +25,38 @@
                 <h2 class="tltHeadingUppercase">@lang('messages.service_ihtgo')</h2>
                 <p>@lang('messages.ihtgo_connection_options_for_shop_owners_and_customers')</p><br />
             </div>
-            <div class="container service_ihtgo">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="public/Images/Index/three-col-1.png" />
-                        <p>@lang('messages.delivery_within_the_province_and_inner_city')</p>
+            <div class="container serviceIHTGO">
+                <div class="col-sm-4 ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@lang('messages.delivery_in_province')</div>
+                        <div class="panel-body">
+                            <h6>@lang('messages.only_from')</h6>
+                            <h2 class="price-order" >70,000Đ/@lang('messages.orders')</h2>
+                            <p class="list-provinces">@lang('messages.delivery_in_province_detail')</p>
+                            <h5>@lang('messages.delivery_in_province_time')</h5>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <img src="public/Images/Index/three-col-2.png" />
-                        <p>@lang('messages.deliver_documents_during_the_day_from_HCMC_BINH_DUONG_and_vice_versa')</p>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@lang('messages.delivery_outside_province')</div>
+                        <div class="panel-body">
+                            <h6>@lang('messages.only_from')</h6>
+                            <h2 class="price-order">140,000Đ/@lang('messages.orders')</h2>
+                            <p class="list-provinces">@lang('messages.delivery_outside_province_detail')</p>
+                            <h5>@lang('messages.delivery_outside_province_time')</h5>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <img src="public/Images/Index/three-col-3.png" />
-                        <p>@lang('messages.express_delivery_during_the_day')</p>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@lang('messages.express_delivery')</div>
+                        <div class="panel-body">
+                            <h6>@lang('messages.only_from')</h6>
+                            <h2 class="price-order">140,000Đ/@lang('messages.orders')</h2>
+                            <p class="list-provinces">@lang('messages.express_delivery_detail')</p>
+                            <h5>@lang('messages.express_delivery_time')</h5>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,143 +70,59 @@
 
             <!-----------------Octopus Section----------------->
             <div class="features-area">
-                <div class="" style="padding-bottom:2%;">
+                <div style="padding-bottom:2%;">
                     <br />
                     <h2 class="tltHeadingUppercase">@lang('messages.why_do_you_have_to_choose_IHT_Go')</h2><br />
                 </div>
                 <!--Octopus Section show on computer-->
-                <div class="octopusSectionComputer">
-                    <div class="col-sm-6 octopus-image-row">
-                        <div class="octopus-image pull-right">
-                            <img src="public/Images/Index/mobile.png" alt="why choose image" />
+                <div class="container">
+                    <div class="col-sm-6 display-flex">
+                        <div class="col-sm-2 single-item-icon">
+                            <img src="public/Images/Index/1.png" />
+                        </div>
+                        <div class="col-sm-8 ">
+                            <div class="whyChooseText"><strong>@lang('messages.track_orders')</strong></div>
+                            <p>@lang('messages.track_orders_detail')</p>
                         </div>
                     </div>
-                    <div class="col-sm-6 octopus-5-image">
-                        <div class="row single-item">
-                            <div class="col-sm-3 single-item-icon">
-                                <img src="public/Images/Index/1.png" />
-                            </div>
-                            <div class="col-sm-9 single-item-text">
-                                <div style="padding:1% 0">
-                                    <div class="whyChooseText"><strong>@lang('messages.track_orders')</strong></div>
-                                    <p>@lang('messages.track_orders_detail')
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="col-sm-6 display-flex">
+                        <div class="col-sm-3 single-item-icon">
+                            <img src="public/Images/Index/2.png" alt="" />
                         </div>
-                        <div class="row single-item">
-                            <div class="col-sm-3 single-item-icon">
-                                <img src="public/Images/Index/2.png" alt="" />
-                            </div>
-                            <div class="col-sm-9 single-item-text">
-                                <div style="padding:1% 0;">
-                                    <div class="whyChooseText"><strong>@lang('messages.take_the_place')</strong></div>
-                                    <p>@lang('messages.take_the_place_detail')
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="col-sm-9 ">
+                            <div class="whyChooseText"><strong>@lang('messages.take_the_place')</strong></div>
+                            <p>@lang('messages.take_the_place_detail') </p>
                         </div>
-                        <div class="single-item row">
-                            <div class="col-sm-3 single-item-icon">
-                                <img src="public/Images/Index/3.png" alt="" />
-                            </div>
-                            <div class="col-sm-9 single-item-text">
-                                <div style="padding: 4.5% 0;">
-                                    <div class="whyChooseText"><strong>@lang('messages.cash_on_delivery')</strong></div>
-                                    <p>@lang('messages.cash_on_delivery_detail')</p>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-sm-6 display-flex">
+                        <div class="col-sm-3 single-item-icon">
+                            <img src="public/Images/Index/3.png" alt="" />
                         </div>
-                        <div class="single-item row">
-                            <div class="col-sm-3 single-item-icon">
-                                <img src="public/Images/Index/4.png" alt="" />
-                            </div>
-                            <div class="col-sm-9 single-item-text">
-                                <div style="padding:2.5% 0;">
-                                    <div class="whyChooseText"><strong>@lang('messages.automatic_cost_calculation')</strong></div>
-                                    <p>@lang('messages.automatic_cost_calculation_detail') </p>
-                                </div>
-                            </div>
+                        <div class="col-sm-9 ">
+                            <div class="whyChooseText"><strong>@lang('messages.cash_on_delivery')</strong></div>
+                            <p>@lang('messages.cash_on_delivery_detail')</p>
                         </div>
-                        <div class="single-item row">
-                            <div class="col-sm-3 single-item-icon">
-                                <img src="public/Images/Index/5.png" alt="" />
-                            </div>
-                            <div class="col-sm-9 single-item-text">
-                                <div style="padding:2.5% 0;">
-                                    <div class="whyChooseText"><strong>@lang('messages.container_holds_heat')</strong></div>
-                                    <p>@lang('messages.container_holds_heat_detail') </p>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-sm-6 display-flex">
+                        <div class="col-sm-3 single-item-icon">
+                            <img src="public/Images/Index/4.png" alt="" />
+                        </div>
+                        <div class="col-sm-9 ">
+                            <div class="whyChooseText"><strong>@lang('messages.automatic_cost_calculation')</strong></div>
+                            <p>@lang('messages.automatic_cost_calculation_detail') </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 display-flex">
+                        <div class="col-sm-3 single-item-icon">
+                            <img src="public/Images/Index/5.png" alt="" />
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="whyChooseText"><strong>@lang('messages.container_holds_heat')</strong></div>
+                            <p>@lang('messages.container_holds_heat_detail') </p>
                         </div>
                     </div>
                 </div>
                 <!--End octopus Section show on computer-->
-                <!--Octopus Section show on Phone-->
-                <div class="container-fluid three-col-serv-in-2 octopusSectionPhone">
-                    <div class="three-col-serv-in-2-in">
-                        <div class="col-md-2">
-                            <div class="single-item-icon-mobile" style="margin: 0 auto;">
-                                <img src="public/Images/Index/1.png" />
-                            </div>
-                            <div class="ocSecContent" style="padding:2% 0; text-align: center;">
-                                <div class="whyChooseText"><strong>THEO DÕI ĐƠN HÀNG</strong></div>
-                                <p>
-                                    Cung cấp vị trí, lộ trình, thời gian của tài xế <br />
-                                    trên ứng dụng IHT GO <br />
-                                    hiển thị vị trí tài xế trên google map
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="single-item-icon-mobile" style="margin: 0 auto;">
-                                <img src="public/Images/Index/2.png" />
-                            </div>
-                            <div class="ocSecContent" style="padding:2% 0; text-align: center;">
-                                <div class="whyChooseText"><strong>LẤY HÀNG TẬN NƠI</strong></div>
-                                <p>
-                                    Nhân viên IHT GO sẽ có mặt <br />
-                                    trong thời gian nhanh nhất <br />
-                                    đến nơi khách hàng yêu cầu nhận hàng
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="single-item-icon-mobile" style="margin: 0 auto;">
-                                <img src="public/Images/Index/3.png" />
-                            </div>
-                            <div class="ocSecContent" style="padding:2% 0; text-align: center;">
-                                <div class="whyChooseText"><strong>THU HỘ TIỀN</strong></div>
-                                <p>IHT GO giao hàng và thu tiền hộ khách</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="single-item-icon-mobile" style="margin: 0 auto;">
-                                <img src="public/Images/Index/4.png" />
-                            </div>
-                            <div class="ocSecContent" style="padding:2% 0; text-align: center;">
-                                <div class="whyChooseText"><strong>TÍNH PHÍ TỰ ĐỘNG</strong></div>
-                                <p>
-                                    Khách hàng sẽ biết được chi phí vận chuyển <br />
-                                    khi tài xế đến nhận và giao hàng
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="single-item-icon-mobile" style="margin: 0 auto;">
-                                <img src="public/Images/Index/5.png" />
-                            </div>
-                            <div class="ocSecContent" style="padding:2% 0; text-align: center;">
-                                <div class="whyChooseText"><strong>THÙNG GIỮ NHIỆT</strong></div>
-                                <p>
-                                    Giúp hàng hóa được giao đảm bảo <br />
-                                    an toàn trên mọi cung đường
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--END octopus Section show on Phone-->
             </div>
             <!--END Octopus Section----------------->
         </div>
@@ -198,7 +133,7 @@
     <!-------------------User Guide--------------------->
     <div class="container">
         <div class="row-fluid center-text">
-            <h2><span class="text-uppercase" style="font-size: 24px;"><strong>hướng dẫn sử dụng app</strong></span></h2>
+            <h2><span class="text-uppercase" style="font-size: 24px;"><strong>@lang('messages.user_manual')</strong></span></h2>
         </div>
         <div class="user-guide-wrap">
             <div class="user-guide owl-carousel owl-theme animated">

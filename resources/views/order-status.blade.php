@@ -14,20 +14,21 @@
     <div class="h50px"></div>
     <div class="container">
         <ul class="pagination">
-            <li class="active"><a href="{!! url('order'); !!}">@lang('messages.all')({{$count_order_all}})</a></li>
-            <li><a href="{!! url('order/status=1'); !!}">@lang('messages.waiting')({{$count_order_watting}})</a></li>
-            <li><a href="{!! url('order/status=2'); !!}">@lang('messages.no_delivery')({{$count_order_no_delivery}})</a></li>
-            <li><a href="{!! url('order/status=3'); !!}">@lang('messages.being_delivery')({{$count_order_beging_delivery}})</a></li>
-            <li><a href="{!! url('order/status=4'); !!}">@lang('messages.succeeded')({{$count_order_done_delivery}})</a></li>
-            <li><a href="{!! url('order/status=5'); !!}">@lang('messages.customer_cancel')({{$count_order_customer_cancel}})</a></li>
-            <li><a href="{!! url('order/status=6'); !!}">@lang('messages.iht_cancel')({{$count_order_iht_cancel}})</a></li>
-            <li><a href="{!! url('order/status=7'); !!}">@lang('messages.unsuccessful')({{$count_order_fail}})</a></li>
+            <li class="{{ Request::path() == 'order' ? 'active' : '' }}"><a href="{!! url('order'); !!}">@lang('messages.all')({{$count_order_all}})</a></li>
+            <li class="{{ Request::path() == 'order/status=1' ? 'active' : '' }}"><a href="{!! url('order/status=1'); !!}">@lang('messages.waiting')({{$count_order_watting}})</a></li>
+            <li class="{{ Request::path() == 'order/status=2' ? 'active' : '' }}"><a href="{!! url('order/status=2'); !!}">@lang('messages.no_delivery')({{$count_order_no_delivery}})</a></li>
+            <li class="{{ Request::path() == 'order/status=3' ? 'active' : '' }}"><a href="{!! url('order/status=3'); !!}">@lang('messages.being_delivery')({{$count_order_beging_delivery}})</a></li>
+            <li class="{{ Request::path() == 'order/status=4' ? 'active' : '' }}"><a href="{!! url('order/status=4'); !!}">@lang('messages.succeeded')({{$count_order_done_delivery}})</a></li>
+            <li class="{{ Request::path() == 'order/status=5' ? 'active' : '' }}"><a href="{!! url('order/status=5'); !!}">@lang('messages.customer_cancel')({{$count_order_customer_cancel}})</a></li>
+            <li class="{{ Request::path() == 'order/status=6' ? 'active' : '' }}"><a href="{!! url('order/status=6'); !!}">@lang('messages.iht_cancel')({{$count_order_iht_cancel}})</a></li>
+            <li class="{{ Request::path() == 'order/status=7' ? 'active' : '' }}"><a href="{!! url('order/status=7'); !!}">@lang('messages.unsuccessful')({{$count_order_fail}})</a></li>
         </ul>
+        @if(count($order)!=0)
         <div id="load-data">
             @foreach($order as $o)
             <div class="row">
                 <div class="col-md-2">
-                    <img data-toggle="modal" data-target="#myModal" src={{"public/storage/order/" . $o->id.'_order.png?'.rand()}} alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src='public/images/index/notfound.png';">
+                    <img data-toggle="modal" data-target="#myModal" src={{"../public/storage/order/" . $o->id.'_order.png?'.rand()}} alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
                 </div>
                 <div class="col-md-3">
                     <p><a href="order-detail/id={{$o->id}}">@if($o->is_speed == 1)<i class="fas fa-rocket"></i>@endif {{ $o->code }}</a></p>
@@ -50,7 +51,6 @@
                         @endif
                     </p>
                     <p>@lang('messages.total_money'): {{number_format($o->total_price).' VNĐ'}}</p>
-
                 </div>
                 <div class="col-md-3">
                     <p>@lang('messages.case') :
@@ -84,10 +84,37 @@
             <hr>
             @endforeach
             <div id="remove-row" style="text-align: center;">
-                <button id="btn-more"  data-id="{{$o->id}}" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+                <button id="btn-more" onclick="Loadmore({{$o->id}},{{$o->status}})" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
             </div>
         </div>
+        @else
+        <p>@lang('messages.no_order')</p>
+        @endif
     </div>
     <div class="h50px"></div>
 </div>
+<script>
+    function Loadmore(id, status) {
+        $.ajax({
+            url: '{{ url("loadOrder_Status") }}',
+            method: "POST",
+            data: {
+                id: id,
+                status: status,
+                _token: "{{csrf_token()}}"
+            },
+            dataType: "text",
+            success: function(data) {
+                if (data != '') {
+                    console.log(data);
+                    $('#remove-row').remove();
+                    $('#load-data').append(data);
+
+                } else {
+                    $('#btn-more').html('<i class="fas fa-times"></i>');
+                }
+            }
+        });
+    }
+</script>
 @endsection

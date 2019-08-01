@@ -14,9 +14,9 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     Route::post('tracking', 'ApiController@tracking');
 
     Route::post('list-order', 'ApiController@loadOrders');
-    Route::get('order-detail/{id}', 'ApiController@detail');
-    Route::get('order-start/{id}', 'ApiController@startShipping');
-    Route::get('order-finish/{id}', 'ApiController@finishShipping');
+    Route::get('order-detail/{id?}', 'ApiController@detail');
+    Route::get('order-start/{id?}', 'ApiController@startShipping');
+    Route::get('order-finish/{id?}', 'ApiController@finishShipping');
     Route::post('update-fcm', 'ApiController@updateFCM');
     Route::post('get-order', 'ApiController@getOrder');
 });

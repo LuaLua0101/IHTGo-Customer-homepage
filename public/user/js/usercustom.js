@@ -114,38 +114,33 @@ $(function () {
         placeholder: ""
     });
     //Validate About
-    var regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     $(document).on('click', '#btnContactSubmit', function () {
         var error = 0;
+        var phone = $.trim($("#contactPhone").val());
+        var email = $.trim($("#contactEmail").val());
         //contactName
         if ($.trim($('#contactName').val()) == "") {
-            $('#errorContactName').text("Họ và tên không được để trống!");
-            error++;
-        } else if ($('#contactName').val().length < 2) {
-            $('#errorContactName').text("Họ và tên không được dưới 2 ký tự!");
-            error++;
-        } else if ($('#contactName').val().length > 50) {
-            $('#errorContactName').text("Họ và tên nhỏ hơn 50 ký tự!");
+            $('#errorContactName').text(error_name);
             error++;
         } else {
             $('#errorContactName').text("");
         }
         //contactPhone
-        if ($.trim($('#contactPhone').val()) == "") {
-            $('#errorContactPhone').text("Số điện thoại không được để trống!");
+        if (phone == "") {
+            $('#errorContactPhone').text(error_phone);
             error++;
-        } else if ($('#contactPhone').val().length < 15) {
-            $('#errorContactPhone').text("Số điện thoại từ 9 đến 10 số!");
+        } else if (!checkPhoneNumber(phone)) {
+            $('#errorContactPhone').text(error_check_phone);
             error++;
         } else {
             $('#errorContactPhone').text("");
         }
         //contactEmail
-        if ($.trim($('#contactEmail').val()) == "") {
-            $('#errorContactEmail').text("Email không được để trống!");
+        if (email == "") {
+            $('#errorContactEmail').text(error_email);
             error++;
-        } else if (!regexEmail.test($('#contactEmail').val().toLowerCase())) {
-            $('#errorContactEmail').text("Email không hợp lệ!");
+        } else if (!isEmail(email)) {
+            $('#errorContactEmail').text(error_check_email);
             error++;
         } else {
             $('#errorContactEmail').text("");
@@ -158,11 +153,7 @@ $(function () {
     });
     $('#contactName').on('focusout blur', function () {
         if ($.trim($('#contactName').val()) == "") {
-            $('#errorContactName').text("Họ và tên không được để trống!");
-        } else if ($('#contactName').val().length < 2) {
-            $('#errorContactName').text("Họ và tên không được dưới 2 ký tự!");
-        } else if ($('#contactName').val().length > 50) {
-            $('#errorContactName').text("Họ và tên nhỏ hơn 50 ký tự!");
+            $('#errorContactName').text(error_name);
         } else {
             $('#errorContactName').text("");
         }
@@ -172,12 +163,13 @@ $(function () {
         $('#errorContactPhone').text("");
     });
     $('#contactPhone').on('focusout blur', function () {
-        if ($.trim($('#contactPhone').val()) == "") {
-            $('#errorContactPhone').text("Số điện thoại không được để trống!");
-        } else if ($('#contactPhone').val().length < 15) {
-            $('#errorContactPhone').text("Số điện thoại từ 9 đến 10 số!");
+        var phone = $.trim($("#contactPhone").val());
+        if (phone == "") {
+            $('#errorContactPhone').text(error_phone);
+        } else if (!checkPhoneNumber(phone)) {
+            $('#errorContactPhone').text(error_check_phone);
         } else {
-            $('#errorContactPhone').text("");
+            $('#errorContactPhone').text('');
         }
     });
     //contactEmail
@@ -185,10 +177,13 @@ $(function () {
         $('#errorContactEmail').text("");
     });
     $('#contactEmail').on('focusout blur', function () {
-        if ($.trim($('#contactEmail').val()) == "") {
-            $('#errorContactEmail').text("Email không được để trống!");
-        } else if (!regexEmail.test($('#contactEmail').val().toLowerCase())) {
-            $('#errorContactEmail').text("Email không hợp lệ!");
+        var email = $.trim($("#contactEmail").val());
+        if (email == "") {
+            $('#errorContactEmail').text(error_email);
+            error++;
+        } else if (!isEmail(email)) {
+            $('#errorContactEmail').text(error_check_email);
+            error++;
         } else {
             $('#errorContactEmail').text("");
         }
@@ -783,5 +778,26 @@ $(function () {
             $('#form-weight').css('display', 'block');
 
         }
+    });
+    $(document).on('click', '#btn-more', function () {
+        var id = $(this).data('id');
+        $("#btn-more").html("Loading....");
+        $.ajax({
+            url: 'loadOrder',
+            method: "POST",
+            data: {
+                id: id,
+            },
+            dataType: "text",
+            success: function (data) {
+                console.log(data);
+                if (data != '') {
+                    $('#remove-row').remove();
+                    $('#load-data').append(data);
+                } else {
+                    $('#btn-more').html("No Data");
+                }
+            }
+        });
     });
 });

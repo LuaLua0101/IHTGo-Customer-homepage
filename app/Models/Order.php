@@ -14,48 +14,217 @@ use Request;
 class Order extends Model
 {
     protected $table = "orders";
-
-    //hàm phân trang
-    public static function paginateArray($data, $perPage = 15)
-    {
-        $page = Paginator::resolveCurrentPage();
-        $total = count($data);
-        $results = array_slice($data, ($page - 1) * $perPage, $perPage);
-
-        return new LengthAwarePaginator($results, $total, $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath(),
-        ]);
-    }
-    //danh sách đơn hàng
+    //list
     public static function getList()
     {
         $user_id = Auth::user()->id;
-        $res = self::paginateArray(
-            DB::select("select od.sender_address,od.receive_address,o.*,
-        IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
-        IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
-        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-        IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
-        FROM orders o, order_details od
-        WHERE o.id=od.order_id AND o.user_id=$user_id
-        ORDER BY o.id DESC")
-        );
+
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->orderBy('created_at', 'DESC')->limit(10)->get();
         return $res;
     }
-    //danh sách đơn hàng theo trạng thái đơn
-    public static function getList_Status($status)
+    public static function getList_Status($status_id)
     {
         $user_id = Auth::user()->id;
-        $res = self::paginateArray(
-            $res = DB::select("select od.sender_address,od.receive_address,o.*,
-                IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
-                IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
-                IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
-                IFNULL((SELECT d.name FROM districts d WHERE d.id=od.receive_district_id),'') as receive_district_name
-                FROM orders o, order_details od
-                WHERE o.id=od.order_id AND o.user_id=$user_id AND o.status=$status
-                ORDER BY o.id DESC")
-        );
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->where('status', $status_id)->orderBy('created_at', 'DESC')->limit(10)->get();
+        return $res;
+    }
+    //ajax load more
+    public static function loadOrder($request)
+    {
+        if (Request::ajax()) {
+            $user_id = Auth::user()->id;
+            $output = '';
+            $id = $request->id;
+            $i = 1;
+            $order = DB::table(config('constants.ORDER_TABLE'))->where('id', '<', $id)->where('user_id', $user_id)->orderBy('created_at', 'DESC')->limit(10)->get();
+            if (!$order->isEmpty()) {
+                foreach ($order as $o) {
+                    //giao hỏa tốc
+                    if ($o->is_speed == 1) {
+                        $ispeed = '<i class="fas fa-rocket"></i>';
+                    }else{
+                        $ispeed="";
+                    };
+                    //trạng thái đơn hàng
+                    if ($o->status == 1) {
+                        $status = ' <span class="bage-warning">' . __('messages.waiting') . ' </span>';
+                    } elseif ($o->status == 2) {
+                        $status = ' <span class="bage-info">' . __('messages.no_delivery') . ' </span>';
+                    } elseif ($o->status == 3) {
+                        $status = ' <span class="bage-info">' . __('messages.being_delivery') . ' </span>';
+                    } elseif ($o->status == 4) {
+                        $status = ' <span class="bage-success">' . __('messages.succeeded') . ' </span>';
+                    } elseif ($o->status == 5) {
+                        $status = ' <span class="bage-basic">' . __('messages.customer_cancel') . ' </span>';
+                    } elseif ($o->status == 6) {
+                        $status = ' <span class="bage-basic">' . __('messages.iht_cancel') . ' </span>';
+                    } elseif ($o->status == 7) {
+                        $status = ' <span class="bage-danger">' . __('messages.unsuccessful') . ' </span>';
+                    };
+                    //Thanh toán
+                    if ($o->is_payment == 0) {
+                        $is_payment = ' <span class="bage-basic">' . __('messages.unpaid') . '</span>';
+                    } elseif ($o->is_payment == 1) {
+                        $is_payment = '<span class="bage-success"> ' . __('messages.paid') . '</span>';
+                    } elseif ($o->is_payment == 2) {
+                        $is_payment = '<span class="bage-danger">' . __('messages.debit') . '</span>';
+                    };
+                    //người thanh toán
+                    if ($o->payer == 1) {
+                        $payer = '<span class="bage-info">' . __("messages.receicer") . '</span>';
+                    } else {
+                        $payer = '<span class="bage-success">' . __("messages.sender") . ' </span>';
+                    };
+                    //trường hợp
+                    if ($o->car_option == 1) {
+                        $car_option = '<span class="bage-warning">' . __("messages.delivery_in_province") . ' </span>';
+                    } elseif ($o->car_option == 2) {
+                        $car_option = '<span class="bage-success">' . __("messages.delivery_of_documents") . '  </span>';
+                    } elseif ($o->car_option == 3) {
+                        $car_option = '<span class="bage-info">' . __("messages.delivery_outside_province") . ' </span>';
+                    };
+
+                    $output .= '
+                <div class="row">
+                <div class="col-md-2">
+                ' . $i++ . '   <img data-toggle="modal" data-target="#myModal" id="myImg" src="public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`public//images//index//notfound.png`;">
+                </div>
+                <div class="col-md-3">
+                    <p><a href="order-detail/id=' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
+                    <p class="text-justify">' . __("messages.order_name") . ': ' . $o->name . '</p>
+                    <p class="text-justify">' . __("messages.date_created") . ': ' . date('d-m-Y', strtotime($o->created_at)) . '</p>
+                </div>
+                <div class="col-md-3 ">
+                    <p>' . __("messages.payer") . ':' . $payer . ' </p>
+                    <p>' . __("messages.pay") . ': ' . $is_payment . '</p>
+                    <p>' . __("messages.total_money") . ': ' . number_format($o->total_price) . ' VNĐ' . '</p>
+                </div>
+                <div class="col-md-3">
+                    <p>' . __("messages.case") . ': ' . $car_option . '</p>
+                    <p class="text-justify">' . __("messages.status") . ': ' . $status . '</p>
+                </div>
+            </div>
+            <hr>
+            ';
+                }
+                $output .= '
+                <div id="remove-row" style="text-align: center;">
+                <button id="btn-more" onclick="Loadmore(' . $o->id . ')" data-id="' . $o->id . ' class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+            </div>';
+                return $output;
+               
+            }
+        }
+    }
+    public static function loadOrder_Status($request)
+    {
+        if (Request::ajax()) {
+            $user_id = Auth::user()->id;
+            $output = '';
+            $id = $request->id;
+            $i = 1;
+            $order = DB::table(config('constants.ORDER_TABLE'))->where('id', '<', $id)->where('user_id', $user_id)->where('status', $request->status)->orderBy('created_at', 'DESC')->limit(10)->get();
+            if (!$order->isEmpty()) {
+                foreach ($order as $o) {
+                    //giao hỏa tốc
+                    if ($o->is_speed == '1') {
+                        $ispeed = '<i class="fas fa-rocket"></i>';
+                    } else {
+                        $ispeed = '';
+                    };
+                    //trạng thái đơn hàng
+                    if ($o->status == 1) {
+                        $status = ' <span class="bage-warning">' . __('messages.waiting') . ' </span>';
+                    } elseif ($o->status == 2) {
+                        $status = ' <span class="bage-info">' . __('messages.no_delivery') . ' </span>';
+                    } elseif ($o->status == 3) {
+                        $status = ' <span class="bage-info">' . __('messages.being_delivery') . ' </span>';
+                    } elseif ($o->status == 4) {
+                        $status = ' <span class="bage-success">' . __('messages.succeeded') . ' </span>';
+                    } elseif ($o->status == 5) {
+                        $status = ' <span class="bage-basic">' . __('messages.customer_cancel') . ' </span>';
+                    } elseif ($o->status == 6) {
+                        $status = ' <span class="bage-basic">' . __('messages.iht_cancel') . ' </span>';
+                    } elseif ($o->status == 7) {
+                        $status = ' <span class="bage-danger">' . __('messages.unsuccessful') . ' </span>';
+                    }
+                    //Thanh toán
+                    if ($o->is_payment == 0) {
+                        $is_payment = ' <span class="bage-basic">' . __('messages.unpaid') . '</span>';
+                    } elseif ($o->is_payment == 1) {
+                        $is_payment = '<span class="bage-success"> ' . __('messages.paid') . '</span>';
+                    } elseif ($o->is_payment == 2) {
+                        $is_payment = '<span class="bage-danger">' . __('messages.debit') . '</span>';
+                    }
+                    //người thanh toán
+                    if ($o->payer == 1) {
+                        $payer = '<span class="bage-info">' . __("messages.receicer") . '</span>';
+                    } else {
+                        $payer = '<span class="bage-success">' . __("messages.sender") . ' </span>';
+                    }
+                    //trường hợp
+                    if ($o->car_option == 1) {
+                        $car_option = '<span class="bage-warning">' . __("messages.delivery_in_province") . ' </span>';
+                    } elseif ($o->car_option == 2) {
+                        $car_option = '<span class="bage-success">' . __("messages.delivery_of_documents") . '  </span>';
+                    } elseif ($o->car_option == 3) {
+                        $car_option = '<span class="bage-info">' . __("messages.delivery_outside_province") . ' </span>';
+                    }
+                    $output .= '
+                <div class="row">
+                <div class="col-md-2">
+                ' . $i++ . '  <img data-toggle="modal" data-target="#myModal" id="myImg" src="../public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`..//public//images//index//notfound.png`;">
+                </div>
+                <div class="col-md-3">
+                    <p><a href="order-detail/id=' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
+                    <p class="text-justify">' . __("messages.order_name") . ': ' . $o->name . '</p>
+                    <p class="text-justify">' . __("messages.date_created") . ': ' . date('d-m-Y', strtotime($o->created_at)) . '</p>
+                </div>
+                <div class="col-md-3 ">
+                    <p>' . __("messages.payer") . ':' . $payer . ' </p>
+                    <p>' . __("messages.pay") . ': ' . $is_payment . '</p>
+                    <p>' . __("messages.total_money") . ': ' . number_format($o->total_price) . ' VNĐ' . '</p>
+                </div>
+                <div class="col-md-3">
+                    <p>' . __("messages.case") . ': ' . $car_option . '</p>
+                    <p class="text-justify">' . __("messages.status") . ': ' . $status . '</p>
+                </div>
+            </div>
+            <hr>
+            ';
+                }
+                $output .= '
+            <div id="remove-row" style="text-align: center;">
+                <button id="btn-more" onclick="Loadmore(' . $o->id . ',' . $request->status . ')" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+            </div>';
+                return $output;
+            }
+        }
+    }
+    //count
+    public static function countList()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->count();
+        return $res;
+    }
+    public static function countList_Status($status_id)
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->where('status', $status_id)->count();
+        return $res;
+    }
+    //sum
+    public static function sumList()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->sum('total_price');
+        return $res;
+    }
+    public static function sumList_Status($status_id)
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->where('status', $status_id)->sum('total_price');
         return $res;
     }
     //danh sách đơn hàng search date
@@ -102,7 +271,7 @@ class Order extends Model
     public static function detail($id)
     {
         $user_id = Auth::user()->id;
-        $res = DB::select(DB::raw("select od.sender_address,od.receive_address,o.*,od.*,o.id as order_id,
+        $res = DB::select("select od.sender_address,od.receive_address,o.*,od.*,o.id as order_id,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
@@ -112,8 +281,8 @@ class Order extends Model
 		IFNULL((SELECT c.number FROM deliveries d, cars c WHERE o.id=d.order_id AND d.car_id=c.id),'') as receive__shipper_car
         FROM orders o, order_details od
         WHERE o.id=od.order_id AND o.user_id=  $user_id AND o.id=  $id
-        ORDER BY o.id DESC"))[0];
-        return $res;
+        ORDER BY o.id DESC");
+        return $res[0];
     }
 
     //hiển thị tổng tiền đơn hàng theo trạng thái đơn
@@ -172,9 +341,9 @@ class Order extends Model
             $car_option = 0;
             $is_speed = 0;
             $length = ($data->length > 1 || $data->length != null) ? $data->length : 1;
-            $width =($data->width > 1 || $data->width != null) ? $data->width : 1;
+            $width = ($data->width > 1 || $data->width != null) ? $data->width : 1;
             $height = ($data->height > 1 || $data->height != null) ? $data->height : 1;
-            $weight =($data->weight > 1 || $data->weight != null) ? $data->weight : 1;
+            $weight = ($data->weight > 1 || $data->weight != null) ? $data->weight : 1;
             $size = ($length * $width * $height) / 5000;
 
             //delivery_of_documents 

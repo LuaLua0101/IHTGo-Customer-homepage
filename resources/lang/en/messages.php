@@ -15,9 +15,6 @@ return [
     //page index
     'service_ihtgo' => 'Service IHT Go',
     'ihtgo_connection_options_for_shop_owners_and_customers' => 'IHT Go - connection options for shop owners and customers',
-    'delivery_within_the_province_and_inner_city' => 'Delivery within the province and inner city',
-    'deliver_documents_during_the_day_from_HCMC_BINH_DUONG_and_vice_versa' => 'Deliver documents during the day from HCMC - BINH DUONG and vice versa',
-    'express_delivery_during_the_day' => 'Express delivery during the day',
     'why_do_you_have_to_choose_IHT_Go' => 'Why do you have to choose IHT Go?',
     'track_orders' => 'Track orders',
     'track_orders_detail' => 'Providing the location, route, the time of the driver on the IHT Go application showing the drivers position on google map',
@@ -28,8 +25,15 @@ return [
     'automatic_cost_calculation_detail' => ' Customers will know the shipping cost when the driver arrives and delivers',
     'container_holds_heat' => 'Container holds heat',
     'container_holds_heat_detail' => 'Help deliver goods to ensure safety on all roads',
-
-
+    'user_manual' => 'User manual',
+    'only_from'=>'Only from',
+    'orders'=>'Orders',
+    'delivery_in_province_detail'=>'Transporting goods in Ho Chi Minh, Binh Duong, Dong Nai and Long An',
+    'delivery_outside_province_detail'=>'Transporting goods between Long An-Ho Chi Minh-Binh Duong-Binh Phuoc-Dong Nai-Tay Ninh',
+    'express_delivery_detail'=>'Transporting goods in Ho Chi Minh, Binh Duong, Dong Nai and Long An',
+    'delivery_in_province_time'=>'Within 12 hours',
+    'delivery_outside_province_time'=>'Within 12-24 hours',
+    'express_delivery_time'=>'Within 2-3 hours',
     //page order
     'title_order'       => 'ORDER',
     'date_start' => 'Date start',
@@ -57,7 +61,7 @@ return [
     'unpaid' => 'Unpaid',
     'paid' => 'Paid',
     'debit' => 'Debit',
-
+    'no_order'=>'No order',
     //page order detail
 
     'detail_order' => 'Detail order',
@@ -111,8 +115,15 @@ return [
     'personal' => 'Personal',
     'company' => 'Company',
     'list_of_companies' => 'List of companies',
-
+    //page contact
+    'contact_us' => 'Contact us',
+    'contact_us_detail' => 'Please fill in the details below and we will contact you soon<br/> Or contact our business team directly at <strong> 0902 926 925</strong>',
+    "company_name"=>"Company's name",
+    'company_detail'=>'Please leave your store name/company/business',
+    'submit'=>'Submit',
     //footer
+    'download_now_IHTGo_app' => 'Download now IHTGo app',
+    'download_now_IHTGo_app_detail' => 'Download and install the IHT Go app on Google Play and the App Store',
     'branch_system' => 'Branch system',
     'hcm_branch' => 'Ho Chi Minh branch',
     'bd_branch' => 'Binh Duong branch',
@@ -127,7 +138,9 @@ return [
     'address_dn_bien_hoa' => '100 kp Binh Duong, Ward Long Binh Tan, Bien Hoa',
     'address_dn_nhon_trach' => '48C, Duong Ton Duc Thang, Ap 3, Hiep Phuoc and Nhon Trach',
     'tax_code' => 'Tax code',
-
+    'privacy_policy'=>'Privacy Policy',
+    'terms_and_conditions'=>'Terms and conditions',
+    'recruitment'=>'Recruitment',
     //validate value
     'error_name' => 'Please enter last name & first name',
     'error_phone' => 'Please enter the phone number',

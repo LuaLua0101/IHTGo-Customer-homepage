@@ -15,9 +15,6 @@ return [
     //page index
     'service_ihtgo' => 'Dịch vụ IHT Go',
     'ihtgo_connection_options_for_shop_owners_and_customers' => 'IHT Go - lựa chọn kết nối của chủ cửa hàng và khách hàng',
-    'delivery_within_the_province_and_inner_city' => 'Giao hàng trong ngày nội tỉnh và nội thành',
-    'deliver_documents_during_the_day_from_HCMC_BINH_DUONG_and_vice_versa' => 'Giao chứng từ trong ngày từ TP.HCM - BÌNH DƯƠNG và ngược lại',
-    'express_delivery_during_the_day' => 'Giao hàng hỏa tốc trong ngày',
     'why_do_you_have_to_choose_IHT_Go' => 'Tại sao bạn phải chọn IHT Go?',
     'track_orders' => 'Theo dõi đơn hàng',
     'track_orders_detail' => 'Cung cấp vị trí, lộ trình, thời gian của tài xế trên ứng dụng IHT Go hiển thị vị trí tài xế trên google map',
@@ -28,6 +25,16 @@ return [
     'automatic_cost_calculation_detail' => ' Khách hàng sẽ biết được chi phí vận chuyển khi tài xế đến nhận và giao hàng',
     'container_holds_heat' => 'Thùng giữ nhiệt',
     'container_holds_heat_detail' => 'Giúp hàng hóa được giao đảm bảo an toàn trên mọi cung đường',
+    'user_manual' => 'Hướng dẫn sử dụng',
+    'only_from'=>'Chỉ từ',
+    'orders'=>'Đơn',
+    'delivery_in_province_detail'=>'Vận chuyển hàng hóa ở các Hồ Chí Minh, Bình Dương, Đồng Nai, Long An',
+    'delivery_outside_province_detail'=>'Vận chuyển hàng hóa giữa các Long An-Hồ Chí Minh-Bình Dương-Bình Phước-Đồng Nai-Tây Ninh',
+    'express_delivery_detail'=>'Vận chuyển hàng hóa ở các Hồ Chí Minh, Bình Dương, Đồng Nai, Long An',
+    'delivery_in_province_time'=>'Trong vòng 12 giờ',
+    'delivery_outside_province_time'=>'Trong vòng 12-24 giờ',
+    'express_delivery_time'=>'Trong vòng 2-3 giờ',
+    ''=>'',
     //page order
     'title_order' => 'ĐƠN HÀNG',
     'date_start' => 'Ngày bắt đầu',
@@ -57,7 +64,7 @@ return [
     'unpaid' => 'Chưa thanh toán',
     'paid' => 'Đã thanh toán',
     'debit' => 'Ghi nợ',
-
+    'no_order'=>'Không có đơn hàng',
     //page order detail
     'detail_order' => 'Chi tiết đơn hàng',
     'sender_information' => 'Thông tin người gửi',
@@ -108,8 +115,15 @@ return [
     'personal' => 'Cá nhân',
     'company' => 'Công ty',
     'list_of_companies' => 'Danh sách công ty',
-
+    //page contact
+    'contact_us'=>'Liên hệ với chúng tôi',
+    'contact_us_detail'=>'Vui lòng điền thông tin chi tiết dưới đây và chúng tôi sẽ liên lạc với bạn sớm nhất<br/> Hoặc liên hệ trực tiếp với nhóm kinh doanh của chúng tôi theo số <strong> 0902 926 925</strong>',
+    "company_name"=>"Tên doanh nghiệp",
+    'company_detail'=>'Vui lòng để lại tên cửa hàng/công ty/doanh nghiệp của bạn',
+    'submit'=>'Gửi',
     //footer
+    'download_now_IHTGo_app' => 'Tải ngay ứng dụng IHTGo',
+    'download_now_IHTGo_app_detail' => 'Tải và cài đặt ứng dụng IHT Go trên Google Play và App Store',
     'branch_system' => 'Hệ thống chi nhánh',
     'hcm_branch' => 'Chi nhánh Hồ Chí Minh',
     'bd_branch' => 'Chi nhánh Bình Dương',
@@ -124,7 +138,9 @@ return [
     'address_dn_bien_hoa' => '100 kp Bình Dương, Phường Long Bình Tân, Biên Hòa',
     'address_dn_nhon_trach' => '48C, Đường Tôn Đức Thắng, ẤP 3, Hiệp Phước, Nhơn Trạch',
     'tax_code' => 'Mã số thuế',
-
+    'privacy_policy'=>'Chính sách bảo mật',
+    'terms_and_conditions'=>'Các điều khoản và điều kiện',
+    'recruitment'=>'Tuyển dụng',
     //validate value
     'error_name' => 'Vui lòng nhập họ & tên',
     'error_phone' => 'Vui lòng nhập số điện thoại',

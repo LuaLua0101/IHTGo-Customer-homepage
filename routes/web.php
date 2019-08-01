@@ -20,14 +20,17 @@ Route::post('change-password', 'UserController@changePassword');
 Route::get('checkExistPasswordCurrent/{password?}', 'UserController@checkExistPasswordCurrent');
 
 //trang hiển thị
-Route::get('gioi-thieu', 'HomeController@contact');
+Route::get('contact', 'HomeController@contact');
 Route::post('contact-us', 'HomeController@contactUs');
-Route::get('bang-gia', 'HomeController@price_list');
-Route::get('tin-tuc', 'HomeController@news');
-Route::get('noi-dung', 'HomeController@new_detail');
-Route::get('don-hang', 'HomeController@order');
-Route::get('chi-tiet-don-hang/id={id?}', 'HomeController@order_detail');
-Route::get('tim-don-hang', 'HomeController@order_search');
+Route::get('price-list', 'HomeController@price_list');
+Route::get('news', 'HomeController@news');
+Route::get('new-detail', 'HomeController@new_detail');
+Route::get('order', 'HomeController@order');
+Route::post('loadOrder', 'HomeController@loadOrder');
+Route::get('order/status={id?}', 'HomeController@orderStatus');
+Route::post('loadOrder_Status', 'HomeController@loadOrder_Status');
+Route::get('order-detail/id={id?}', 'HomeController@order_detail');
+Route::get('order-search', 'HomeController@order_search');
 
 //hiển thị danh sách  (AJAX)
 Route::get('districtOfProvince/{province_id?}', 'DistrictController@districtOfProvince');
