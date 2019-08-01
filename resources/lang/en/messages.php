@@ -26,7 +26,14 @@ return [
     'container_holds_heat' => 'Container holds heat',
     'container_holds_heat_detail' => 'Help deliver goods to ensure safety on all roads',
     'user_manual' => 'User manual',
-
+    'only_from'=>'Only from',
+    'orders'=>'Orders',
+    'delivery_in_province_detail'=>'Transporting goods in Ho Chi Minh, Binh Duong, Dong Nai and Long An',
+    'delivery_outside_province_detail'=>'Transporting goods between Long An-Ho Chi Minh-Binh Duong-Binh Phuoc-Dong Nai-Tay Ninh',
+    'express_delivery_detail'=>'Transporting goods in Ho Chi Minh, Binh Duong, Dong Nai and Long An',
+    'delivery_in_province_time'=>'Within 12 hours',
+    'delivery_outside_province_time'=>'Within 12-24 hours',
+    'express_delivery_time'=>'Within 2-3 hours',
     //page order
     'title_order'       => 'ORDER',
     'date_start' => 'Date start',

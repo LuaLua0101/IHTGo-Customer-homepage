@@ -30,10 +30,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">@lang('messages.delivery_in_province')</div>
                         <div class="panel-body">
-                            <h6>chỉ từ</h6>
-                            <h2 class="price-order" >70,000Đ/ĐƠN</h2>
-                            <p class="list-provinces">Vận chuyển hàng hóa ở các Hồ Chí Minh, Bình Dương, Đồng Nai, Long An</p>
-                            <h5>Trong vòng 12 giờ</h5>
+                            <h6>@lang('messages.only_from')</h6>
+                            <h2 class="price-order" >70,000Đ/@lang('messages.orders')</h2>
+                            <p class="list-provinces">@lang('messages.delivery_in_province_detail')</p>
+                            <h5>@lang('messages.delivery_in_province_time')</h5>
                         </div>
                     </div>
                 </div>
@@ -41,10 +41,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">@lang('messages.delivery_outside_province')</div>
                         <div class="panel-body">
-                            <h6>chỉ từ</h6>
-                            <h2 class="price-order">140,000Đ/ĐƠN</h2>
-                            <p class="list-provinces">Vận chuyển hàng hóa giữa các Long An-Hồ Chí Minh-Bình Dương-Bình Phước-Đồng Nai-Tây Ninh</p>
-                            <h5>Trong vòng 12-24 giờ</h5>
+                            <h6>@lang('messages.only_from')</h6>
+                            <h2 class="price-order">140,000Đ/@lang('messages.orders')</h2>
+                            <p class="list-provinces">@lang('messages.delivery_outside_province_detail')</p>
+                            <h5>@lang('messages.delivery_outside_province_time')</h5>
                         </div>
                     </div>
                 </div>
@@ -52,10 +52,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">@lang('messages.express_delivery')</div>
                         <div class="panel-body">
-                            <h6>chỉ từ</h6>
-                            <h2 class="price-order">70,000Đ/ĐƠN</h2>
-                            <p class="list-provinces">Vận chuyển hàng hóa ở các Hồ Chí Minh, Bình Dương, Đồng Nai, Long An</p>
-                            <h5>Trong vòng 2-3 giờ</h5>
+                            <h6>@lang('messages.only_from')</h6>
+                            <h2 class="price-order">140,000Đ/@lang('messages.orders')</h2>
+                            <p class="list-provinces">@lang('messages.express_delivery_detail')</p>
+                            <h5>@lang('messages.express_delivery_time')</h5>
                         </div>
                     </div>
                 </div>
