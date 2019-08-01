@@ -779,4 +779,25 @@ $(function () {
 
         }
     });
+    $(document).on('click', '#btn-more', function () {
+        var id = $(this).data('id');
+        $("#btn-more").html("Loading....");
+        $.ajax({
+            url: 'loadOrder',
+            method: "POST",
+            data: {
+                id: id,
+            },
+            dataType: "text",
+            success: function (data) {
+                console.log(data);
+                if (data != '') {
+                    $('#remove-row').remove();
+                    $('#load-data').append(data);
+                } else {
+                    $('#btn-more').html("No Data");
+                }
+            }
+        });
+    });
 });

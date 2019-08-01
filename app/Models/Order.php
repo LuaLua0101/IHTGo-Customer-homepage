@@ -18,13 +18,14 @@ class Order extends Model
     public static function getList()
     {
         $user_id = Auth::user()->id;
-        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(10);
+
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->orderBy('created_at', 'DESC')->limit(10)->get();
         return $res;
     }
     public static function getList_Status($status_id)
     {
         $user_id = Auth::user()->id;
-        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->where('status', $status_id)->orderBy('created_at', 'DESC')->paginate(10);
+        $res = DB::table(config('constants.ORDER_TABLE'))->where('user_id', $user_id)->where('status', $status_id)->orderBy('created_at', 'DESC')->limit(10)->get();
         return $res;
     }
     //ajax load more
@@ -34,12 +35,15 @@ class Order extends Model
             $user_id = Auth::user()->id;
             $output = '';
             $id = $request->id;
-            $order = DB::table(config('constants.ORDER_TABLE'))->where('id', '>', $id)->where('user_id', $user_id)->orderBy('created_at', 'DESC')->limit(10)->get();
+            $i = 1;
+            $order = DB::table(config('constants.ORDER_TABLE'))->where('id', '<', $id)->where('user_id', $user_id)->orderBy('created_at', 'DESC')->limit(10)->get();
             if (!$order->isEmpty()) {
                 foreach ($order as $o) {
                     //giao hỏa tốc
                     if ($o->is_speed == 1) {
                         $ispeed = '<i class="fas fa-rocket"></i>';
+                    }else{
+                        $ispeed="";
                     };
                     //trạng thái đơn hàng
                     if ($o->status == 1) {
@@ -56,7 +60,7 @@ class Order extends Model
                         $status = ' <span class="bage-basic">' . __('messages.iht_cancel') . ' </span>';
                     } elseif ($o->status == 7) {
                         $status = ' <span class="bage-danger">' . __('messages.unsuccessful') . ' </span>';
-                    }
+                    };
                     //Thanh toán
                     if ($o->is_payment == 0) {
                         $is_payment = ' <span class="bage-basic">' . __('messages.unpaid') . '</span>';
@@ -64,13 +68,13 @@ class Order extends Model
                         $is_payment = '<span class="bage-success"> ' . __('messages.paid') . '</span>';
                     } elseif ($o->is_payment == 2) {
                         $is_payment = '<span class="bage-danger">' . __('messages.debit') . '</span>';
-                    }
+                    };
                     //người thanh toán
                     if ($o->payer == 1) {
                         $payer = '<span class="bage-info">' . __("messages.receicer") . '</span>';
                     } else {
                         $payer = '<span class="bage-success">' . __("messages.sender") . ' </span>';
-                    }
+                    };
                     //trường hợp
                     if ($o->car_option == 1) {
                         $car_option = '<span class="bage-warning">' . __("messages.delivery_in_province") . ' </span>';
@@ -78,11 +82,12 @@ class Order extends Model
                         $car_option = '<span class="bage-success">' . __("messages.delivery_of_documents") . '  </span>';
                     } elseif ($o->car_option == 3) {
                         $car_option = '<span class="bage-info">' . __("messages.delivery_outside_province") . ' </span>';
-                    }
+                    };
+
                     $output .= '
                 <div class="row">
                 <div class="col-md-2">
-                    <img data-toggle="modal" data-target="#myModal" id="myImg" src="public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`public//images//index//notfound.png`;">
+                ' . $i++ . '   <img data-toggle="modal" data-target="#myModal" id="myImg" src="public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`public//images//index//notfound.png`;">
                 </div>
                 <div class="col-md-3">
                     <p><a href="order-detail/id=' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
@@ -103,10 +108,11 @@ class Order extends Model
             ';
                 }
                 $output .= '
-            <div id="remove-row" style="text-align: center;">
-                <button id="btn-more" onclick="Loadmore(' . $o->id . ')" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+                <div id="remove-row" style="text-align: center;">
+                <button id="btn-more" onclick="Loadmore(' . $o->id . ')" data-id="' . $o->id . ' class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
             </div>';
                 return $output;
+               
             }
         }
     }
@@ -116,7 +122,8 @@ class Order extends Model
             $user_id = Auth::user()->id;
             $output = '';
             $id = $request->id;
-            $order = DB::table(config('constants.ORDER_TABLE'))->where('id', '>', $id)->where('user_id', $user_id)->where('status', $request->status)->orderBy('created_at', 'DESC')->limit(10)->get();
+            $i = 1;
+            $order = DB::table(config('constants.ORDER_TABLE'))->where('id', '<', $id)->where('user_id', $user_id)->where('status', $request->status)->orderBy('created_at', 'DESC')->limit(10)->get();
             if (!$order->isEmpty()) {
                 foreach ($order as $o) {
                     //giao hỏa tốc
@@ -166,7 +173,7 @@ class Order extends Model
                     $output .= '
                 <div class="row">
                 <div class="col-md-2">
-                    <img data-toggle="modal" data-target="#myModal" id="myImg" src="../public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`..//public//images//index//notfound.png`;">
+                ' . $i++ . '  <img data-toggle="modal" data-target="#myModal" id="myImg" src="../public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`..//public//images//index//notfound.png`;">
                 </div>
                 <div class="col-md-3">
                     <p><a href="order-detail/id=' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
@@ -188,7 +195,7 @@ class Order extends Model
                 }
                 $output .= '
             <div id="remove-row" style="text-align: center;">
-                <button id="btn-more" onclick="Loadmore(' . $o->id . ')" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+                <button id="btn-more" onclick="Loadmore(' . $o->id . ',' . $request->status . ')" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
             </div>';
                 return $output;
             }
@@ -264,7 +271,7 @@ class Order extends Model
     public static function detail($id)
     {
         $user_id = Auth::user()->id;
-        $res = DB::select(DB::raw("select od.sender_address,od.receive_address,o.*,od.*,o.id as order_id,
+        $res = DB::select("select od.sender_address,od.receive_address,o.*,od.*,o.id as order_id,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.sender_province_id),'') as sender_province_name,
         IFNULL((SELECT p.name FROM provinces p WHERE p.province_id=od.receive_province_id),'') as receive_province_name,
         IFNULL((SELECT d.name FROM districts d WHERE d.id=od.sender_district_id),'') as sender_district_name,
@@ -274,8 +281,8 @@ class Order extends Model
 		IFNULL((SELECT c.number FROM deliveries d, cars c WHERE o.id=d.order_id AND d.car_id=c.id),'') as receive__shipper_car
         FROM orders o, order_details od
         WHERE o.id=od.order_id AND o.user_id=  $user_id AND o.id=  $id
-        ORDER BY o.id DESC"))[0];
-        return $res;
+        ORDER BY o.id DESC");
+        return $res[0];
     }
 
     //hiển thị tổng tiền đơn hàng theo trạng thái đơn

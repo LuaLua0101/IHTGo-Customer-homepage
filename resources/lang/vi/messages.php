@@ -15,9 +15,6 @@ return [
     //page index
     'service_ihtgo' => 'Dịch vụ IHT Go',
     'ihtgo_connection_options_for_shop_owners_and_customers' => 'IHT Go - lựa chọn kết nối của chủ cửa hàng và khách hàng',
-    'delivery_within_the_province_and_inner_city' => 'Giao hàng trong ngày nội tỉnh và nội thành',
-    'deliver_documents_during_the_day_from_HCMC_BINH_DUONG_and_vice_versa' => 'Giao chứng từ trong ngày từ TP.HCM - BÌNH DƯƠNG và ngược lại',
-    'express_delivery_during_the_day' => 'Giao hàng hỏa tốc trong ngày',
     'why_do_you_have_to_choose_IHT_Go' => 'Tại sao bạn phải chọn IHT Go?',
     'track_orders' => 'Theo dõi đơn hàng',
     'track_orders_detail' => 'Cung cấp vị trí, lộ trình, thời gian của tài xế trên ứng dụng IHT Go hiển thị vị trí tài xế trên google map',
@@ -58,7 +55,7 @@ return [
     'unpaid' => 'Chưa thanh toán',
     'paid' => 'Đã thanh toán',
     'debit' => 'Ghi nợ',
-
+    'no_order'=>'Không có đơn hàng',
     //page order detail
     'detail_order' => 'Chi tiết đơn hàng',
     'sender_information' => 'Thông tin người gửi',

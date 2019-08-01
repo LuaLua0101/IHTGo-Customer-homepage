@@ -8,25 +8,7 @@
         </div>
         <div class="h50px"></div>
         <div class=" form-search-order ">
-            <form method="GET" action="{{ url('order-search')}}" class='formModal' id='formSearchOrder'>
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                <div class="form-inline ">
-                    <div class="form-group">
-                        <label>@lang('messages.date_start') : </label>
-                        <input type="date" name='start_date' id="start-date" /></li>
-                        <p class="text-danger" id='error-start-date'></p>
-                    </div>
-                    <div class="form-group ">
-                        <label>@lang('messages.date_end') : </label>
-                        <input type="date" name='end_date' id="end-date" /></li>
-                        <p class="text-danger" id='error-end-date'></p>
-                    </div>
-                    <div class="form-group" style="margin-left:1em">
-                        <button type="submit" class="btn btn-danger" disabled id="btnSearchOrder">@lang('messages.search') </button>
-                    </div>
-                    <div class="form-group" style="float: right;"> <label class="">@lang('messages.total_money') :<span id='total-price'> {{ number_format($sum_order)}} VNĐ</span> </label></div>
-                </div>
-            </form>
+            <div class="form-group"> <label class="">@lang('messages.total_money') :<span id='total-price'> {{ number_format($sum_order)}} VNĐ</span> </label></div>
         </div>
     </div>
     <div class="h50px"></div>
@@ -41,6 +23,7 @@
             <li class="{{ Request::path() == 'order/status=6' ? 'active' : '' }}"><a href="{!! url('order/status=6'); !!}">@lang('messages.iht_cancel')({{$count_order_iht_cancel}})</a></li>
             <li class="{{ Request::path() == 'order/status=7' ? 'active' : '' }}"><a href="{!! url('order/status=7'); !!}">@lang('messages.unsuccessful')({{$count_order_fail}})</a></li>
         </ul>
+        @if(count($order)!=0)
         <div id="load-data">
             @foreach($order as $o)
             <div class="row">
@@ -51,7 +34,6 @@
                     <p><a href="order-detail/id={{$o->id}}">@if($o->is_speed == 1)<i class="fas fa-rocket"></i>@endif {{ $o->code }}</a></p>
                     <p class="text-justify">@lang('messages.order_name'): {{ $o->name }}</p>
                     <p class="text-justify">@lang('messages.date_created'): {{date("d-m-Y", strtotime($o->created_at))}}</p>
-
                 </div>
                 <div class="col-md-3 ">
                     <p>@lang('messages.payer'): @if($o->payer==1)
@@ -69,7 +51,6 @@
                         @endif
                     </p>
                     <p>@lang('messages.total_money'): {{number_format($o->total_price).' VNĐ'}}</p>
-
                 </div>
                 <div class="col-md-3">
                     <p>@lang('messages.case') :
@@ -106,6 +87,9 @@
                 <button id="btn-more" onclick="Loadmore({{$o->id}},{{$o->status}})" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
             </div>
         </div>
+        @else
+        <p>@lang('messages.no_order')</p>
+        @endif
     </div>
     <div class="h50px"></div>
 </div>
@@ -127,8 +111,7 @@
                     $('#load-data').append(data);
 
                 } else {
-                    console.log(123);
-                    $('#btn-more').html("No Data");
+                    $('#btn-more').html('<i class="fas fa-times"></i>');
                 }
             }
         });

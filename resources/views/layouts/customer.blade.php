@@ -6,10 +6,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('public/Images/Index/logo.png') }}" />
 
     <!--------------------------------------Bootstrap CSS--------------------------------------------->
-    <link href="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <!----------------------------------------------------------------------------------->
-    <link href="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
+    <!----------------------------------------------------------------------------------->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <!----------------------------------------PagedList----------------------------------------------->
     <link href="{{ URL::asset('public/vendor/PagedList.css" rel="stylesheet') }}" />
 
@@ -41,7 +42,6 @@
     <!---------------------------HEADER------------------------------->
     <header>
         <!---------------------First Header----------------------->
-
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -89,7 +89,6 @@
                 </div>
             </div>
         </nav>
-
     </header>
 
     <!--  Modal Dat hang-->
@@ -104,7 +103,7 @@
                         <h4 class="modal-title">@lang('messages.create_order')</h4>
                     </div>
                     <div class="modal-body row">
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <h4>@lang('messages.sender_information') (*)</h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-name'></span>
@@ -155,7 +154,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <h4>@lang('messages.receiver_information')(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-name'></span>
@@ -200,10 +199,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-sm-12">
                             <h4>@lang('messages.order_information') (*)</h4>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-sm-8">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-box-open"></i></span>
@@ -211,7 +210,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4" id='form-length'>
+                                <div class="form-group col-sm-4" id='form-length'>
                                     <label>@lang('messages.length')(cm)*:</label>
                                     <label class="text-danger" id='error-length-order'></label>
                                     <div class="input-group">
@@ -219,14 +218,14 @@
                                         <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4" id='form-width'>
+                                <div class="form-group col-sm-4" id='form-width'>
                                     <label>@lang('messages.width')(cm)*:</label><label class="text-danger" id='error-width-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
                                         <input type="number" onchange="setTwoNumberDecimal" min="1" step="1.25" class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4" id='form-height'>
+                                <div class="form-group col-sm-4" id='form-height'>
                                     <label>@lang('messages.height')(cm)*:</label><label class="text-danger" id='error-height-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
@@ -248,14 +247,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="custom-file col-md-4">
+                                <div class="custom-file col-sm-4">
                                     <label>@lang('messages.photo_order') :<span class="text-danger" id='error-image-order'></span></label>
                                     <div class="upload-btn-wrapper">
                                         <img id="img1" width="130" src="{{ URL::asset('public/images/Index/notfound.png') }}">
                                         <input type="file" id="customFile" name="image_order" onchange="readURL(event, 1)" />
                                     </div>
                                 </div>
-                                <div class="form-group col-md-8">
+                                <div class="form-group col-sm-8">
                                     <label>@lang('messages.note') :<span class="text-danger" id='error-note-order'></span></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
@@ -264,8 +263,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-12 formRadio">
-                            <div class="form-group col-md-12 formCheckBox">
+                        <div class="col-sm-4 formRadio">
+                            <div class="form-group  formCheckBox">
                                 <div class="checkbox  checkbox-success ">
                                     <label><input type="checkbox" name="is_speed" value="1">@lang('messages.express_delivery')</label>
                                 </div>
@@ -273,7 +272,7 @@
                                     <label><input class="label-text" type="checkbox" id='ckbdelivery_of_documents' value="2">@lang('messages.delivery_of_documents')</label>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-sm-12">
                                 <label class="title-form">@lang('messages.payer') :</label>
                                 <label class="container">@lang('messages.receicer')
                                     <input type="radio" name="payer" value="1" checked="checked">
@@ -285,7 +284,7 @@
                                 </label>
                             </div>
                             @if($customer->type == 2)
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-sm-12">
                                 <label class="title-form">@lang('messages.payment_methods') :</label>
                                 <label class="container">@lang('messages.cash')
                                     <input type="radio" checked="checked" name="payment_type" value="1">
@@ -300,8 +299,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id="btnCreateOrder" disabled>@lang('messages.save') </button>
-                        <button type="button" class="btnClose" data-dismiss="modal">@lang('messages.close') </button>
+                        <button type="button" class="btn btn-danger" id="btnCreateOrder" disabled>@lang('messages.save')</button>
+                        <button type="button" class="btn btn-secondary">@lang('messages.close')</button>
+                        <button type="button" class="btn btn-secondary">Secondary</button>
                     </div>
                 </div>
             </form>
@@ -419,13 +419,13 @@
                             </div>
                         </div>
                         <div class=" row">
-                            <div class="formRadio col-md-12">
-                                <label class="col-md-3">@lang('messages.customer_type') : </label>
-                                <label class="container col-md-2">@lang('messages.personal')
+                            <div class="formRadio col-sm-12">
+                                <label class="col-sm-3">@lang('messages.customer_type') : </label>
+                                <label class="container col-sm-2">@lang('messages.personal')
                                     <input type="radio" checked="checked" name="type" id='rdoPersonal' value="1">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container col-md-3">@lang('messages.company')
+                                <label class="container col-sm-3">@lang('messages.company')
                                     <input type="radio" name="type" id='rdoCompany' value="2">
                                     <span class="checkmark"></span>
                                 </label>
@@ -496,12 +496,12 @@
                         </div>
 
                         <div class=" row">
-                            <div class="formRadio col-md-12">
-                                <label class="container col-md-2">@lang('messages.personal')
+                            <div class="formRadio col-sm-12">
+                                <label class="container col-sm-2">@lang('messages.personal')
                                     <input type="radio" name="radio" {{($customer->type == 1) ? 'checked' :null}} id='rdoPersonal2'>
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="container col-md-3">@lang('messages.company')
+                                <label class="container col-sm-3">@lang('messages.company')
                                     <input type="radio" name="radio" {{($customer->type == 2) ? 'checked' :null}} id='rdoCompany2'>
                                     <span class="checkmark"></span>
                                 </label>
@@ -550,33 +550,33 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">@lang('messages.change_password') }}</h4>
+                        <h4 class="modal-title">@lang('messages.change_password')</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>@lang('messages.current_password') }}:<span class="text-danger" id='error-current-password4'></span></label>
+                            <label>@lang('messages.current_password') :<span class="text-danger" id='error-current-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="@lang('messages.current_password') }}">
+                                <input type="password" name="current_password" id='current-password4' class="form-control" placeholder="@lang('messages.current_password') ">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>@lang('messages.password') }}:<span class="text-danger" id='error-new-password4'></span></label>
+                            <label>@lang('messages.password') :<span class="text-danger" id='error-new-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="@lang('messages.password') }}">
+                                <input type="password" name='new_password' id='new-password4' class="form-control" placeholder="@lang('messages.password') ">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>@lang('messages.confirm_password') }}:<span class="text-danger" id='error-re-password4'></span></label>
+                            <label>@lang('messages.confirm_password') :<span class="text-danger" id='error-re-password4'></span></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="@lang('messages.confirm_password') }}">
+                                <input type="password" name='re_password' id='re-password4' class="form-control" placeholder="@lang('messages.confirm_password')">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>@lang('messages.save') }}</button>
+                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>@lang('messages.save') </button>
                     </div>
                 </div>
             </form>
@@ -603,7 +603,7 @@
     <footer>
         <div class="footer-imgcontent">
             <div class="w100 footer-imgcontent-inner">
-                <div class="col-md-8 col-md-push-2">
+                <div class="col-sm-8 col-md-push-2">
                     <div class="imgcont-headtitle">
                         <h2 data-aos="fade-down">
                             <span style="font-weight:700;">@lang('messages.download_now_IHTGo_app')</span>
@@ -611,7 +611,7 @@
                         <p data-aos="fade-up">@lang('messages.download_now_IHTGo_app_detail')</p>
                     </div>
                 </div>
-                <div class="w100 col-md-12 imgcont-icon">
+                <div class="w100 col-sm-12 imgcont-icon">
                     <div class="imgcont-icon-innner">
                         <a href="https://itunes.apple.com/vn/app/iht-giao-h%C3%A0ng/id1451150698?mt=8&ign-mpt=uo%3D4">
                             <i class="fab fa-apple fa-inverse fa-3x" aria-hidden="true"></i>
@@ -629,7 +629,7 @@
         </div>
         <div class="container-fluid footer-middle">
             <div class="w100">
-                <div class="col-md-6 footMid1stCol">
+                <div class="col-sm-6 footMid1stCol">
                     <p class="text-uppercase"><strong>IHT Go</strong></p>
                     <ul class="list-unstyled">
                         <li>@lang('messages.address') : @lang('messages.address_hcm_8_ba_trieu') </li>
@@ -637,14 +637,14 @@
                         <li>@lang('messages.tax_code') : 0310212371</li>
                     </ul>
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                     <ul class="list-unstyled">
                         <li><a class="decNone" href="javascript:void(0)">@lang('messages.privacy_policy')</a></li>
                         <li><a class="decNone" href="javascript:void(0)">@lang('messages.terms_and_conditions')</a></li>
                         <li><a class="decNone" href="javascript:void(0)">@lang('messages.recruitment')</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                     <p class="text-uppercase"><strong> @lang('messages.branch_system') </strong></p>
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -744,10 +744,10 @@
         var error_weight = "@lang('messages.error_weight')";
     </script>
     <!---------------------------------Jquery JS------------------------------------------>
-    <script src="{{ URL::asset('public/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!--------------------------------Bootstrap JS---------------------------------------->
-    <script src="{{ URL::asset('public/vendor/bootstrap-3.3.7/dist/js/bootstrap.min.js') }}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
     <!--------------------------------Ekko lightbox JS-------------------------------------->
     <script src="{{ URL::asset('public/vendor/ekko lightbox/ekko-lightbox.js') }}"></script>

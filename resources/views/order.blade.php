@@ -8,32 +8,14 @@
         </div>
         <div class="h50px"></div>
         <div class=" form-search-order ">
-            <form method="GET" action="{{ url('order-search')}}" class='formModal' id='formSearchOrder'>
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                <div class="form-inline ">
-                    <div class="form-group">
-                        <label>@lang('messages.date_start') : </label>
-                        <input type="date" name='start_date' id="start-date" /></li>
-                        <p class="text-danger" id='error-start-date'></p>
-                    </div>
-                    <div class="form-group ">
-                        <label>@lang('messages.date_end') : </label>
-                        <input type="date" name='end_date' id="end-date" /></li>
-                        <p class="text-danger" id='error-end-date'></p>
-                    </div>
-                    <div class="form-group" style="margin-left:1em">
-                        <button type="submit" class="btn btn-danger" disabled id="btnSearchOrder">@lang('messages.search') </button>
-                    </div>
-                    <div class="form-group" style="float: right;"> <label class="">@lang('messages.total_money') :<span id='total-price'> {{ number_format($sum_order)}} VNĐ</span> </label></div>
-                </div>
-            </form>
+            <div class="form-group"> <label class="">@lang('messages.total_money') :<span id='total-price'> {{ number_format($sum_order)}} VNĐ</span> </label></div>
         </div>
     </div>
     <div class="h50px"></div>
     <div class="container">
         <ul class="pagination">
             <li class="active"><a href="{!! url('order'); !!}">@lang('messages.all')({{$count_order_all}})</a></li>
-            <li ><a href="{!! url('order/status=1'); !!}">@lang('messages.waiting')({{$count_order_watting}})</a></li>
+            <li><a href="{!! url('order/status=1'); !!}">@lang('messages.waiting')({{$count_order_watting}})</a></li>
             <li><a href="{!! url('order/status=2'); !!}">@lang('messages.no_delivery')({{$count_order_no_delivery}})</a></li>
             <li><a href="{!! url('order/status=3'); !!}">@lang('messages.being_delivery')({{$count_order_beging_delivery}})</a></li>
             <li><a href="{!! url('order/status=4'); !!}">@lang('messages.succeeded')({{$count_order_done_delivery}})</a></li>
@@ -51,7 +33,6 @@
                     <p><a href="order-detail/id={{$o->id}}">@if($o->is_speed == 1)<i class="fas fa-rocket"></i>@endif {{ $o->code }}</a></p>
                     <p class="text-justify">@lang('messages.order_name'): {{ $o->name }}</p>
                     <p class="text-justify">@lang('messages.date_created'): {{date("d-m-Y", strtotime($o->created_at))}}</p>
-
                 </div>
                 <div class="col-md-3 ">
                     <p>@lang('messages.payer'): @if($o->payer==1)
@@ -103,34 +84,10 @@
             <hr>
             @endforeach
             <div id="remove-row" style="text-align: center;">
-                <button id="btn-more" onclick="Loadmore({{$o->id}})" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+                <button id="btn-more"  data-id="{{$o->id}}" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
             </div>
         </div>
     </div>
     <div class="h50px"></div>
 </div>
-<script>
-    function Loadmore(id) {
-        $.ajax({
-            url: '{{ url("loadOrder") }}',
-            method: "POST",
-            data: {
-                id: id,
-                _token: "{{csrf_token()}}"
-            },
-            dataType: "text",
-            success: function(data) {
-                if (data != '') {
-                    console.log(data);
-                    $('#remove-row').remove();
-                    $('#load-data').append(data);
-
-                } else {
-                    console.log(123);
-                    $('#btn-more').html("No Data");
-                }
-            }
-        });
-    }
-</script>
 @endsection

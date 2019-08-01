@@ -15,9 +15,6 @@ return [
     //page index
     'service_ihtgo' => 'Service IHT Go',
     'ihtgo_connection_options_for_shop_owners_and_customers' => 'IHT Go - connection options for shop owners and customers',
-    'delivery_within_the_province_and_inner_city' => 'Delivery within the province and inner city',
-    'deliver_documents_during_the_day_from_HCMC_BINH_DUONG_and_vice_versa' => 'Deliver documents during the day from HCMC - BINH DUONG and vice versa',
-    'express_delivery_during_the_day' => 'Express delivery during the day',
     'why_do_you_have_to_choose_IHT_Go' => 'Why do you have to choose IHT Go?',
     'track_orders' => 'Track orders',
     'track_orders_detail' => 'Providing the location, route, the time of the driver on the IHT Go application showing the drivers position on google map',
@@ -57,7 +54,7 @@ return [
     'unpaid' => 'Unpaid',
     'paid' => 'Paid',
     'debit' => 'Debit',
-
+    'no_order'=>'No order',
     //page order detail
 
     'detail_order' => 'Detail order',

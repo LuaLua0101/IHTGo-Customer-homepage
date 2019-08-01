@@ -169,14 +169,8 @@ class HomeController extends Controller
     }
     public function loadOrder(Request $request)
     {
-        try {
             $res = Order::loadOrder($request);
-            if ($res != null) {
-                return $res;
-            }
-        } catch (\Exception $ex) {
-            return $ex;
-        }
+            return $res;
     }
     public function loadOrder_Status(Request $request)
     {

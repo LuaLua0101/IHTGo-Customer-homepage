@@ -639,7 +639,9 @@ footer {
     .features-area .single-item:nth-child(3) {
         margin-left: 50px;
     }
-
+.display-flex{
+    display: flex;
+}
 .whyChooseText {
     font-size: 16px;
     text-transform: uppercase;
@@ -671,15 +673,9 @@ footer {
         padding: 20%;
         height: inherit;
     }
-.single-item-text p{width: 50%}
-.octopusSectionPhone {
-    display: none;
-}
 
 @media (max-width:990px) {
-    .octopusSectionComputer {
-        display: none;
-    }
+ 
 
     .octopus-image-row {
         display: none;
@@ -688,11 +684,6 @@ footer {
     .octopus-5-image .single-item {
         display: table-cell;
     }
-
-    .octopusSectionPhone {
-        display: block;
-    }
-
     .single-item-icon-mobile {
         background-color: #e50303;
         border-radius: 30px 30px 0;
