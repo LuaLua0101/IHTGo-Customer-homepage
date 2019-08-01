@@ -28,10 +28,10 @@
             @foreach($order as $o)
             <div class="row">
                 <div class="col-md-2">
-                    <img data-toggle="modal" data-target="#myModal" src={{"../public/storage/order/" . $o->id.'_order.png?'.rand()}} alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
+                    <img data-toggle="modal" data-target="#myModal" src={{"../storage/app/public/order/" . $o->id.'_order.png?'.rand()}} alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
                 </div>
                 <div class="col-md-3">
-                    <p><a href="order-detail/id={{$o->id}}">@if($o->is_speed == 1)<i class="fas fa-rocket"></i>@endif {{ $o->code }}</a></p>
+                    <p><a href="order-detail/{{$o->id}}">@if($o->is_speed == 1)<i class="fas fa-rocket"></i>@endif {{ $o->code }}</a></p>
                     <p class="text-justify">@lang('messages.order_name'): {{ $o->name }}</p>
                     <p class="text-justify">@lang('messages.date_created'): {{date("d-m-Y", strtotime($o->created_at))}}</p>
                 </div>

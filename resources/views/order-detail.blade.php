@@ -106,7 +106,7 @@
             <div class="col-md-6">
                 <div class="list-group">
                     <span class="list-group-item active">{{ __('messages.photo_order') }}</span>
-                    <img data-toggle="modal" data-target="#myModal" id="myImg" src={{"../public/storage/order/" . $order->order_id."_order.png?" . rand()}} alt="No Image" style="width:100%;max-width:300px" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
+                    <img data-toggle="modal" data-target="#myModal" id="myImg" src={{"../storage/app/public/order/" . $order->order_id."_order.png?" . rand()}} alt="No Image" style="width:100%;max-width:300px" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-body">
-                <img data-toggle="modal" width="100%" height="100%" data-target="#myModal" id="myImg" src={{"../public/storage/order/" . $order->order_id."_order.png?" . rand()}} alt="No Image" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
+                <img data-toggle="modal" width="100%" height="100%" data-target="#myModal" id="myImg" src={{"../storage/app/public/order/" . $order->order_id."_order.png?" . rand()}} alt="No Image" onerror="this.onerror=null;this.src='../public/images/index/notfound.png';">
             </div>
         </div>
     </div>

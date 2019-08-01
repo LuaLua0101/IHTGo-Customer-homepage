@@ -29,7 +29,7 @@ Route::get('order', 'HomeController@order');
 Route::post('loadOrder', 'HomeController@loadOrder');
 Route::get('order/status={id?}', 'HomeController@orderStatus');
 Route::post('loadOrder_Status', 'HomeController@loadOrder_Status');
-Route::get('order-detail/id={id?}', 'HomeController@order_detail');
+Route::get('order-detail/{id?}', 'HomeController@order_detail');
 Route::get('order-search', 'HomeController@order_search');
 
 //hiển thị danh sách  (AJAX)

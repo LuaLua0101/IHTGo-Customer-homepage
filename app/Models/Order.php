@@ -90,7 +90,7 @@ class Order extends Model
                 ' . $i++ . '   <img data-toggle="modal" data-target="#myModal" id="myImg" src="public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`public//images//index//notfound.png`;">
                 </div>
                 <div class="col-md-3">
-                    <p><a href="order-detail/id=' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
+                    <p><a href="order-detail/' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
                     <p class="text-justify">' . __("messages.order_name") . ': ' . $o->name . '</p>
                     <p class="text-justify">' . __("messages.date_created") . ': ' . date('d-m-Y', strtotime($o->created_at)) . '</p>
                 </div>
@@ -176,7 +176,7 @@ class Order extends Model
                 ' . $i++ . '  <img data-toggle="modal" data-target="#myModal" id="myImg" src="../public/storage/order/' . $o->id . '_order.png?' . rand() . '"  alt="No Image" style="width:100%;max-width:300px;height:8em" onerror="this.onerror=null;this.src=`..//public//images//index//notfound.png`;">
                 </div>
                 <div class="col-md-3">
-                    <p><a href="order-detail/id=' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
+                    <p><a href="order-detail/' . $o->id . '">' . $ispeed . ' ' . $o->code . '</a></p>
                     <p class="text-justify">' . __("messages.order_name") . ': ' . $o->name . '</p>
                     <p class="text-justify">' . __("messages.date_created") . ': ' . date('d-m-Y', strtotime($o->created_at)) . '</p>
                 </div>
