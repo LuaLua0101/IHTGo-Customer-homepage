@@ -18,12 +18,10 @@ class HomeController extends Controller
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         return view('index', [
             'customer' => $customer,
             'company' => $company,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
     public function contact()
@@ -31,12 +29,10 @@ class HomeController extends Controller
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         return view('contact', [
             'customer' => $customer,
             'company' => $company,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
     public function contactUs(Request $request)
@@ -63,12 +59,10 @@ class HomeController extends Controller
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         return view('price-list', [
             'customer' => $customer,
             'company' => $company,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
     public function news()
@@ -76,12 +70,10 @@ class HomeController extends Controller
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         return view('news', [
             'customer' => $customer,
             'company' => $company,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
     public function new_detail()
@@ -89,12 +81,10 @@ class HomeController extends Controller
         $province = Province::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         return view('new-detail', [
             'customer' => $customer,
             'company' => $company,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
     public function order()
@@ -103,7 +93,6 @@ class HomeController extends Controller
         $district = District::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         $order = Order::getList();
         $count_order_all = Order::countList();
         $count_order_watting = Order::countList_Status(1);
@@ -113,14 +102,13 @@ class HomeController extends Controller
         $count_order_customer_cancel = Order::countList_Status(5);
         $count_order_iht_cancel = Order::countList_Status(6);
         $count_order_fail = Order::countList_Status(7);
-        $sum_order =Order::sumList();
+        $sum_order = Order::sumList();
         return view('order', [
             'order' => $order,
             'customer' => $customer,
             'company' => $company,
             'province' => $province,
             'district' => $district,
-            'receive' => $receive,
             'sum_order' => $sum_order,
             'count_order_all' => $count_order_all,
             'count_order_watting' => $count_order_watting,
@@ -138,7 +126,6 @@ class HomeController extends Controller
         $district = District::getList();
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
-        $receive = Order::historyDelivery();
         $order = Order::getList_Status($status_id);
         $count_order_all = Order::countList();
         $count_order_watting = Order::countList_Status(1);
@@ -155,7 +142,6 @@ class HomeController extends Controller
             'company' => $company,
             'province' => $province,
             'district' => $district,
-            'receive' => $receive,
             'sum_order' => $sum_order,
             'count_order_all' => $count_order_all,
             'count_order_watting' => $count_order_watting,
@@ -169,8 +155,8 @@ class HomeController extends Controller
     }
     public function loadOrder(Request $request)
     {
-            $res = Order::loadOrder($request);
-            return $res;
+        $res = Order::loadOrder($request);
+        return $res;
     }
     public function loadOrder_Status(Request $request)
     {
@@ -196,7 +182,6 @@ class HomeController extends Controller
         $order_customer_cancel = Order::getList_StatusSearch($request, 5);
         $order_iht_cancel = Order::getList_StatusSearch($request, 6);
         $order_fail = Order::getList_StatusSearch($request, 7);
-        $receive = Order::historyDelivery();
         $sum_order = 0;
         foreach ($order as $item) {
             $sum_order += $item->total_price;
@@ -214,7 +199,6 @@ class HomeController extends Controller
             'order_fail' => $order_fail,
             'sum_order' => $sum_order,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
     public function order_detail($id)
@@ -223,13 +207,11 @@ class HomeController extends Controller
         $customer = Customer::getUserOfCustomer();
         $company = Company::listCompanyAll();
         $order = Order::detail($id);
-        $receive = Order::historyDelivery();
         return view('order-detail', [
             'customer' => $customer,
             'company' => $company,
             'order' => $order,
             'province' => $province,
-            'receive' => $receive
         ]);
     }
 

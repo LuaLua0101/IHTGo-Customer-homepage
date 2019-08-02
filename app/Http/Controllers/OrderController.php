@@ -59,11 +59,20 @@ class OrderController extends Controller
             return $ex;
         }
     }
-    //load histoy
-    public function loadHistoryDelivery($id)
+    public function loadInfoSender(Request $request)
     {
         try {
-            $res = Order::loadHistoryDelivery($id);
+            $res = Order::loadInfoSender($request);
+            return $res;
+            
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public function loadInfoReceive(Request $request)
+    {
+        try {
+            $res = Order::loadInfoReceive($request);
             return $res;
         } catch (\Exception $ex) {
             return $ex;
