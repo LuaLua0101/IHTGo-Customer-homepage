@@ -84,7 +84,7 @@
             <hr>
             @endforeach
             <div id="remove-row" style="text-align: center;">
-                <button id="btn-more"  data-id="{{$o->id}}" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
+                <button id="btn-more" data-id="{{$o->id}}" class="btn btn-default"> <i class="fas fa-chevron-down"></i> </button>
             </div>
         </div>
     </div>

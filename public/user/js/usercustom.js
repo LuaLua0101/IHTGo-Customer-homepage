@@ -472,6 +472,7 @@ $(function () {
         }
     });
     //validate form create order-----------
+
     $("#sender_name").blur(function () {
         var name = $.trim($("#sender_name").val());
         if (name == '') {
@@ -480,6 +481,7 @@ $(function () {
             $('#error-sender-name').text('');
         }
     });
+
     $("#sender_phone").blur(function () {
         var phone = $.trim($("#sender_phone").val());
         if (phone == '') {
@@ -713,53 +715,6 @@ $(function () {
         $('#listCompany2').css('display', 'none');
         $("#company_id2").empty();
     });
-    $('#btnHistoryDelivery').click(function () {
-        var id = $("[name=rdoHistoryDelivery]:checked").val();
-        $.ajax({
-            type: "GET",
-            url: 'loadHistoryDelivery/' + id,
-            success: function (data) {
-                data.forEach(function (item) {
-                    $("#receive_name").val(item.receive_name);
-                    $("#receive_phone").val(item.receive_phone);
-                    $("#receive_address").val(item.receive_address);
-                    $('#receive_province_id option').each(function () {
-                        if (this.value == item.receive_province_id) {
-                            $("#receive_province_id option[value='" + this.value + "']").prop('selected', true)
-                        }
-                    });
-                    var Id = $('#receive_province_id').val();
-                    $.ajax({
-                        type: "GET",
-                        url: 'districtOfProvince/' + Id,
-                        success: function (data) {
-                            $("#receive_district_id").empty();
-                            data.forEach(function (item) {
-                                $("#receive_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
-                            });
-                            $('#receive_district_id option').each(function () {
-                                if (this.value == item.receive_district_id) {
-                                    $("#receive_district_id option[value='" + this.value + "']").prop('selected', true)
-                                }
-                            });
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-
-                            console.log('jqXHR:');
-                            console.log(jqXHR);
-
-                        }
-                    })
-
-                })
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log('jqXHR:');
-                console.log(jqXHR);
-            }
-        })
-    });
-    //
     $('#ckbdelivery_of_documents').change(function () {
         if ($(this).is(":checked")) {
             $('#length').val('1');
@@ -799,5 +754,47 @@ $(function () {
                 }
             }
         });
+    });
+    $("#sender_name").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "loadInfoSender",
+                data: {
+                    term: request.term
+                },
+                dataType: "json",
+                success: function (data) {
+                    var resp = $.map(data, function (obj) {
+                        $("#sender_name").val(obj.sender_name);
+                        $("#sender_phone").val(obj.sender_phone);
+                        $("#sender_address").val(obj.sender_address);
+                        return obj.sender_name;
+                    });
+                    response(resp);
+                }
+            });
+        },
+        minLength: 0
+    });
+    $("#receive_name").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "loadInfoReceive",
+                data: {
+                    term: request.term
+                },
+                dataType: "json",
+                success: function (data) {
+                    var resp = $.map(data, function (obj) {
+                        $("#receive_name").val(obj.receive_name);
+                        $("#receive_phone").val(obj.receive_phone);
+                        $("#receive_address").val(obj.receive_address);
+                        return obj.receive_name;
+                    });
+                    response(resp);
+                }
+            });
+        },
+        minLength: 1
     });
 });

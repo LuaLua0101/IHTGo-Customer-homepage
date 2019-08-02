@@ -7,7 +7,6 @@
 
     <!--------------------------------------Bootstrap CSS--------------------------------------------->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
     <!----------------------------------------------------------------------------------->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
@@ -31,10 +30,11 @@
     <link href="{{ URL::asset('public/user/css/usercustom.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('public/css/style.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('public/shared/common.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!----------------------------------------------------------------------------------------------->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <title>IHTGO - Trang Chủ</title>
+    rel = "stylesheet">
+    <title>IHTGO</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
@@ -65,15 +65,15 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
-                        <li><a data-toggle="modal" data-target="#DatHang" id='dat-hang'><strong>@lang('messages.create_order') </strong></a></li>
-                        <li class="{{ Request::path() == 'order' ? 'active' : '' }}"><a href="{!! url('order'); !!}" id='don-hang'><strong>@lang('messages.order_management') </strong></a></li>
+                        <li><a data-toggle="modal" data-target="#createOrder" id='btnCreateOrder'><strong>@lang('messages.create_order') </strong></a></li>
+                        <li class="{{ Request::path() == 'order' ? 'active' : '' }}"><a href="{!! url('order'); !!}"><strong>@lang('messages.order_management') </strong></a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">@lang('messages.hello') {{Auth::user()->name}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" data-toggle="modal" data-target="#InfoUser">@lang('messages.personal_information') </a></li>
                                 <li><a href="#" data-toggle="modal" data-target="#ChangePassword">@lang('messages.change_password')</a></li>
                                 <li><a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">@lang('messages.log_out')
+                                    document.getElementById('logout-form').submit();">@lang('messages.log_out')
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -90,9 +90,9 @@
         </nav>
     </header>
 
-    <!--  Modal Dat hang-->
+    <!--  Modal create order -->
     @if(Auth::user())
-    <div class="modal fade" id="DatHang" role="dialog">
+    <div class="modal fade" id="createOrder" role="dialog">
         <div class="modal-dialog modal-lg">
             <form method="POST" action="{{ url('/create-order') }}" class='formModal' id='formCreateOrder' enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -108,14 +108,16 @@
                                 <span class="text-danger" id='error-sender-name'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-user"></i></span>
-                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="@lang('messages.name')(*)" value="{{Auth::user()->name}}">
+                                    <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="@lang('messages.name')(*)" require>
+                                    <input type="hidden" id="load_sender_name">
+                                    <p id="load_sender_a"></p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <span class="text-danger" id='error-sender-phone'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="number" class="form-control" name="sender_phone" id="sender_phone" placeholder="@lang('messages.phone') (*)" value="{{Auth::user()->phone}}">
+                                    <input type="number" class="form-control" name="sender_phone" id="sender_phone" placeholder="@lang('messages.phone') (*)">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -137,7 +139,6 @@
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
                                     <select class="form-control" id="sender_district_id" name="sender_district_id">
                                         <option>@lang('messages.please_select_district') (*)</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -145,16 +146,12 @@
                                 <span class="text-danger" id='error-sender-address'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-map-marked"></i></span>
-                                    @if($customer==null)
                                     <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="@lang('messages.sender_address') (*)">
-                                    @else
-                                    <input type="text" class="form-control" name="sender_address" id="sender_address" placeholder="@lang('messages.sender_address') (*)" value="{{$customer->address}}">
-                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <h4>@lang('messages.receiver_information')(*) <span id="iconHistoryDelivery" data-toggle="modal" data-target="#historyDelivery"><i class="fas fa-question"></i></span></h4>
+                            <h4>@lang('messages.receiver_information')(*) </h4>
                             <div class="form-group">
                                 <span class="text-danger" id='error-receive-name'></span>
                                 <div class="input-group">
@@ -214,21 +211,21 @@
                                     <label class="text-danger" id='error-length-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number" min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
+                                        <input type="number" min="0" max="100" step="0.25" class="form-control" placeholder="@lang('messages.length') (cm)*" id="length" name="length">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-4" id='form-width'>
                                     <label>@lang('messages.width')(cm)*:</label><label class="text-danger" id='error-width-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number"  min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
+                                        <input type="number" min="0" max="100" step="0.25" class="form-control" placeholder="@lang('messages.width') (cm)*" id="width" name="width">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-4" id='form-height'>
                                     <label>@lang('messages.height')(cm)*:</label><label class="text-danger" id='error-height-order'></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-ruler-combined"></i></span>
-                                        <input type="number"  min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
+                                        <input type="number" min="0" max="100" step="0.25" class="form-control" placeholder="@lang('messages.height') (cm)*" id="height" name="height">
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +233,7 @@
                                 <label>@lang('messages.weight')(kg)*:</label> <span class="text-danger" id='error-weight-order'></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-balance-scale"></i></span>
-                                    <input type="number"  min="0" max="100" step="0.25"  class="form-control" placeholder="@lang('messages.weight') (*)" id="weight" name="weight">
+                                    <input type="number" min="0" max="100" step="0.25" class="form-control" placeholder="@lang('messages.weight') (*)" id="weight" name="weight">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -305,30 +302,6 @@
             </form>
         </div>
     </div>
-    <!-- Modal  history delivery-->
-    <div id="historyDelivery" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">@lang('messages.the_latest_recipient_history') </h4>
-                </div>
-                <div class="modal-body formRadio">
-                    @foreach($receive as $r)
-                    <label class="container"><i class="fas fa-user"></i> {{$r->receive_name}} <i class="fas fa-phone"></i> {{$r->receive_phone}} <i class="fas fa-map-marker-alt"></i> {{$r->receive_address}},{{$r->receive_district_name}},{{$r->receive_province_name}}
-                        <input type="radio" name="rdoHistoryDelivery" id="rdoHistoryDelivery" value="{{$r->id}}">
-                        <span class="checkmark"></span>
-                    </label>
-                    @endforeach
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btnHistoryDelivery" data-dismiss="modal">@lang('messages.choose') </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @endif
     <!-- Modal login-->
     <div class="modal fade" id="Login" role="dialog">
@@ -357,7 +330,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnLogin' disabled>@lang('messages.login') </button>
+                        <button type="submit" class="btn btn-danger" id='btnLogin' disabled>@lang('messages.login') </button>
                     </div>
                 </form>
             </div>
@@ -442,7 +415,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnRegister' disabled>@lang('messages.save') </button>
+                        <button type="submit" class="btn btn-danger" id='btnRegister' disabled>@lang('messages.save') </button>
                     </div>
                 </form>
             </div>
@@ -493,47 +466,10 @@
                             </div>
                         </div>
 
-                        <div class=" row">
-                            <div class="formRadio col-sm-12">
-                                <label class="container col-sm-2">@lang('messages.personal')
-                                    <input type="radio" name="radio" {{($customer->type == 1) ? 'checked' :null}} id='rdoPersonal2'>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container col-sm-3">@lang('messages.company')
-                                    <input type="radio" name="radio" {{($customer->type == 2) ? 'checked' :null}} id='rdoCompany2'>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                        @if($customer->type == 2 )
-                        <div class="form-group" id="listCompany2">
-                            <label>@lang('messages.list_of_companies') :</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="far fa-building"></i></span>
-                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
-                                    @foreach($company as $c)
-                                    <option value="{{$c->id}}" {{($customer->company_id == $c->id) ? 'selected' :null}}>{{$c->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        @else
-                        <div class="form-group" id="listCompany2" style="display:none">
-                            <label>@lang('messages.list_of_companies') :</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="far fa-building"></i></span>
-                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" id="company_id2" name="company_id" style="width: 100%">
-                                    @foreach($company as $c)
-                                    <option value="{{$c->id}}">{{$c->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        @endif
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnInfoUser' disabled>@lang('messages.save') </button>
+                        <button type="submit" class="btn btn btn-danger" id='btnInfoUser' disabled>@lang('messages.save') </button>
                     </div>
                 </div>
             </form>
@@ -574,7 +510,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btnSave" id='btnChangePassword' disabled>@lang('messages.save') </button>
+                        <button type="submit" class="btn btn btn-danger" id='btnChangePassword' disabled>@lang('messages.save') </button>
                     </div>
                 </div>
             </form>
@@ -743,7 +679,7 @@
     </script>
     <!---------------------------------Jquery JS------------------------------------------>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!--------------------------------Bootstrap JS---------------------------------------->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
@@ -762,12 +698,11 @@
     <!------------------------------------Custom JS---------------------------------------->
     <script src="{{ URL::asset('public/user/js/usercustom.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-
 </body>
 
 </html>
 
-<script>
+<script type="text/javascript">
     function readURL(event, id) {
         var output = document.getElementById('img' + id);
         output.src = URL.createObjectURL(event.target.files[0]);

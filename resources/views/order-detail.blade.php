@@ -63,7 +63,7 @@
                         <span class="bage-success">{{ __('messages.sender') }}</span>
                         @endif
                     </span>
-                    <span class="list-group-item"><i class="fas fa-ruler-combined"></i><span class="tltHeading">{{ __('messages.size') }}(cm):</span> </span>
+                    <span class="list-group-item"><i class="fas fa-ruler-combined"></i><span class="tltHeading">{{ __('messages.size') }}(cm):</span>{{$order->length}} x {{$order->width}} x {{$order->height}} </span>
                     <span class="list-group-item"><i class="fas fa-balance-scale"></i><span class="tltHeading">{{ __('messages.weight') }}(kg):</span>{{$order->weight}}</span>
                     <span class="list-group-item"><i class="fas fa-hand-holding-usd"></i><span class="tltHeading">{{ __('messages.cash_on_delivery') }}:</span> {{number_format($order->take_money).' VNĐ'}}</span>
                     <span class="list-group-item"><i class="fas fa-hand-holding-usd"></i><span class="tltHeading">{{ __('messages.delivery_charges') }}:</span> {{number_format($order->total_price).' VNĐ'}}</span>

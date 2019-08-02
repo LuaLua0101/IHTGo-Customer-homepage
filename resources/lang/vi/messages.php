@@ -79,6 +79,7 @@ return [
     'express_delivery' => 'Chuyển phát nhanh',
     'case' => 'Trường hợp',
     'payer' => 'Người thanh toán',
+    'size'=>'Kích thước',
     'length' => 'Chiều dài',
     'width' => 'Chiều rộng',
     'height' => 'Chiều cao',

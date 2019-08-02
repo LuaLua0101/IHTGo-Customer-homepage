@@ -79,6 +79,7 @@ return [
     'express_delivery' => 'Express delivery',
     'case' => 'Case',
     'payer' => 'Payer',
+    'size'=>'Size',
     'length' => 'Length',
     'width' => 'Width',
     'height' => 'Height',
