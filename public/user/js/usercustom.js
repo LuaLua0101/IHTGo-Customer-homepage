@@ -768,13 +768,15 @@ $(function () {
                         $("#sender_name").val(obj.sender_name);
                         $("#sender_phone").val(obj.sender_phone);
                         $("#sender_address").val(obj.sender_address);
+                        $("#sender_province_id").val(obj.sender_province_id);
+                        $("#sender_district_id").val(obj.sender_district_id);
                         return obj.sender_name;
                     });
                     response(resp);
                 }
             });
         },
-        minLength: 0
+        minLength: 1
     });
     $("#receive_name").autocomplete({
         source: function (request, response) {
@@ -789,6 +791,7 @@ $(function () {
                         $("#receive_name").val(obj.receive_name);
                         $("#receive_phone").val(obj.receive_phone);
                         $("#receive_address").val(obj.receive_address);
+                        $("#receive_province_id").val(obj.receive_province_id);
                         return obj.receive_name;
                     });
                     response(resp);

@@ -461,7 +461,7 @@ class Order extends Model
             ->select('sender_name', 'sender_phone','sender_address','sender_province_id','sender_district_id')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('order_details.sender_name', 'LIKE', '%' . $search . '%')
-            ->where('orders.user_id', $user_id)->distinct()->get();
+            ->where('orders.user_id', $user_id)->distinct()->orderBy('orders.id', 'desc')->get();
         return response()->json($res);
     }
     public static function loadInfoReceive($request)
@@ -472,7 +472,7 @@ class Order extends Model
             ->select('receive_name', 'receive_phone','receive_address','receive_province_id','receive_district_id')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('order_details.receive_name', 'LIKE', '%' . $search . '%')
-            ->where('orders.user_id', $user_id)->distinct()->get();
+            ->where('orders.user_id', $user_id)->orderBy('orders.id', 'desc')->distinct()->get();
         return response()->json($res);
     }
 

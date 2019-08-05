@@ -206,7 +206,9 @@ class ApiController extends Controller
             //send notify to customer
             Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đang trên đường giao', []);
             return response()->json(200);
-        } catch (\Exception $e) {return response()->json(e);}
+        } catch (\Exception $e) {
+            return response()->json(e);
+        }
     }
 
     public function finishShipping($id)
@@ -218,7 +220,9 @@ class ApiController extends Controller
             //send notify to customer
             Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đã được giao thành công', []);
             return response()->json(200);
-        } catch (\Exception $e) {return response()->json(e);}
+        } catch (\Exception $e) {
+            return response()->json(e);
+        }
     }
 
     public function updateFCM(Request $req)
@@ -238,6 +242,25 @@ class ApiController extends Controller
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
+        }
+    }
+    //raymond
+    public function loadInfoSender(Request $req)
+    {
+        try {
+            $data = Order::loadInfoSender($req);
+            return response()->json(['data' => $data, 'code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 500]);
+        }
+    }
+    public function loadInfoReceive(Request $req)
+    {
+        try {
+            $data = Order::loadInfoReceive($req);
+            return response()->json(['data' => $data, 'code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 500]);
         }
     }
 }
