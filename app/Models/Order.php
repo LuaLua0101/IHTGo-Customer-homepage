@@ -458,7 +458,7 @@ class Order extends Model
         $user_id = Auth::user()->id;
         $search = $request->get('term');
         $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
-            ->select('sender_name', 'sender_phone','sender_address','sender_province_id','sender_district_id')
+            ->select([DB::RAW('DISTINCT(sender_name)'),'sender_phone','sender_address','sender_province_id','sender_district_id'])
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('order_details.sender_name', 'LIKE', '%' . $search . '%')
             ->where('orders.user_id', $user_id)->distinct()->get();
@@ -472,7 +472,7 @@ class Order extends Model
             ->select('receive_name', 'receive_phone','receive_address','receive_province_id','receive_district_id')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('order_details.receive_name', 'LIKE', '%' . $search . '%')
-            ->where('orders.user_id', $user_id)->distinct()->get();
+            ->where('orders.user_id', $user_id)->orderBy('orders.id', 'desc')->distinct()->get();
         return response()->json($res);
     }
 

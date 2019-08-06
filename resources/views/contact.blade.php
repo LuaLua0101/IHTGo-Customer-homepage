@@ -21,30 +21,22 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('messages.name') <span class="text-danger">*</span> <span id="errorContactName" class="validateError"></span></label>
-                            <input class="form-control" type="text" id="contactName" name="name" placeholder="@lang('messages.name')" maxlength="50" />
+                            <input  type="text" id="contactName" name="name" placeholder="@lang('messages.name')" maxlength="50" />
                         </div>
                         <div class="form-group">
                             <label>@lang('messages.company_name')</label>
-                            <input class="form-control" type="text" id="contactCompany" name="company" maxlength="250" placeholder="@lang('messages.company_detail')" />
+                            <input  type="text" id="contactCompany" name="company" maxlength="250" placeholder="@lang('messages.company_detail')" />
                         </div>
                         <div class="form-group">
                             <label>@lang('messages.phone') <span class="text-danger">*</span>
                                 <span id="errorContactPhone" class="validateError"></span></label>
-                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input class="form-control" id="contactPhone" name="phone" data-inputmask="'alias':'number','mask':' 999 999 9999','placeholder':''" data-mask="" type="text" placeholder="" />
-
-                            </div>
+                                <input  id="contactPhone" name="phone" data-inputmask="'alias':'number','mask':' 999 999 9999','placeholder':''" data-mask="" type="text" placeholder="" />
                         </div>
                         <div class="form-group">
                             <label>Email <span class="text-danger">*</span> <span id="errorContactEmail" class="validateError"></span></label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input class="form-control" id="contactEmail" name="email" type="text" placeholder="my@example.com" />
-                            </div>
+                                <input  id="contactEmail" name="email" type="text" placeholder="my@example.com" />
                         </div>
-                        <div class="form-group center-text" style="margin-top: 7%;">
-                            <input id="btnContactSubmit" class="btn btn-danger text-uppercase" type="submit" value="@lang('messages.submit')" />
-                        </div>
+                            <input class="button button3" type="submit" value="@lang('messages.submit')" />
                     </div>
                 </form>
             </div>

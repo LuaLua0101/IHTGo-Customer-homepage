@@ -191,245 +191,234 @@ $(function () {
     //------------------------Raymond edit----------------------
 
     //validate form login--------------
-    $("#phone1").blur(function () {
+    $("#btnLogin").click(function () {
         var phone = $.trim($("#phone1").val());
+        var password = $.trim($("#password1").val());
+        var flag = 0;
+        //validate phone
         if (phone == '') {
             $('#error-phone1').text(error_phone);
+            flag++;
         } else if (!checkPhoneNumber(phone)) {
             $('#error-phone1').text(error_check_phone);
+            flag++;
         } else {
             $('#error-phone1').text('');
         }
-    });
-    $("#password1").blur(function () {
-        var password = $.trim($("#password1").val());
+        //validate password
         if (password == '') {
             $('#error-password1').text(error_password);
+            flag++;
         } else if (password.length < 6) {
             $('#error-password1').text(error_re_password);
+            flag++;
         } else {
             $('#error-password1').text('');
         }
-    });
-    $("#formLogin").keyup(function () {
-        var phone = $.trim($("#phone1").val());
-        var password = $.trim($("#password1").val());
-        if (phone != '' && password != '' && password.length > 5 && checkPhoneNumber(phone)) {
-            $('#btnLogin').prop("disabled", false);
+        //check validate
+        if (flag != 0) {
+            return false;
         }
         else {
-            $('#btnLogin').prop("disabled", true);
+            return true;
         }
     });
     //validate form register-----------
-    $("#name2").blur(function () {
+    $("#btnRegister").click(function () {
         var name = $.trim($("#name2").val());
+        var email = $.trim($("#email2").val());
+        var phone = $.trim($("#phone2").val());
+        var password = $.trim($("#password2").val());
+        var re_password = $.trim($("#re-password2").val());
+        var province = $.trim($("#registered_province_id").val());
+        var district = $.trim($("#registered_district_id").val());
+
+        var flag = 0;
+        //name
         if (name == '') {
             $('#error-name2').text(error_name);
+            flag++;
         } else {
             $('#error-name2').text('');
         }
-    });
-    $("#email2").blur(function () {
-        var email = $.trim($("#email2").val());
-
-        $.ajax({
-            type: "GET",
-            url: 'checkExistEmail/' + email,
-            success: function (data) {
-                if (data != 200) {
-                    $('#error-email2').text(error_email_has_been_used);
-                } else {
-                    if (email == '') {
-                        $('#error-email2').text(error_email);
-                    } else if (!isEmail(email)) {
-                        $('#error-email2').text(error_check_email);
+        //email
+        if (email == '') {
+            $('#error-email2').text(error_email);
+            flag++;
+        } else if (!isEmail(email)) {
+            $('#error-email2').text(error_check_email);
+            flag++;
+        } else {
+            $.ajax({
+                type: "GET",
+                url: 'checkExistEmail/' + email,
+                success: function (data) {
+                    if (data != 200) {
+                        $('#error-email2').text(error_email_has_been_used);
+                        flag++;
                     } else {
                         $('#error-email2').text('');
                     }
+                },
+                error: function (jqXHR) {
+                    console.log(jqXHR);
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
+            })
+        }
 
-                console.log('jqXHR:');
-                console.log(jqXHR);
-            }
-        })
-
-    });
-    $("#phone2").blur(function () {
-        var phone = $.trim($("#phone2").val());
-        $.ajax({
-            type: "GET",
-            url: 'checkExistPhone/' + phone,
-            success: function (data) {
-                if (data != 200) {
-                    $('#error-phone2').text(error_phone_has_been_used);
-                } else {
-                    if (phone == '') {
-                        $('#error-phone2').text(error_phone);
-                    } else if (!checkPhoneNumber(phone)) {
-                        $('#error-phone2').text(error_check_phone);
-                    }
-                    else {
+        //phone
+        if (phone == '') {
+            $('#error-phone2').text(error_phone);
+            flag++;
+        } else if (!checkPhoneNumber(phone)) {
+            $('#error-phone2').text(error_check_phone);
+            flag++;
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                url: 'checkExistPhone/' + phone,
+                success: function (data) {
+                    if (data != 200) {
+                        $('#error-phone2').text(error_phone_has_been_used);
+                        flag++;
+                    } else {
                         $('#error-phone2').text('');
                     }
+                },
+                error: function (jqXHR) {
+                    console.log(jqXHR);
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-                console.log('jqXHR:');
-                console.log(jqXHR);
-            }
-        })
-    });
-    $("#password2").blur(function () {
-        var password = $.trim($("#password2").val());
+            })
+        }
+        //password
         if (password == '') {
             $('#error-password2').text(error_password);
+            flag++;
         } else if (password.length < 6) {
             $('#error-password2').text(error_length_password);
+            flag++;
         } else {
             $('#error-password2').text('');
         }
-    });
-    $("#re-password2").blur(function () {
-        var password = $.trim($("#password2").val());
-        var re_password = $.trim($("#re-password2").val());
+        //re-password
         if (re_password == '') {
             $('#error-re-password2').text(error_password);
+            flag++;
         } else if (re_password.length < 6) {
             $('#error-re-password2').text(error_length_password);
+            flag++;
         }
         else if (password != re_password) {
             $('#error-re-password2').text(error_current_password);
+            flag++;
         } else {
             $('#error-re-password2').text('');
         }
-    });
-    $("#formRegister").keyup(function () {
-        var name = $.trim($("#name2").val());
-        var email = $.trim($("#email2").val());
-        var phone = $.trim($("#phone2").val());
-        var password = $.trim($("#password2").val());
-        var re_password = $.trim($("#re-password2").val());
-        var flag = 0;
-        if (name != '' && email != '' && phone != '' && password != '' && re_password != '') {
+        //province
+        if (province == '' || province == 0) {
+            $('#error-registered-province-id').text(error_province);
             flag++;
+        } else {
+            $('#error-registered-province-id').text('');
         }
-        if (password.length > 5 && re_password.length > 5) {
+        //district
+        if (district == '' || district == 0) {
+            $('#error-registered-district-id').text(error_district);
             flag++;
+        } else {
+            $('#error-registered-district-id').text('');
         }
-        if (isEmail(email) && checkPhoneNumber(phone)) {
-            flag++;
-        } if (password == re_password) {
-            flag++;
-        } if (flag == 4) {
-            $('#btnRegister').prop("disabled", false);
-        }
-        else {
-            $('#btnRegister').prop("disabled", true);
+        if (flag == 0) {
+            return true;
+        } else {
+            return false;
         }
     });
     //validate form info user-----------
-    $("#name3").blur(function () {
-        var name = $.trim($("#name3").val());
-        if (name == '') {
-            $('#error-name3').text(error_name);
-        } else {
-            $('#error-name3').text('');
-        }
-    });
-    $("#address3").blur(function () {
-        var name = $.trim($("#address3").val());
-        if (name == '') {
-            $('#error-address3').text(error_address);
-        } else {
-            $('#error-address3').text('');
-        }
-    });
-    $("#formInfoUser").keyup(function () {
+    $("#btnInfoUser").click(function () {
         var name = $.trim($("#name3").val());
         var address = $.trim($("#address3").val());
         var flag = 0;
-        if (name != '' && address != '') {
+        if (name == '') {
+            $('#error-name3').text(error_name);
             flag++;
+        } else {
+            $('#error-name3').text('');
         }
-        if (flag == 1) {
-            $('#btnInfoUser').prop("disabled", false);
+        if (address == '') {
+            $('#error-address3').text(error_address);
+            flag++;
+        } else {
+            $('#error-address3').text('');
+        }
+        //check validate
+        if (flag != 0) {
+            return false;
         }
         else {
-            $('#btnInfoUser').prop("disabled", true);
+            return true;
         }
     });
     //validate form change password-----------
-    $("#current-password4").blur(function () {
-        var password = $.trim($("#current-password4").val());
-        $.ajax({
-            type: "GET",
-            url: 'checkExistPasswordCurrent/' + password,
-            success: function (data) {
-                if (data != 200) {
-                    $('#error-current-password4').text(error_re_password);
-                } else {
-                    if (password == '') {
-                        $('#error-current-password4').text(error_password);
-                    } else if (password.length < 6) {
-                        $('#error-current-password4').text(error_length_password);
-                    } else {
-                        $('#error-current-password4').text('');
-                    }
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-                console.log('jqXHR:');
-                console.log(jqXHR);
-            }
-        })
-    });
-    $("#new-password4").blur(function () {
-        var password = $.trim($("#new-password4").val());
-        if (password == '') {
-            $('#error-new-password4').text(error_password);
-        } else if (password.length < 6) {
-            $('#error-new-password4').text(error_length_password);
-        } else {
-            $('#error-new-password4').text('');
-        }
-    });
-    $("#re-password4").blur(function () {
-        var password = $.trim($("#new-password4").val());
-        var re_password = $.trim($("#re-password4").val());
-        if (re_password == '') {
-            $('#error-re-password4').text(error_password);
-        } else if (re_password.length < 6) {
-            $('#error-re-password4').text(error_length_password);
-        }
-        else if (password != re_password) {
-            $('#error-re-password4').text(error_current_password);
-        } else {
-            $('#error-re-password4').text('');
-        }
-    });
-    $("#formChangePassword").keyup(function () {
+    $("#btnChangePassword").click(function () {
         var current_password = $.trim($("#current-password4").val());
         var password = $.trim($("#new-password4").val());
         var re_password = $.trim($("#re-password4").val());
         var flag = 0;
-        if (current_password != '' && password != '' && re_password != '') {
+        //current password
+        if (current_password == '') {
+            $('#error-current-password4').text(error_password);
+            flag++;
+        } else if (current_password.length < 6) {
+            $('#error-current-password4').text(error_length_password);
+            flag++;
+        } else {
+            $.ajax({
+                type: "GET",
+                url: 'checkExistPasswordCurrent/' + current_password,
+                success: function (data) {
+                    if (data != 200) {
+                        $('#error-current-password4').text(error_re_password);
+                        flag++;
+                    } else {
+                        $('#error-current-password4').text('');
+                    }
+                },
+                error: function (jqXHR) {
+                    console.log(jqXHR);
+                }
+            })
+        }
+        //password
+        if (password == '') {
+            $('#error-new-password4').text(error_password);
+            flag++;
+        } else if (password.length < 6) {
+            $('#error-new-password4').text(error_length_password);
+            flag++;
+        } else {
+            $('#error-new-password4').text('');
+        }
+        // re password
+        if (re_password == '') {
+            $('#error-re-password4').text(error_password);
+            flag++;
+        } else if (re_password.length < 6) {
+            $('#error-re-password4').text(error_length_password);
             flag++;
         }
-        if (current_password.length > 5 && password.length > 5 && re_password.length > 5) {
+        else if (password != re_password) {
+            $('#error-re-password4').text(error_current_password);
             flag++;
+        } else {
+            $('#error-re-password4').text('');
         }
-        if (password == re_password) {
-            flag++;
-        } if (flag == 3) {
-            $('#btnChangePassword').prop("disabled", false);
-        }
-        else {
-            $('#btnChangePassword').prop("disabled", true);
+        //check validate
+        if (flag != 0) {
+            return false;
+        } else {
+            return true;
         }
     });
 
@@ -472,131 +461,12 @@ $(function () {
         }
     });
     //validate form create order-----------
-
-    $("#sender_name").blur(function () {
-        var name = $.trim($("#sender_name").val());
-        if (name == '') {
-            $('#error-sender-name').text(error_name);
-        } else {
-            $('#error-sender-name').text('');
-        }
-    });
-
-    $("#sender_phone").blur(function () {
-        var phone = $.trim($("#sender_phone").val());
-        if (phone == '') {
-            $('#error-sender-phone').text(error_phone);
-        } else if (!checkPhoneNumber(phone)) {
-            $('#error-sender-phone').text(error_check_phone);
-        }
-        else {
-            $('#error-sender-phone').text('');
-        }
-    });
-    $("#sender_province_id").blur(function () {
-        var province = $.trim($("#sender_province_id").val());
-        if (province == '' || province == 0) {
-            $('#error-sender-province-id').text(error_province);
-        } else {
-            $('#error-sender-province-id').text('');
-        }
-    });
-    $("#sender_district_id").blur(function () {
-        var district = $.trim($("#sender_district_id").val());
-        if (district == '' || district == 0) {
-            $('#error-sender-district-id').text(error_district);
-        } else {
-            $('#error-sender-district-id').text('');
-        }
-    });
-    $("#sender_address").blur(function () {
-        var address = $.trim($("#sender_address").val());
-        if (address == '') {
-            $('#error-sender-address').text(error_address);
-        } else {
-            $('#error-sender-address').text('');
-        }
-    });
-    $("#receive_name").blur(function () {
-        var name = $.trim($("#receive_name").val());
-        if (name == '') {
-            $('#error-receive-name').text(error_name);
-        } else {
-            $('#error-receive-name').text('');
-        }
-    });
-    $("#receive_phone").blur(function () {
-        var phone = $.trim($("#receive_phone").val());
-        if (phone == '') {
-            $('#error-receive-phone').text(error_phone);
-        } else if (!checkPhoneNumber(phone)) {
-            $('#error-receive-phone').text(error_check_phone);
-        } else {
-            $('#error-receive-phone').text('');
-        }
-    });
-    $("#receive_province_id").blur(function () {
-        var province = $.trim($("#receive_province_id").val());
-        if (province == '' || province == 0) {
-            $('#error-receive-province-id').text(error_province);
-        } else {
-            $('#error-receive-province-id').text('');
-        }
-    });
-    $("#receive_district_id").blur(function () {
-        var district = $.trim($("#receive_district_id").val());
-        if (district == '' || district == 0) {
-            $('#error-receive-district-id').text(error_district);
-        } else {
-            $('#error-receive-district-id').text('');
-        }
-    });
-    $("#receive_address").blur(function () {
-        var address = $.trim($("#receive_address").val());
-        if (address == '') {
-            $('#error-receive-address').text(error_address);
-        } else {
-            $('#error-receive-address').text('');
-        }
-    });
-    $("#length").blur(function () {
-        var length = $.trim($("#length").val());
-        if (length == '') {
-            $('#error-length-order').text(error_length);
-        } else {
-            $('#error-length-order').text('');
-        }
-    });
-    $("#width").blur(function () {
-        var width = $.trim($("#width").val());
-        if (width == '') {
-            $('#error-width-order').text(error_width);
-        } else {
-            $('#error-width-order').text('');
-        }
-    });
-    $("#height").blur(function () {
-        var height = $.trim($("#height").val());
-        if (height == '') {
-            $('#error-height-order').text(error_height);
-        } else {
-            $('#error-height-order').text('');
-        }
-    });
-    $("#weight").blur(function () {
-        var weight = $.trim($("#weight").val());
-        if (weight == '') {
-            $('#error-weight-order').text(error_weight);
-        } else {
-            $('#error-weight-order').text('');
-        }
-    });
-    $("#formCreateOrder").change(function () {
+    $("#btnCreateOrder").click(function () {
         var sender_name = $.trim($("#sender_name").val());
         var sender_phone = $.trim($("#sender_phone").val());
         var sender_province_id = $.trim($("#sender_province_id").val());
+        var sender_district_id = $.trim($("#sender_district_id").val());
         var sender_address = $.trim($("#sender_address").val());
-        var sender_name = $.trim($("#sender_name").val());
         var receive_name = $.trim($("#receive_name").val());
         var receive_phone = $.trim($("#receive_phone").val());
         var receive_province_id = $("#receive_province_id").val();
@@ -605,18 +475,118 @@ $(function () {
         var length = $.trim($("#length").val());
         var width = $.trim($("#width").val());
         var height = $.trim($("#height").val());
+        var weight = $.trim($("#weight").val());
         var flag = 0;
-        if (length != '' && width != '' && height != '' && sender_name != '' && sender_phone != '' && sender_province_id != '' && sender_district_id != '' && sender_address != '' && receive_name != '' && receive_phone != '' && receive_province_id != '' && receive_district_id != '' && receive_address != '') {
+        //sender name
+        if (sender_name == '') {
+            $('#error-sender-name').text(error_name);
             flag++;
+        } else {
+            $('#error-sender-name').text('');
         }
-        if (checkPhoneNumber(sender_phone) && checkPhoneNumber(receive_phone)) {
+        //sender phone
+        if (sender_phone == '') {
+            $('#error-sender-phone').text(error_phone);
             flag++;
-        }
-        if (flag == 2) {
-            $('#btnCreateOrder').prop("disabled", false);
+        } else if (!checkPhoneNumber(sender_phone)) {
+            $('#error-sender-phone').text(error_check_phone);
+            flag++;
         }
         else {
-            $('#btnCreateOrder').prop("disabled", true);
+            $('#error-sender-phone').text('');
+        }
+        //sender province
+        if (sender_province_id == '' || sender_province_id == 0) {
+            $('#error-sender-province-id').text(error_province);
+            flag++;
+        } else {
+            $('#error-sender-province-id').text('');
+        }
+        //sender district
+        if (sender_district_id == '' || sender_district_id == 0) {
+            $('#error-sender-district-id').text(error_district);
+            flag++;
+        } else {
+            $('#error-sender-district-id').text('');
+        }
+        //sender address
+        if (sender_address == '') {
+            $('#error-sender-address').text(error_address);
+            flag++;
+        } else {
+            $('#error-sender-address').text('');
+        }
+        //receive name
+        if (receive_name == '') {
+            $('#error-receive-name').text(error_name);
+            flag++;
+        } else {
+            $('#error-receive-name').text('');
+        }
+        //receive phone
+        if (receive_phone == '') {
+            $('#error-receive-phone').text(error_phone);
+            flag++;
+        } else if (!checkPhoneNumber(receive_phone)) {
+            $('#error-receive-phone').text(error_check_phone);
+            flag++;
+        } else {
+            $('#error-receive-phone').text('');
+        }
+        //receive province
+        if (receive_province_id == '' || receive_province_id == 0) {
+            $('#error-receive-province-id').text(error_province);
+            flag++;
+        } else {
+            $('#error-receive-province-id').text('');
+        }
+        //receive district
+        if (receive_district_id == '' || receive_district_id == 0) {
+            $('#error-receive-district-id').text(error_district);
+            flag++;
+        } else {
+            $('#error-receive-district-id').text('');
+        }
+        //receive address
+        if (receive_address == '') {
+            $('#error-receive-address').text(error_address);
+            flag++;
+        } else {
+            $('#error-receive-address').text('');
+        }
+        //length
+        if (length == '') {
+            $('#error-length-order').text(error_length);
+            flag++;
+        } else {
+            $('#error-length-order').text('');
+        }
+        //width
+        if (width == '') {
+            $('#error-width-order').text(error_width);
+            flag++;
+        } else {
+            $('#error-width-order').text('');
+        }
+        //height
+        if (height == '') {
+            $('#error-height-order').text(error_height);
+            flag++;
+        } else {
+            $('#error-height-order').text('');
+        }
+        //weight
+        if (weight == '') {
+            $('#error-weight-order').text(error_weight);
+            flag++;
+        } else {
+            $('#error-weight-order').text('');
+        }
+        if (flag != 0) {
+            return false;
+        }
+        else {
+            return true;
         }
     });
 
@@ -691,11 +661,26 @@ $(function () {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log('jqXHR:');
                 console.log(jqXHR);
-
             }
         })
     });
-
+    $('#registered_province_id').change(function () {
+        var Id = $('#registered_province_id').val();
+        $.ajax({
+            type: "GET",
+            url: 'districtOfProvince/' + Id,
+            success: function (data) {
+                $("#registered_district_id").empty();
+                data.forEach(function (item) {
+                    $("#registered_district_id").append("<option value = '" + item.id + "'>" + item.text + "</option>");
+                })
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('jqXHR:');
+                console.log(jqXHR);
+            }
+        })
+    });
     //hiển thị danh sách công ty trên form đăng ký
     $('#rdoCompany').change(function () {
         $('#listCompany').css('display', 'block');
@@ -774,7 +759,7 @@ $(function () {
                 }
             });
         },
-        minLength: 0
+        minLength: 1
     });
     $("#receive_name").autocomplete({
         source: function (request, response) {
@@ -784,6 +769,10 @@ $(function () {
                     term: request.term
                 },
                 dataType: "json",
+                focus: function (event, ui) {
+                    $("#receive_name").val(ui.item.label);
+                    return false;
+                },
                 success: function (data) {
                     var resp = $.map(data, function (obj) {
                         $("#receive_name").val(obj.receive_name);

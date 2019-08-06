@@ -97,6 +97,7 @@ return [
     'delivery_of_documents' => 'Giao chứng từ',
     'receicer' => 'Người nhận',
     'sender' => 'Người gửi',
+    'service'=>'Dịch vụ',
 
     'payment_methods' => 'Phương thức thanh toán',
     'cash' => 'Tiền mặt',
