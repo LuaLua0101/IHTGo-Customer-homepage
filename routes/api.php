@@ -19,8 +19,10 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     Route::get('order-finish/{id?}', 'ApiController@finishShipping');
     Route::post('update-fcm', 'ApiController@updateFCM');
     Route::post('get-order', 'ApiController@getOrder');
+});
 
-    //raymond
-    Route::get('load-info-sender', 'ApiController@loadInfoSender');
-    Route::get('load-info-receive', 'ApiController@loadInfoReceive');
+//raymond
+Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
+    Route::post('load-info-sender', 'ApiController@loadInfoSender');
+    Route::post('load-info-receive', 'ApiController@loadInfoReceive');
 });
