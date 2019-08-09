@@ -130,7 +130,7 @@ return [
     'hcm_branch' => 'Ho Chi Minh branch',
     'bd_branch' => 'Binh Duong branch',
     'dn_branch' => 'Dong Nai branch',
-    'address_hcm_8_ba_trieu' => 'No. 8 Ba Trieu, Thanh An Building, Ward 12, District 5',
+    'address_hcm_5' => 'No. 8 Ba Trieu, Thanh An Building, Ward 12, District 5',
     'address_hcm_6' => '1610 Vo Van Kiet, Ward 7, District 6',
     'address_hcm_12' => '91 To Ky, Dong Hung Thuan Ward, District 12',
     'address_hcm_binh_chanh' => '3A 64/3 hamlet 3, Pham Van Hai Commune, Binh Chanh District',
@@ -140,9 +140,6 @@ return [
     'address_dn_bien_hoa' => '100 kp Binh Duong, Ward Long Binh Tan, Bien Hoa',
     'address_dn_nhon_trach' => '48C, Duong Ton Duc Thang, Ap 3, Hiep Phuoc and Nhon Trach',
     'tax_code' => 'Tax code',
-    'privacy_policy'=>'Privacy Policy',
-    'terms_and_conditions'=>'Terms and conditions',
-    'recruitment'=>'Recruitment',
     //validate value
     'error_name' => 'Please enter last name & first name',
     'error_phone' => 'Please enter the phone number',

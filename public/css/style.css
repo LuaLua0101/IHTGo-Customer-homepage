@@ -193,8 +193,8 @@ i {
     border-color: #e50303 !important;
 }
 .navbar-brand .logo-image {
-    height: 4em;
-    margin-top: -1.6em;
+    height: 3em;
+    margin-top: -1em;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:focus,
@@ -214,8 +214,7 @@ i {
     border-radius: 0% !important;
     height: 5em !important;
     padding: 1em !important;
-    border-color: #9e9e9e !important;
-    box-shadow: 0 0 5px #9e9e9e, 0 5px 10px #9e9e9e;
+    border-color: #e2dede !important;
     background-color: #fff !important;
 }
 .navbar-inverse .navbar-nav > .active > a,
@@ -255,6 +254,9 @@ i {
     display: block;
     background: #faf9f9;
     margin-top: 0.6em;
+}
+.navbar-inverse .navbar-collapse{
+    border-color: #f6f5f5!important;
 }
 .collapse.in ul li a {
     text-align: center;
@@ -525,6 +527,19 @@ input[type="radio"]:disabled + .label-text:before{
 	color: #ccc;
 }
 .ui-autocomplete { z-index:2147483647!important; }
+.social-footer li{
+    border-radius: 50%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+            transition:         transform .8s ease-in-out;
+}
+.social-footer li:hover,.social-footer li a:hover{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    background-color: #fff;
+}
+.social-footer li a{
+    font-size: 3em;
+}
 /*  */
 @media (min-width: 768px) {
     .modal-content {
@@ -532,12 +547,21 @@ input[type="radio"]:disabled + .label-text:before{
         border: 1px solid #e50303;
         border-radius: 0%;
     }
+
 }
 @media all and (max-width: 600px) {
     #imgPricePage img {
         width: 90%;
         margin-top: -1em;
         margin-bottom: -5em;
+    }
+    #bannerTop-carousel-slide{
+        width: 700;
+    }
+    .social-footer{display: inline-flex;}
+    .navbar-inverse .navbar-collapse{
+        margin-right: -2em;
+        margin-left: -2em;
     }
 }
 @keyframes effect{
