@@ -65,7 +65,7 @@ body {
     color: #303030;
     font-family: 'Segoe UI';
     font-size: 15px;
-    /*transform: scale(1);*/
+    transform: scale(1);
 }
 
 ::selection {
@@ -954,9 +954,6 @@ footer {
         right: 5%;
         padding-top: 6%;
     }
-
-        .about-wrap .about-side-image img {
-        }
 }
 
 @media (max-width: 990px) {
@@ -1098,10 +1095,7 @@ footer {
     margin: 0 auto;
 }
 
-.newsdetail-body .newsdetails-content {
-    /*margin-left: 10%;
-    margin-right: 10%;*/
-}
+
 /*******************/
 
 /*****Price Page******/

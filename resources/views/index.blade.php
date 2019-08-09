@@ -12,7 +12,7 @@
                 <!--Wrapper for slide-->
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img id="firstBanner" class="firstbannerimg" src="public/Images/FileUpload/images/TrangChu/index_banner.jpg" alt="banner" title="banner" style="width:100%;" />
+                        <img id="firstBanner" class="firstbannerimg" src="public/Images/FileUpload/images/TrangChu/index_banner.jpg" alt="banner" title="banner" />
                     </div>
                 </div>
                 <!--Left & Right control-->

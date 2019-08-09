@@ -20,3 +20,9 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     Route::post('update-fcm', 'ApiController@updateFCM');
     Route::post('get-order', 'ApiController@getOrder');
 });
+
+//raymond
+Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
+    Route::post('load-info-sender', 'ApiController@loadInfoSender');
+    Route::post('load-info-receive', 'ApiController@loadInfoReceive');
+});

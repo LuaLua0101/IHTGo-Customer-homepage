@@ -97,6 +97,7 @@ return [
     'delivery_of_documents' => 'Giao chứng từ',
     'receicer' => 'Người nhận',
     'sender' => 'Người gửi',
+    'service'=>'Dịch vụ',
 
     'payment_methods' => 'Phương thức thanh toán',
     'cash' => 'Tiền mặt',
@@ -139,9 +140,6 @@ return [
     'address_dn_bien_hoa' => '100 kp Bình Dương, Phường Long Bình Tân, Biên Hòa',
     'address_dn_nhon_trach' => '48C, Đường Tôn Đức Thắng, ẤP 3, Hiệp Phước, Nhơn Trạch',
     'tax_code' => 'Mã số thuế',
-    'privacy_policy'=>'Chính sách bảo mật',
-    'terms_and_conditions'=>'Các điều khoản và điều kiện',
-    'recruitment'=>'Tuyển dụng',
     //validate value
     'error_name' => 'Vui lòng nhập họ & tên',
     'error_phone' => 'Vui lòng nhập số điện thoại',

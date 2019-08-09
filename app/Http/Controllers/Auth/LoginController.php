@@ -13,8 +13,8 @@ class LoginController extends Controller
     {
         try {
             // Nếu dữ liệu hợp lệ sẽ kiểm tra trong csdl
-            $phone = $request->input('phone');
-            $password = $request->input('password');
+            $phone = trim($request->input('phone'));
+            $password = trim($request->input('password'));
             if (Auth::attempt(['phone' => $phone, 'password' => $password])) {
                 // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
                 if (Auth::user()->level == 3) {

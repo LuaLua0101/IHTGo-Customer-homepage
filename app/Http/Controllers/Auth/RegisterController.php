@@ -37,6 +37,8 @@ class RegisterController extends Controller
                     'code' => $code,
                     'address' => $data->address,
                     'company_id' => $data['company_id'],
+                    'province_id'=>$data['province_id'],
+                    'district_id'=>$data['district_id'],
                     'created_at' => date('Y-m-d h:i:s'),
                 ]
             );
