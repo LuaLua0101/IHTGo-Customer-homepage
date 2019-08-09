@@ -22,10 +22,8 @@
 
     <!----------------------------------------AOS CSS------------------------------------------------>
     <link href="{{ URL::asset('public/vendor/aos/aos.css') }}" rel="stylesheet" />
-
     <!----------------------------------------Fontawesome CSS---------------------------------------->
     <link href="{{ URL::asset('public/vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" />
-
     <!---------------------------------------Custom CSS---------------------------------------------->
     <link href="{{ URL::asset('public/user/css/usercustom.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('public/css/style.css') }}" rel="stylesheet" />
@@ -34,13 +32,25 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <!----------------------------------------------------------------------------------------------->
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <title>IHTGO</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <style>
+        html {
+            scrollbar-width: none;
+            /* For Firefox */
+            -ms-overflow-style: none;
+            /* For Internet Explorer and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            width: 0px;
+            /* For Chrome, Safari, and Opera */
+        }
+    </style>
 </head>
-
 <body class="body-container">
-
     <!---------------------------HEADER------------------------------->
     <header>
         <!---------------------First Header----------------------->
@@ -84,7 +94,7 @@
                         </li>
                         @else
                         <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> @lang('messages.login') </a></li>
-                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="glyphicon glyphicon-log-in"></span> @lang('messages.registration') </a></li>
+                        <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="fas fa-user-plus"></span> @lang('messages.registration') </a></li>
                         @endif
                     </ul>
                 </div>
@@ -453,16 +463,16 @@
                 <div class="col-sm-6 footMid1stCol">
                     <p class="text-uppercase"><strong>IHT Go</strong></p>
                     <ul class="list-unstyled">
-                        <li>@lang('messages.address') : @lang('messages.address_hcm_8_ba_trieu') </li>
-                        <li>@lang('messages.phone') : (028) 38380888</li>
+                        <li>@lang('messages.address') : @lang('messages.address_hcm_5') </li>
+                        <li>@lang('messages.phone') : <a href="tel:0902926925">0902.926.925</a></li>
                         <li>@lang('messages.tax_code') : 0310212371</li>
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <ul class="list-unstyled">
-                        <li><a class="decNone" href="javascript:void(0)">@lang('messages.privacy_policy')</a></li>
-                        <li><a class="decNone" href="javascript:void(0)">@lang('messages.terms_and_conditions')</a></li>
-                        <li><a class="decNone" href="javascript:void(0)">@lang('messages.recruitment')</a></li>
+                    <ul class="nav navbar-nav social-footer">
+                        <li><a href="https://www.facebook.com/ihtgo"><i class="fab fa-facebook-square"></i></a></li>
+                        <li><a href="tel:0902926925"><i class="fas fa-phone-square"></i></a></li>
+                        <li><a href="mailto:ihtgo.vn@gmail.com?Subject=Hello%20again"> <i class="fas fa-envelope"></i></a></li>
                     </ul>
                 </div>
                 <div class="col-sm-3">
@@ -481,7 +491,7 @@
                             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     <ul class="list-group">
-                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_8_ba_trieu') }}">@lang('messages.address_hcm_8_ba_trieu') </a></li>
+                                        <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_8_ba_trieu') }}">@lang('messages.address_hcm_5') </a></li>
                                         <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_6') }}">@lang('messages.address_hcm_6') </a></li>
                                         <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_12') }}">@lang('messages.address_hcm_12') </a></li>
                                         <li class="list-group-item"><a href="http://maps.google.com/?q=@lang('messages.address_hcm_binh_chanh') }}">@lang('messages.address_hcm_binh_chanh') </a></li>
@@ -533,7 +543,7 @@
             </div>
         </div>
         <div class="container-fluid center-text footer-bottom" style="background: #dcdcdc; padding-top: 10px;">
-            <p style="color:#707070;">Copyright &#9400; 2018 IHTGO. Design by IHT</p>
+            <p style="color:#707070;">Copyright &#9400; 2019 IHTGO. Design by IHT</p>
         </div>
     </footer>
 
@@ -585,6 +595,8 @@
 
     <!------------------------------------Custom JS---------------------------------------->
     <script src="{{ URL::asset('public/user/js/usercustom.js') }}"></script>
+
+    <!-- <script src="{{ URL::asset('public/js/fontawesome.min.js') }}"></script> -->
 
 
 </body>
