@@ -21,7 +21,7 @@
         <!----------------------END Carousel Top Banner---------------------->
         <div class="three-col-serv-wrap">
             <!-------------Three Col IHT Service-------------->
-            <div class="row-fluid center-text">
+            <!-- <div class="row-fluid center-text">
                 <h2 class="tltHeadingUppercase">@lang('messages.service_ihtgo')</h2>
                 <p>@lang('messages.ihtgo_connection_options_for_shop_owners_and_customers')</p><br />
             </div>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-------------END Three Col IHT Service-------------->
             <!--Second Banner-->
             <div class="row-fluid">

@@ -67,7 +67,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a href="{!! url('contact'); !!}"><strong>@lang('messages.about_us')</strong></a></li>
-                        <li class="{{ Request::path() == 'price-list' ? 'active' : '' }}"><a href="{!! url('price-list'); !!}"><strong>@lang('messages.price_list') </strong></a></li>
+                        <!-- <li class="{{ Request::path() == 'price-list' ? 'active' : '' }}"><a href="{!! url('price-list'); !!}"><strong>@lang('messages.price_list') </strong></a></li> -->
                         <!-- <li class="{{ Request::path() == 'news' ? 'active' : '' }}"><a href="{!! url('news'); !!}"><strong>@lang('messages.news')</strong></a></li> -->
                         @if(app()->getLocale()=='vi')
                         <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i>EN</a></li>
@@ -75,7 +75,7 @@
                         <li><a href="{{ url('locale/vi') }}"><i class="fa fa-language"></i> VI</a></li>
                         @endif
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <!-- <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
                         <li><a data-toggle="modal" data-target="#createOrder"><strong>@lang('messages.create_order') </strong></a></li>
                         <li class="{{ Request::path() == 'order' ? 'active' : '' }}"><a href="{!! url('order'); !!}"><strong>@lang('messages.order_management') </strong></a></li>
@@ -96,7 +96,7 @@
                         <li><a class=" " data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-user"></span> @lang('messages.login') </a></li>
                         <li><a class=" " data-toggle="modal" data-target="#Registered"><span class="fas fa-user-plus"></span> @lang('messages.registration') </a></li>
                         @endif
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </nav>
