@@ -67,7 +67,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a href="{!! url('contact'); !!}"><strong>@lang('messages.about_us')</strong></a></li>
-                        <!-- <li class="{{ Request::path() == 'price-list' ? 'active' : '' }}"><a href="{!! url('price-list'); !!}"><strong>@lang('messages.price_list') </strong></a></li> -->
+                        <li class="{{ Request::path() == 'price-list' ? 'active' : '' }}"><a href="{!! url('price-list'); !!}"><strong>@lang('messages.price_list') </strong></a></li>
                         <!-- <li class="{{ Request::path() == 'news' ? 'active' : '' }}"><a href="{!! url('news'); !!}"><strong>@lang('messages.news')</strong></a></li> -->
                         @if(app()->getLocale()=='vi')
                         <li><a href="{{ url('locale/en') }}"><i class="fa fa-language"></i>EN</a></li>
