@@ -15,4 +15,13 @@ class Driver extends Model
             ->where('user_id', $id)
             ->update(['lat' => $req->lat, 'lng' => $req->lng]);
     }
+    public static function findDriver()
+    {
+
+        return DB::table('drivers as d')
+            ->join('users as u','u.id','=','d.user_id')
+            ->where('d.deleted_at', null)
+            ->select('u.id','u.name','d.lng','d.lat')
+            ->get();
+    }
 }
