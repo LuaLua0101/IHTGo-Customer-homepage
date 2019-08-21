@@ -263,4 +263,14 @@ class ApiController extends Controller
             return response()->json(['code' => 500]);
         }
     }
+    public function findDriver()
+    {
+        try {
+            $data = Driver::findDriver();
+            return response()->json(['data' => $data, 'code' => 200]);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['code' => 500]);
+        }
+    }
 }
