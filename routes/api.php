@@ -1,11 +1,11 @@
 <?php
 
 Route::post('login', 'ApiController@login');
-Route::post('customer-login', 'ApiController@customerLogin');
+Route::post('customer-login', 'ApiController@customerLogin')->middleware('cors');
 Route::post('register', 'ApiController@register');
 
 Route::post('customer/update-fcm', 'ApiController@updateCustomerFCM');
-Route::get('driver/find', 'ApiController@findDriver')->middleware('cors');;
+Route::get('driver/find', 'ApiController@findDriver')->middleware('cors');
 
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     // Route::get('verify', 'ApiController@verify')->middleware(['can:delete-company2']);
@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
     Route::post('load-info-receive', 'ApiController@loadInfoReceive');
 });
 
-Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
+Route::group(['middleware' => ['auth.jwt', 'cors'], 'prefix' => 'customer'], function () {
 
     Route::get('logout', 'ApiController@logout');
     Route::post('order-detail/{id?}', 'Api\CustomerController@orderDetail');
