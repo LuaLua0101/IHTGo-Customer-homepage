@@ -1,6 +1,7 @@
 <?php
 
 Route::post('login', 'ApiController@login');
+Route::post('customer-login', 'ApiController@customerLogin');
 Route::post('register', 'ApiController@register');
 
 Route::post('customer/update-fcm', 'ApiController@updateCustomerFCM');
@@ -26,4 +27,15 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
     Route::post('load-info-sender', 'ApiController@loadInfoSender');
     Route::post('load-info-receive', 'ApiController@loadInfoReceive');
+});
+
+Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
+
+    Route::get('logout', 'ApiController@logout');
+    Route::post('order-detail/{id?}', 'Api\CustomerController@orderDetail');
+    Route::post('order-all', 'Api\CustomerController@orderAll');
+    Route::post('order-waiting', 'Api\CustomerController@orderWaiting');
+    Route::post('order-finish', 'Api\CustomerController@orderFinish');
+    Route::post('order-cancel', 'Api\CustomerController@orderCancel');
+
 });

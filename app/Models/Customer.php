@@ -87,4 +87,86 @@ class Customer
         $res = 'IHT-KH' . date('Ymd') . $code;
         return $res;
     }
+
+    //list order
+    public static function orderAll()
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $data = DB::table('orders as o')
+                ->join('order_details as od', 'od.order_id', '=', 'o.id')
+                ->where('o.user_id', $user_id)
+                ->select('o.id', 'o.coupon_code', 'o.name', 'o.total_price','od.sender_address','receive_address', 'o.created_at')
+                ->orderByDesc('o.id')
+                ->get();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public static function orderWaiting()
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $data = DB::table('orders as o')
+                ->join('order_details as od', 'od.order_id', '=', 'o.id')
+                ->where('o.user_id', $user_id)
+                ->where('o.status',1)
+                ->select('o.id', 'o.coupon_code', 'o.name', 'o.total_price','od.sender_address','receive_address', 'o.created_at')
+                ->orderByDesc('o.id')
+                ->get();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public static function orderFinish()
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $data = DB::table('orders as o')
+                ->join('order_details as od', 'od.order_id', '=', 'o.id')
+                ->where('o.user_id', $user_id)
+                ->where('o.status',4)
+                ->select('o.id', 'o.coupon_code', 'o.name', 'o.total_price','od.sender_address','receive_address', 'o.created_at')
+                ->orderByDesc('o.id')
+                ->get();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public static function orderCancel()
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $data = DB::table('orders as o')
+                ->join('order_details as od', 'od.order_id', '=', 'o.id')
+                ->where('o.user_id', $user_id)
+                ->where('o.status',5)
+                ->orWhere('o.status',6)
+                ->select('o.id', 'o.coupon_code', 'o.name', 'o.total_price','od.sender_address','receive_address', 'o.created_at')
+                ->orderByDesc('o.id')
+                ->get();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public static function orderDetail($id)
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $data = DB::table('orders as o')
+                ->where('o.id',$id)
+                ->where('o.user_id', $user_id)
+                ->join('order_details as od', 'od.order_id', '=', 'o.id')
+                ->leftJoin('order_detail_ext as ode','ode.order_id','=','o.id')
+                ->select('o.id', 'o.coupon_code', 'o.name','o.car_option', 'o.is_speed','o.payer', 'o.total_price','o.status','o.created_at','od.length','od.width','od.height','od.weight','od.take_money','od.sender_name','od.sender_phone','od.sender_address','od.receive_name','od.receive_phone','od.receive_address','od.note','ode.distance','ode.hand_on','ode.discharge','ode.start_time_inventory','ode.finish_time_inventory')
+                ->first();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
 }
