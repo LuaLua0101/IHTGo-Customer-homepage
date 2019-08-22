@@ -62,17 +62,67 @@ class ApiController extends Controller
             return response()->json(['token_absent' => $e->getMessage()], 500);
         }
 
+        $user_level = Auth::user()->level;
         $user = Auth::user();
-        // Device::sendMsgToDevice('euebX8Iv8Ac:APA91bF1dyWEGmjr1bGBMMxVy8COlKV60FvGLeaYN2wCFPALG-feASd0Iupd2lYbzyCDj907EJ1bm6g6559nTVpCUfpky7xt11V_aN4fe2zJctIW1ePihFj8qBfXYLS70k7RdKr2WLA5', '13' . '34', []);
-        return response()->json([
-            'token' => 'Bearer ' . $jwt_token,
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'email' => $user->email,
-        ]);
-    }
 
+        if ($user_level == 4) {
+            return response()->json([
+                'token' => 'Bearer ' . $jwt_token,
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid Phone or Password',
+            ], 401);
+        }
+    }
+    public function customerLogin(Request $request)
+    {
+        $this->validate($request, [
+            'phone' => 'required|max:255',
+            'password' => 'required',
+        ]);
+        $input = $request->only('phone', 'password');
+
+        $jwt_token = null;
+
+        try {
+            if (!$jwt_token = JWTAuth::attempt($input)) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Phone or Password',
+                ], 401);
+            }
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], 500);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['token_invalid'], 500);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['token_absent' => $e->getMessage()], 500);
+        }
+        $user_level = Auth::user()->level;
+        $user = Auth::user();
+
+        if ($user_level == 3) {
+            return response()->json([
+                'token' => 'Bearer ' . $jwt_token,
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid Phone or Password',
+            ], 401);
+        }
+    }
     public function logout(Request $request)
     {
         $this->validate($request, [
