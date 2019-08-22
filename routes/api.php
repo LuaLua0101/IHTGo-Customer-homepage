@@ -4,7 +4,7 @@ Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
 
 Route::post('customer/update-fcm', 'ApiController@updateCustomerFCM');
-Route::get('driver/find', 'ApiController@findDriver');
+Route::get('driver/find', 'ApiController@findDriver')->middleware('cors');;
 
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     // Route::get('verify', 'ApiController@verify')->middleware(['can:delete-company2']);
