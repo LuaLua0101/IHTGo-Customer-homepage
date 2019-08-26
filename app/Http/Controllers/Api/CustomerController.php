@@ -16,10 +16,11 @@ class CustomerController extends Controller
     {
         $this->middleware('jwt.auth');
     }
-    public function orderAll()
+    public function orderAll(Request $req)
     {
         try {
-            $data =  Customer::orderAll();
+            $skip = $req->skip ? $req->skip : 0;
+            $data =  Customer::orderAll($skip);
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json([
@@ -28,10 +29,11 @@ class CustomerController extends Controller
             ], 401);
         }
     }
-    public function orderWaiting()
+    public function orderWaiting(Request $req)
     {
         try {
-            $data =  Customer::orderWaiting();
+            $skip = $req->skip ? $req->skip : 0;
+            $data =  Customer::orderWaiting($skip);
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json([
@@ -40,10 +42,11 @@ class CustomerController extends Controller
             ], 401);
         }
     }
-    public function orderFinish()
+    public function orderFinish(Request $req)
     {
         try {
-            $data =  Customer::orderFinish();
+            $skip = $req->skip ? $req->skip : 0;
+            $data =  Customer::orderFinish($skip);
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json([
@@ -52,10 +55,11 @@ class CustomerController extends Controller
             ], 401);
         }
     }
-    public function orderCancel()
+    public function orderCancel(Request $req)
     {
         try {
-            $data =  Customer::orderCancel();
+            $skip = $req->skip ? $req->skip : 0;
+            $data =  Customer::orderCancel($skip);
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json([
@@ -68,7 +72,8 @@ class CustomerController extends Controller
     {
         try {
             $data =  Customer::orderDetail($id);
-            return response()->json(['data' => $data, 'code' => 200]);
+            $order_deliveries =  Customer::orderDeliveries($id);
+            return response()->json(['data' => $data,'order_deliveries'=>$order_deliveries, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
