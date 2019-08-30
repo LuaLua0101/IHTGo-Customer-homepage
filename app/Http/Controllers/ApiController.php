@@ -15,61 +15,12 @@ use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\Customer;
+use App\Models\Company;
 
 class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
 
-    public function register(Request $request)
-    {
-        try{
-            dd($request);
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-            //thêm thông tin khách hàng vào bảng user
-            $res =   DB::table(config('constants.USER_TABLE'))->insertGetId(
-                [
-                    'name' => $request['name'],
-                    'email' => $request['email'],
-                    'phone' => $request['phone'],
-                    'password' => Hash::make($request['password']),
-                    'activated' => '1',
-                    'created_at' => date('Y-m-d h:i:s'),
-                ]
-            );
-            //kiểm tra khách hàng thuộc cá nhân or công ty
-            if ($request['type']==2) {
-                //kh công ty
-                $code = Customer::codeCustomer();
-                DB::table(config('constants.CUSTOMER_TABLE'))->insert(
-                    [
-                        'user_id' => $res,
-                        'type' => 2,
-                        'code' => $code,
-                        'address' => $request->address,
-                        'company_id' => $request['company_id'],
-                        'created_at' => date('Y-m-d h:i:s'),
-                    ]
-                );
-            } else {
-                //kh cá nhân
-                DB::table(config('constants.CUSTOMER_TABLE'))->insert(
-                    [
-                        'user_id' => $res,
-                        'type' => 1,
-                        'address' => $request->address,
-                        'created_at' => date('Y-m-d h:i:s'),
-                    ]
-                );
-            }
-
-            return response()->json([
-                'success' => true,
-                'data' => $user,
-            ], 200);
-        }catch (Exception $e) {
-                return response()->json('fail', 500);
-        }
-    }
     public function login(Request $request)
     {
 
@@ -111,6 +62,39 @@ class ApiController extends Controller
                 'success' => false,
                 'message' => 'Invalid Phone or Password',
             ], 401);
+        }
+    }
+    public function customerRegister(Request $request)
+    {
+        try {
+            //check phone & email
+            $phone = Customer::checkExistPhone($request->phone);
+            $email = Customer::checkExistEmail($request->email);
+            if ($phone == 200 && $email == 200) {
+                $user = Customer::customerRegister($request);
+                return response()->json([
+                    'success' => true,
+                    'data' => $user,
+                ], 200);
+            } else {
+                if ($phone == 201 && $email == 201) {
+                    return response()->json([
+                        'fail' => 'Your phone number & email already exists',
+                    ], 201);
+                }
+                if ($phone == 201) {
+                    return response()->json([
+                        'fail' => 'Your phone number already exists',
+                    ], 201);
+                }
+                if ($email == 201) {
+                    return response()->json([
+                        'fail' => 'Your email already exists',
+                    ], 201);
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json('fail', 500);
         }
     }
     public function customerLogin(Request $request)
@@ -192,30 +176,30 @@ class ApiController extends Controller
     }
     public function searchAll(Request $req)
     {
-        $res=Order::searchAll($req->search);
+        $res = Order::searchAll($req->search);
 
         return response()->json($res);
     }
     public function searchWaiting(Request $req)
     {
-        $res=Order::searchWaiting($req->search);
+        $res = Order::searchWaiting($req->search);
 
         return response()->json($res);
     }
     public function searchFinished(Request $req)
     {
-        $res=Order::searchFinished($req->search);
+        $res = Order::searchFinished($req->search);
 
         return response()->json($res);
     }
     public function searchCancelled(Request $req)
     {
-        $res=Order::searchCancelled($req->search);
+        $res = Order::searchCancelled($req->search);
 
         return response()->json($res);
     }
 
- 
+
     public function changeInfo(Request $req)
     {
         try {
@@ -372,7 +356,7 @@ class ApiController extends Controller
         }
     }
     public function findDriver()
-    { 
+    {
         try {
             $data = Driver::findDriver();
             return response()->json(['data' => $data, 'code' => 200]);
@@ -383,13 +367,12 @@ class ApiController extends Controller
     }
     public function checkCouponCode(Request $req)
     {
-        $res=Order::checkCouponCode($req);
-        if($res==200){
+        $res = Order::checkCouponCode($req);
+        if ($res == 200) {
             return response()->json('ok');
-        }else{
+        } else {
             return response()->json('fail');
         }
-
     }
     public function createOrder(Request $req)
     {
