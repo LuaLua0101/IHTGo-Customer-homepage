@@ -21,7 +21,8 @@ class Customer
                     'email' => $request['email'],
                     'phone' => $request['phone'],
                     'password' => Hash::make($request['password']),
-                    'activated' => '1',
+                    'activated' => 1,
+                    'level' => 3,
                     'created_at' => date('Y-m-d h:i:s'),
                 ]
             );
