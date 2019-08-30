@@ -432,7 +432,7 @@ class Order extends Model
         }
     }
 
-    //tạo giá trị code đơn hàng
+    //tạo code đơn hàng
     public static function codeOrder()
     {
         $code = DB::select(DB::raw("select o.code
@@ -453,27 +453,29 @@ class Order extends Model
     }
 
     //lịch sử thông tin người gửi/nhận
-    public static function loadInfoSender($request)
+    public static function loadInfoSender()
     {
         $user_id = Auth::user()->id;
-        $search = $request->get('term');
         $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
-            ->select([DB::RAW('DISTINCT(sender_name)'),'sender_phone','sender_address','sender_province_id','sender_district_id'])
+            ->select('sender_name','sender_address')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
-            ->where('order_details.sender_name', 'LIKE', '%' . $search . '%')
-            ->where('orders.user_id', $user_id)->distinct()->get();
-        return response()->json($res);
+            ->where('orders.user_id', $user_id)
+            ->orderBy('orders.id', 'desc')
+            ->distinct()
+            ->get();
+        return $res;
     }
-    public static function loadInfoReceive($request)
+    public static function loadInfoReceive()
     {
         $user_id = Auth::user()->id;
-        $search = $request->get('term');
         $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
-            ->select('receive_name', 'receive_phone','receive_address','receive_province_id','receive_district_id')
+            ->select('receive_name','receive_address')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
-            ->where('order_details.receive_name', 'LIKE', '%' . $search . '%')
-            ->where('orders.user_id', $user_id)->orderBy('orders.id', 'desc')->distinct()->get();
-        return response()->json($res);
+            ->where('orders.user_id', $user_id)
+            ->orderBy('orders.id', 'desc')
+            ->distinct()
+            ->get();
+        return $res;
     }
 
     //NAD
@@ -538,6 +540,273 @@ class Order extends Model
             ->take(10)
             ->get(['orders.id', 'orders.name', 'orders.status', 'orders.total_price', 'orders.is_speed', 'orders.car_option', 'orders.created_at']);
         return $res;
+    }
+    public static function searchAll($search)
+    {
+        $user_id=Auth::user()->id;
+        $orders = DB::table('orders as o')
+            ->join('order_details as od', 'od.order_id', '=', 'o.id')
+            ->where('o.user_id', $user_id)
+            ->where(function ($query) use ($search) {
+                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+            })
+            ->orderBy('o.id', 'desc')
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+        return $orders;
+    }
+    public static function searchWaiting($search)
+    {
+        $user_id=Auth::user()->id;
+        $orders = DB::table('orders as o')
+            ->join('order_details as od', 'od.order_id', '=', 'o.id')
+            ->where('o.user_id', $user_id)
+            ->where(function ($query) {
+                $query->where('o.status', '1')
+                    ->orWhere('o.status', '2')
+                    ->orWhere('o.status', '3');
+            })
+            ->where(function ($query) use ($search) {
+                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+            })
+            ->orderBy('o.id', 'desc')
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+
+        return $orders;
+    }
+    public static function searchFinished($search)
+    {
+        $user_id=Auth::user()->id;
+        $orders = DB::table('orders as o')
+            ->join('order_details as od', 'od.order_id', '=', 'o.id')
+            ->where('o.user_id', $user_id)
+            ->where('o.status',4)
+            ->where(function ($query) use ($search) {
+                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+            })
+            ->orderBy('o.id', 'desc')
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+
+        return $orders;
+    }
+    public static function searchCancelled($search)
+    {
+        $user_id=Auth::user()->id;
+        $orders = DB::table('orders as o')
+            ->join('order_details as od', 'od.order_id', '=', 'o.id')
+            ->where('o.user_id', $user_id)
+            ->where(function ($query) {
+                $query->where('o.status', 5)
+                    ->orWhere('o.status',6)
+                    ->orWhere('o.status', 7);
+            })
+            ->where(function ($query) use ($search) {
+                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+            })
+            ->orderBy('o.id', 'desc')
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+
+        return $orders;
+    }
+    public static function checkCouponCode($data)
+    {
+        $user_id=Auth::user()->id;
+        $search=$data->coupon_code;
+        $orders = DB::table('orders as o')
+            ->where('o.user_id', $user_id)
+            ->where(function ($query) use ($search) {
+                $query->where('o.coupon_code', $search);
+            })
+            ->first();
+          if($orders)
+          {
+            return 200;
+          }else{
+            return 404;
+          }  
+    }
+    public static function createOrder($data)
+    {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $user_id=Auth::user()->id;
+        $customer_type=DB::table('customers')->where('user_id',$user_id)->first(['type']);
+        $total_price = self::type_payment($data);
+        $code=self::codeOrder();
+
+        $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
+            [
+                'code' => $code,
+                'coupon_code' => $data->coupon_code,
+                'name' => $data->name,
+                'car_type' => 8,
+                'car_option' => $data->car_option,
+                'status' => 1,
+                'total_price'=>$total_price,
+                'payment_type' =>(int) $customer_type->type== 1 ? 1 : 2,
+                'user_id' => $user_id,
+                'payer' => (int) $data->payer,
+                'is_speed' => (int)$data->is_speed,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]
+        );
+
+        DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
+            [
+                'order_id' => $order_id,
+                'sender_name' => $data->sender_name,
+                'sender_phone' => $data->sender_phone,
+                'sender_address' => $data->sender_address,
+                'receive_name' => $data->receive_name,
+                'receive_phone' => $data->receive_phone,
+                'receive_address' => $data->receive_address,
+                'note' => $data->note,
+                'take_money' => $data->take_money,
+                'length' => (float)($data->length == null || $data->length == 0) ? 1 : $data->length,
+                'width' =>(float) ($data->width == null || $data->width == 0) ? 1 : $data->width,
+                'height' => (float)($data->height == null || $data->height == 0) ? 1 : $data->height,
+                'weight' =>(float) ($data->weight == null || $data->weight == 0) ? 1 : $data->weight,
+            ]
+        );
+
+         DB::table('order_detail_ext')
+                ->insert(
+                    [
+                        'order_id' => $order_id,
+                        'distance' => (float)($data->distance == null || $data->distance == 0) ? 1 : $data->distance,
+                        'hand_on' => ($data->hand_on == null || $data->hand_on == '') ? 0 : $data->hand_on,
+                        'discharge' => ($data->discharge == null || $data->discharge == '') ? 0 : $data->discharge,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
+        if ($data->hasFile('image_order')){
+            ImageController::uploadImageOrder($data, $order_id);
+        }             
+        return ['id' => $order_id, 'total_price' => $total_price];
+    }
+    public static function type_payment($data)
+    {
+        $value = 0;
+        $weight = ((float) $data->weight != 0 || (float) $data->weight != null) ? (float) $data->weight : 1;
+
+        //kiểm tra loại đơn hàng
+        if ($data->car_option == 1) { //hàng hóa
+            $value = self::type_car($data);
+            if ($data->is_speed == 1) {
+                $value = $value * 2;
+            }
+            if ($data->hand_on == 1) {
+                $value = $value + 10000;
+            }
+            if ($data->discharge == 1) {
+                if ($weight > 51 && $weight <= 150) {
+                    $value = $value + 50000;
+                } elseif ($weight >= 151 && $weight <= 300) {
+                    $value = $value + 100000;
+                } elseif ($weight > 300) {
+                    $value = $value + 100000 + (1000 * ($weight - 300));
+                }
+            }
+        
+        } elseif ($data->car_option == 2) { //chứng từ
+            //kiểm tra khu vực đơn hàng & quảng đường đơn hàng
+            $sender_address = $data->sender_address;
+            $receive_address = $data->receive_address;
+            $char_BD = "Bình Dương";
+            $char_HCM = "Hồ Chí Minh";
+            $sender_BD = strpos($sender_address, $char_BD);
+            $sender_HCM = strpos($sender_address, $char_HCM);
+            $receive_DB = strpos($receive_address, $char_BD);
+            $receive_HCM = strpos($receive_address, $char_HCM);
+            if (($sender_BD != false || $sender_HCM != false) && ($receive_DB != false || $receive_HCM != false)) {
+                $value = 70000;
+            } else {
+                $value = 140000;
+            }
+            if ($data->is_speed == 1) {
+                $value = $value * 2;
+            }
+            if ($data->hand_on == 1) {
+                $value = $value + 10000;
+            }
+        } elseif ($data->car_option == 4) //gửi hàng vào kho
+        {
+            $value = self::type_car($data);
+        }
+        return $value;
+    }
+    public static function type_car($data)
+    {
+        $value = 0;
+        $distance = (float) $data->distance != 0 ? (float) $data->distance : 1;
+        $length = (float) $data->length != 0 ? (float) $data->length : 1;
+        $width = (float) $data->width != 0 ? (float) $data->width : 1;
+        $height = (float) $data->height != 0 ? (float) $data->height : 1;
+        $weight = (float) $data->weight != 0 ? (float) $data->weight : 1;
+        $size = ($length * $width * $height) / 5000;
+        //xe may
+        if ($weight <= 20 && $size <= 9.6) {
+            if ($distance <= 25) {
+                $value = 70000;
+            } else {
+                $value = 3500 * $distance;
+            }
+        } else {
+            //kiem tra hang hoa co qua tai khong
+            $value = ($size < $weight) ? $weight : $size;
+            $value = $value - 30;
+            //xe tai
+            if ($distance <= 35 && $value <= 30) {
+                $value = 250000;
+            } else {
+                //bình thường
+                if ($distance > 35 && $value < 30) {
+                        $value = 7000 * ($distance - 35) + 250000;
+                    if ($value > 30 && $distance < 35) {
+                        if ($value <= 50) {
+                            $value = 3000 * $value + 250000;
+                        } elseif ($value > 50 && $value < 100) {
+                            $value = 2000 * $value + 250000;
+                        } elseif ($value > 100) {
+                            $value = 1000 * $value + 250000;
+                        }
+                        dd(2);
+                    }
+                }
+                //quá tải
+                else if ($distance > 35 && $value > 30) {
+                    if ($value <= 50) {
+                        $value = 3000 * $value + (7000 * ($distance - 35)) + 250000;
+                    } elseif ($value > 50 && $value < 100) {
+                        $value = 2000 * $value + (7000 * ($distance - 35)) + 250000;
+                    } elseif ($value > 100) {
+                        $value = 1000 * $value + (7000 * ($distance - 35)) + 250000;
+                    }
+                    
+                }
+              
+            }
+        }
+        return $value;
+
     }
     //====================
 }

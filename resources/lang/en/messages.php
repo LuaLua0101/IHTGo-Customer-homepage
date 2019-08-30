@@ -12,6 +12,7 @@ return [
     'log_out' => 'Log out',
     'login' => 'Login',
     'registration' => 'Registration',
+    'order_now' => 'Order now',
     //page index
     'service_ihtgo' => 'Service IHT Go',
     'ihtgo_connection_options_for_shop_owners_and_customers' => 'IHT Go - connection options for shop owners and customers',

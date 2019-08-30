@@ -14,28 +14,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Models\Customer;
+use App\Models\Company;
 
 class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
-
-    // public function register(RegisterAuthRequest $request)
-    // {
-    //     $user = new User();
-    //     $user->name = $request->name;
-    //     $user->email = $request->email;
-    //     $user->password = bcrypt($request->password);
-    //     $user->save();
-
-    //     if ($this->loginAfterSignUp) {
-    //         return $this->login($request);
-    //     }
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'data' => $user,
-    //     ], 200);
-    // }
 
     public function login(Request $request)
     {
@@ -62,17 +46,100 @@ class ApiController extends Controller
             return response()->json(['token_absent' => $e->getMessage()], 500);
         }
 
+        $user_level = Auth::user()->level;
         $user = Auth::user();
-        // Device::sendMsgToDevice('euebX8Iv8Ac:APA91bF1dyWEGmjr1bGBMMxVy8COlKV60FvGLeaYN2wCFPALG-feASd0Iupd2lYbzyCDj907EJ1bm6g6559nTVpCUfpky7xt11V_aN4fe2zJctIW1ePihFj8qBfXYLS70k7RdKr2WLA5', '13' . '34', []);
-        return response()->json([
-            'token' => 'Bearer ' . $jwt_token,
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'email' => $user->email,
-        ]);
-    }
 
+        if ($user_level == 4) {
+            return response()->json([
+                'token' => 'Bearer ' . $jwt_token,
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid Phone or Password',
+            ], 401);
+        }
+    }
+    public function customerRegister(Request $request)
+    {
+        try {
+            //check phone & email
+            $phone = Customer::checkExistPhone($request->phone);
+            $email = Customer::checkExistEmail($request->email);
+            if ($phone == 200 && $email == 200) {
+                $user = Customer::customerRegister($request);
+                return response()->json([
+                    'success' => true,
+                    'data' => $user,
+                ], 200);
+            } else {
+                if ($phone == 201 && $email == 201) {
+                    return response()->json([
+                        'fail' => 'Your phone number & email already exists',
+                    ], 201);
+                }
+                if ($phone == 201) {
+                    return response()->json([
+                        'fail' => 'Your phone number already exists',
+                    ], 201);
+                }
+                if ($email == 201) {
+                    return response()->json([
+                        'fail' => 'Your email already exists',
+                    ], 201);
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json('fail', 500);
+        }
+    }
+    public function customerLogin(Request $request)
+    {
+        $this->validate($request, [
+            'phone' => 'required|max:255',
+            'password' => 'required',
+        ]);
+        $input = $request->only('phone', 'password');
+
+        $jwt_token = null;
+
+        try {
+            if (!$jwt_token = JWTAuth::attempt($input)) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Phone or Password',
+                ], 401);
+            }
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], 500);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['token_invalid'], 500);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['token_absent' => $e->getMessage()], 500);
+        }
+        $user_level = Auth::user()->level;
+        $user = Auth::user();
+
+        if ($user_level == 3) {
+            return response()->json([
+                'token' => 'Bearer ' . $jwt_token,
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid Phone or Password',
+            ], 401);
+        }
+    }
     public function logout(Request $request)
     {
         $this->validate($request, [
@@ -107,6 +174,31 @@ class ApiController extends Controller
             'email' => $user->email,
         ]);
     }
+    public function searchAll(Request $req)
+    {
+        $res = Order::searchAll($req->search);
+
+        return response()->json($res);
+    }
+    public function searchWaiting(Request $req)
+    {
+        $res = Order::searchWaiting($req->search);
+
+        return response()->json($res);
+    }
+    public function searchFinished(Request $req)
+    {
+        $res = Order::searchFinished($req->search);
+
+        return response()->json($res);
+    }
+    public function searchCancelled(Request $req)
+    {
+        $res = Order::searchCancelled($req->search);
+
+        return response()->json($res);
+    }
+
 
     public function changeInfo(Request $req)
     {
@@ -271,6 +363,24 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             dd($e);
             return response()->json(['code' => 500]);
+        }
+    }
+    public function checkCouponCode(Request $req)
+    {
+        $res = Order::checkCouponCode($req);
+        if ($res == 200) {
+            return response()->json('ok');
+        } else {
+            return response()->json('fail');
+        }
+    }
+    public function createOrder(Request $req)
+    {
+        try {
+            $data = Order::createOrder($req);
+            return response()->json(['data' => $data, 'code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json($e);
         }
     }
 }

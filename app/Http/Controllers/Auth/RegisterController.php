@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
 use App\Models\Customer;
-use App\Models\User;
 
 class RegisterController extends Controller
 {

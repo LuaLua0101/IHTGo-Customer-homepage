@@ -74,6 +74,7 @@
                         @else
                         <li><a href="{{ url('locale/vi') }}"><i class="fa fa-language"></i> VI</a></li>
                         @endif
+                        <li><a type="button" class="btn btn-default" href="https://booking.ihtgo.com.vn"><strong>@lang('messages.order_now')</strong> </a></li>
                     </ul>
                     <!-- <ul class="nav navbar-nav navbar-right">
                         @if(Auth::user())
