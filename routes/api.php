@@ -2,7 +2,8 @@
 
 Route::post('login', 'ApiController@login');
 Route::post('customer-login', 'ApiController@customerLogin');
-Route::post('register', 'ApiController@register');
+Route::get('logout', 'ApiController@logout');
+Route::post('customer-register', 'ApiController@customerRegister');
 
 Route::post('customer/update-fcm', 'ApiController@updateCustomerFCM');
 Route::get('driver/find', 'ApiController@findDriver');
@@ -24,18 +25,25 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
 });
 
 //raymond
+
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
+
+    Route::post('search-all', 'ApiController@searchAll');
+    Route::post('search-waiting', 'ApiController@searchWaiting');
+    Route::post('search-finished', 'ApiController@searchFinished');
+    Route::post('search-cancelled', 'ApiController@searchCancelled');
+
+    Route::post('check-coupon-code', 'ApiController@checkCouponCode');
+    Route::post('create-order', 'ApiController@createOrder');
+
     Route::post('load-info-sender', 'ApiController@loadInfoSender');
     Route::post('load-info-receive', 'ApiController@loadInfoReceive');
-});
 
-Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
 
-    Route::get('logout', 'ApiController@logout');
     Route::post('order-detail/{id?}', 'Api\CustomerController@orderDetail');
     Route::post('order-all', 'Api\CustomerController@orderAll');
     Route::post('order-waiting', 'Api\CustomerController@orderWaiting');
     Route::post('order-finish', 'Api\CustomerController@orderFinish');
-    Route::post('order-cancel', 'Api\CustomerController@orderCancel');
+    Route::post('order-cancelled', 'Api\CustomerController@orderCancel');
 
 });

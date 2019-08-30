@@ -12,6 +12,7 @@ return [
     'log_out' => 'Đăng xuất',
     'login' => 'Đăng nhập',
     'registration' => 'Đăng ký',
+    'order_now' => 'Đặt hàng ngay',
     //page index
     'service_ihtgo' => 'Dịch vụ IHT Go',
     'ihtgo_connection_options_for_shop_owners_and_customers' => 'IHT Go - lựa chọn kết nối của chủ cửa hàng và khách hàng',

@@ -14,29 +14,62 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Models\Customer;
 
 class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
 
-    // public function register(RegisterAuthRequest $request)
-    // {
-    //     $user = new User();
-    //     $user->name = $request->name;
-    //     $user->email = $request->email;
-    //     $user->password = bcrypt($request->password);
-    //     $user->save();
+    public function register(Request $request)
+    {
+        try{
+            dd($request);
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            //thêm thông tin khách hàng vào bảng user
+            $res =   DB::table(config('constants.USER_TABLE'))->insertGetId(
+                [
+                    'name' => $request['name'],
+                    'email' => $request['email'],
+                    'phone' => $request['phone'],
+                    'password' => Hash::make($request['password']),
+                    'activated' => '1',
+                    'created_at' => date('Y-m-d h:i:s'),
+                ]
+            );
+            //kiểm tra khách hàng thuộc cá nhân or công ty
+            if ($request['type']==2) {
+                //kh công ty
+                $code = Customer::codeCustomer();
+                DB::table(config('constants.CUSTOMER_TABLE'))->insert(
+                    [
+                        'user_id' => $res,
+                        'type' => 2,
+                        'code' => $code,
+                        'address' => $request->address,
+                        'company_id' => $request['company_id'],
+                        'created_at' => date('Y-m-d h:i:s'),
+                    ]
+                );
+            } else {
+                //kh cá nhân
+                DB::table(config('constants.CUSTOMER_TABLE'))->insert(
+                    [
+                        'user_id' => $res,
+                        'type' => 1,
+                        'address' => $request->address,
+                        'created_at' => date('Y-m-d h:i:s'),
+                    ]
+                );
+            }
 
-    //     if ($this->loginAfterSignUp) {
-    //         return $this->login($request);
-    //     }
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'data' => $user,
-    //     ], 200);
-    // }
-
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+            ], 200);
+        }catch (Exception $e) {
+                return response()->json('fail', 500);
+        }
+    }
     public function login(Request $request)
     {
 
@@ -157,7 +190,32 @@ class ApiController extends Controller
             'email' => $user->email,
         ]);
     }
+    public function searchAll(Request $req)
+    {
+        $res=Order::searchAll($req->search);
 
+        return response()->json($res);
+    }
+    public function searchWaiting(Request $req)
+    {
+        $res=Order::searchWaiting($req->search);
+
+        return response()->json($res);
+    }
+    public function searchFinished(Request $req)
+    {
+        $res=Order::searchFinished($req->search);
+
+        return response()->json($res);
+    }
+    public function searchCancelled(Request $req)
+    {
+        $res=Order::searchCancelled($req->search);
+
+        return response()->json($res);
+    }
+
+ 
     public function changeInfo(Request $req)
     {
         try {
@@ -317,11 +375,29 @@ class ApiController extends Controller
     { 
         try {
             $data = Driver::findDriver();
-           
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             dd($e);
             return response()->json(['code' => 500]);
+        }
+    }
+    public function checkCouponCode(Request $req)
+    {
+        $res=Order::checkCouponCode($req);
+        if($res==200){
+            return response()->json('ok');
+        }else{
+            return response()->json('fail');
+        }
+
+    }
+    public function createOrder(Request $req)
+    {
+        try {
+            $data = Order::createOrder($req);
+            return response()->json(['data' => $data, 'code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json($e);
         }
     }
 }
