@@ -106,9 +106,15 @@ class ApiController extends Controller
         $input = $request->only('phone', 'password');
 
         $jwt_token = null;
-
+        $username = 'phone';
+        if(filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
+        $username= 'email';
+        }
         try {
-            if (!$jwt_token = JWTAuth::attempt($input)) {
+            if (!$jwt_token = JWTAuth::attempt([
+                $username => $input['phone'],
+                'password' => $input['password']
+            ])) {
 
                 return response()->json([
                     'success' => false,
@@ -125,7 +131,7 @@ class ApiController extends Controller
         $user_level = Auth::user()->level;
         $user = Auth::user();
 
-        if ($user_level == 3) {
+        if ($user_level == 3 || $user_level ==2) {
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
                 'id' => $user->id,
