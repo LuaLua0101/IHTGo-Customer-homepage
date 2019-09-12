@@ -716,15 +716,7 @@ class Order extends Model
             if ($data->hand_on == 1) {
                 $value = $value + 10000;
             }
-            if ($data->discharge == 1) {
-                if ($weight > 51 && $weight <= 150) {
-                    $value = $value + 50000;
-                } elseif ($weight >= 151 && $weight <= 300) {
-                    $value = $value + 100000;
-                } elseif ($weight > 300) {
-                    $value = $value + 100000 + (1000 * ($weight - 300));
-                }
-            }
+            
         
         } elseif ($data->car_option == 2) { //chứng từ
             //kiểm tra khu vực đơn hàng & quảng đường đơn hàng
@@ -802,6 +794,14 @@ class Order extends Model
                     }
                     
                 }
+                 //tính thêm phí bốc xếp hàng
+                    if ($weight > 51 && $weight <= 150) {
+                        $value = $value + 50000;
+                    } elseif ($weight >= 151 && $weight <= 300) {
+                        $value = $value + 100000;
+                    } elseif ($weight > 300) {
+                        $value = $value + 100000 + (1000 * ($weight - 300));
+                    }
               
             }
         }
