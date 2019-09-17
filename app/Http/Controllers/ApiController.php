@@ -23,16 +23,18 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
-
-        $this->validate($request, [
-            'phone' => 'required|max:255',
-            'password' => 'required',
-        ]);
         $input = $request->only('phone', 'password');
-        $jwt_token = null;
 
+        $jwt_token = null;
+        $username = 'phone';
+        if(filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
+        $username= 'email';
+        }
         try {
-            if (!$jwt_token = JWTAuth::attempt($input)) {
+            if (!$jwt_token = JWTAuth::attempt([
+                $username => $input['phone'],
+                'password' => $input['password']
+            ])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Phone or Password',
@@ -48,7 +50,6 @@ class ApiController extends Controller
 
         $user_level = Auth::user()->level;
         $user = Auth::user();
-
         if ($user_level == 4) {
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
@@ -384,6 +385,9 @@ class ApiController extends Controller
     {
         try {
             $data = Order::createOrder($req);
+            //send notify to customer
+            //$user=Auth::user();
+           // Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT', 'Đơn hàng ' . $data['coupon_code'] . ' đã được tạo thành công', []);
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json($e);
