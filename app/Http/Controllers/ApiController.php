@@ -23,18 +23,16 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
-        $input = $request->only('phone', 'password');
 
+        $this->validate($request, [
+            'phone' => 'required|max:255',
+            'password' => 'required',
+        ]);
+        $input = $request->only('phone', 'password');
         $jwt_token = null;
-        $username = 'phone';
-        if(filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
-        $username= 'email';
-        }
+
         try {
-            if (!$jwt_token = JWTAuth::attempt([
-                $username => $input['phone'],
-                'password' => $input['password']
-            ])) {
+            if (!$jwt_token = JWTAuth::attempt($input)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Phone or Password',
@@ -50,6 +48,7 @@ class ApiController extends Controller
 
         $user_level = Auth::user()->level;
         $user = Auth::user();
+
         if ($user_level == 4) {
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
@@ -108,8 +107,8 @@ class ApiController extends Controller
 
         $jwt_token = null;
         $username = 'phone';
-        if(filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
-        $username= 'email';
+        if (filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
+            $username = 'email';
         }
         try {
             if (!$jwt_token = JWTAuth::attempt([
@@ -132,7 +131,7 @@ class ApiController extends Controller
         $user_level = Auth::user()->level;
         $user = Auth::user();
 
-        if ($user_level == 3 || $user_level ==2) {
+        if ($user_level == 3 || $user_level == 2) {
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
                 'id' => $user->id,
@@ -279,6 +278,11 @@ class ApiController extends Controller
         $order = Order::getOrderById($req->order_id);
         return response()->json($order);
     }
+    public function updateCode(Request $req)
+    {
+        $order = Order::updateCode($req);
+        return response()->json($order);
+    }
 
     public function detail($id)
     {
@@ -303,7 +307,7 @@ class ApiController extends Controller
             $order->status = 3;
             $order->save();
             //send notify to customer
-            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đang trên đường giao', []);
+            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -317,7 +321,7 @@ class ApiController extends Controller
             $order->status = 4;
             $order->save();
             //send notify to customer
-            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->code . ' đã được giao thành công', []);
+            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -384,10 +388,10 @@ class ApiController extends Controller
     public function createOrder(Request $req)
     {
         try {
+            $user = Auth::user();
             $data = Order::createOrder($req);
             //send notify to customer
-            //$user=Auth::user();
-           // Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT', 'Đơn hàng ' . $data['coupon_code'] . ' đã được tạo thành công', []);
+            Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code. ' đã được tạo thành công', []);
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json($e);

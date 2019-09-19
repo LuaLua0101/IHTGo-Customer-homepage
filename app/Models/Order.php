@@ -687,7 +687,7 @@ class Order extends Model
             ]
         );
 
-         DB::table('order_detail_ext')
+        DB::table('order_detail_ext')
                 ->insert(
                     [
                         'order_id' => $order_id,
@@ -699,8 +699,9 @@ class Order extends Model
                     );
         if ($data->hasFile('image_order')){
             ImageController::uploadImageOrder($data, $order_id);
-        }             
-        return ['id' => $order_id, 'total_price' => $total_price];
+        }        
+        $data=DB::table('orders')->where('id',$order_id)->first();  
+        return $data;
     }
     public static function type_payment($data)
     {
