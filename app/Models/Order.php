@@ -781,7 +781,6 @@ class Order extends Model
                         } elseif ($value > 100) {
                             $value = 1000 * $value + 250000;
                         }
-                        dd(2);
                     }
                 }
                 //quá tải
@@ -803,7 +802,6 @@ class Order extends Model
                     } elseif ($weight > 300) {
                         $value = $value + 100000 + (1000 * ($weight - 300));
                     }
-              
             }
         }
         return $value;
