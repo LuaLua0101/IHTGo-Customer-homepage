@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
 
 class Customer
 {
@@ -15,7 +14,7 @@ class Customer
         try {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             //thêm thông tin khách hàng vào bảng user
-            $user =   DB::table(config('constants.USER_TABLE'))->insertGetId(
+            $user = DB::table(config('constants.USER_TABLE'))->insertGetId(
                 [
                     'name' => $request['name'],
                     'email' => $request['email'],
@@ -228,7 +227,7 @@ class Customer
                 ->where('o.user_id', $user_id)
                 ->join('order_details as od', 'od.order_id', '=', 'o.id')
                 ->leftJoin('order_detail_ext as ode', 'ode.order_id', '=', 'o.id')
-                ->select('o.id', 'o.car_option', 'o.coupon_code', 'o.name', 'o.car_option', 'o.is_speed', 'o.payer', 'o.total_price', 'o.status', 'o.created_at', 'od.length as len', 'od.width', 'od.height', 'od.weight', 'od.take_money', 'od.sender_name', 'od.sender_phone', 'od.sender_address', 'od.receive_name', 'od.receive_phone', 'od.receive_address', 'od.note', 'ode.distance', 'ode.hand_on', 'ode.discharge', 'ode.start_time_inventory', 'ode.finish_time_inventory')
+                ->select('o.id', 'o.car_option', 'o.code', 'o.coupon_code', 'o.name', 'o.car_option', 'o.is_speed', 'o.payer', 'o.total_price', 'o.status', 'o.created_at', 'od.length as len', 'od.width', 'od.height', 'od.weight', 'od.take_money', 'od.sender_name', 'od.sender_phone', 'od.sender_address', 'od.receive_name', 'od.receive_phone', 'od.receive_address', 'od.note', 'ode.distance', 'ode.hand_on', 'ode.discharge', 'ode.start_time_inventory', 'ode.finish_time_inventory')
                 ->first();
             $data->hand_on = (int) $data->hand_on;
             $data->discharge = (int) $data->discharge;
