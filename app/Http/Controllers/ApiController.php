@@ -405,7 +405,7 @@ class ApiController extends Controller
             Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
 
             //send notify to web
-            Device::sendMsgToDevice(WebFCM::find($user->id), 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+            Device::sendMsgToDevice(WebFCM::find($user->id)->fcm, 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
 
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
