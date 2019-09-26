@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Device;
 use App\Models\District;
 use App\Models\Driver;
 use App\Models\Order;
 use App\Models\Province;
+use App\Models\WebFCM;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,12 +16,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\Models\Customer;
-use App\Models\Company;
 
 class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
+
+    public function updateWebFCM(Request $req)
+    {
+        $id = Auth::user()->id;
+        $o = WebFCM::firstOrNew(array('user_id' => $id));
+        $o->fcm_web_token = $req->fcm;
+        $o->save();
+        // Device::sendMsgToDevice($req->fcm, 'Thông báo từ IHT', 'Đơn hàng đã được tạo thành công', []);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
 
     public function login(Request $request)
     {
@@ -113,7 +125,7 @@ class ApiController extends Controller
         try {
             if (!$jwt_token = JWTAuth::attempt([
                 $username => $input['phone'],
-                'password' => $input['password']
+                'password' => $input['password'],
             ])) {
 
                 return response()->json([
@@ -204,7 +216,6 @@ class ApiController extends Controller
 
         return response()->json($res);
     }
-
 
     public function changeInfo(Request $req)
     {
@@ -391,7 +402,11 @@ class ApiController extends Controller
             $user = Auth::user();
             $data = Order::createOrder($req);
             //send notify to customer
-            Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code. ' đã được tạo thành công', []);
+            Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+
+            //send notify to web
+            Device::sendMsgToDevice(WebFCM::find($user->id), 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json($e);
