@@ -81,4 +81,24 @@ class CustomerController extends Controller
             ], 401);
         }
     }
+    public function changeInfo(Request $req)
+    {
+        try {
+            if($req->name ==null || $req->address ==null||$req->phone ==null||$req->email ==null){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Name, email, phone number, address must not be empty',
+                ], 401);
+            }else{
+                
+                $data =  Customer::changeInfo($req);
+            }
+            return response()->json(['data' => 'success', 'code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'fail',
+            ], 401);
+        }
+    }
 }

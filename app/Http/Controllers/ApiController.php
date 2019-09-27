@@ -131,7 +131,7 @@ class ApiController extends Controller
         $user_level = Auth::user()->level;
         $user = Auth::user();
 
-        if ($user_level == 3 || $user_level == 2) {
+        if ($user_level == 3) {
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
                 'id' => $user->id,

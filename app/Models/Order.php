@@ -445,9 +445,9 @@ class Order extends Model
             $code = substr($code->code, 11);
             $code = ++$code;
             $code = date('Ymd') . '000' + $code;
-            $res = 'IHT' . $code;
+            $res = 'IHTGO' . $code;
         } else {
-            $res = 'IHT' . date('Ymd') . '001';
+            $res = 'IHTGO' . date('Ymd') . '001';
         }
         return $res;
     }
@@ -646,12 +646,12 @@ class Order extends Model
     }
     public static function createOrder($data)
     {
+
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $user_id=Auth::user()->id;
         $customer_type=DB::table('customers')->where('user_id',$user_id)->first(['type']);
         $total_price = self::type_payment($data);
         $code=self::codeOrder();
-
         $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
             [
                 'code' => $code,
