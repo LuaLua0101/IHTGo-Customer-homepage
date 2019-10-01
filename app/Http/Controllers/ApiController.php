@@ -130,7 +130,7 @@ class ApiController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Phone or Password',
-                ], 401);
+                ], 200);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json(['token_expired'], 500);
@@ -150,12 +150,12 @@ class ApiController extends Controller
                 'name' => $user->name,
                 'phone' => $user->phone,
                 'email' => $user->email,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'success' => false,
                 'message' => 'User has no permission',
-            ], 401);
+            ], 200);
         }
     }
     public function logout(Request $request)
