@@ -116,7 +116,6 @@ class ApiController extends Controller
             'password' => 'required',
         ]);
         $input = $request->only('phone', 'password');
-
         $jwt_token = null;
         $username = 'phone';
         if (filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
@@ -140,10 +139,11 @@ class ApiController extends Controller
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_absent' => $e->getMessage()], 500);
         }
+
         $user_level = Auth::user()->level;
         $user = Auth::user();
 
-        if ($user_level == 3 || $user_level == 2) {
+        if ($user_level == 3) {
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
                 'id' => $user->id,
@@ -154,7 +154,7 @@ class ApiController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid Phone or Password',
+                'message' => 'User has no permission',
             ], 401);
         }
     }
