@@ -442,10 +442,10 @@ class Order extends Model
         if ($date == $date_old) {
             $code = substr($code->code, 11);
             $code = ++$code;
-            $code = date('Ymd') . '000'+$code;
-            $res = 'IHT' . $code;
+            $code = date('Ymd') . '000' + $code;
+            $res = 'IHTGO' . $code;
         } else {
-            $res = 'IHT' . date('Ymd') . '001';
+            $res = 'IHTGO' . date('Ymd') . '001';
         }
         return $res;
     }
@@ -643,30 +643,45 @@ class Order extends Model
     }
     public static function createOrder($data)
     {
-        try {
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $user_id = Auth::user()->id;
-            $customer_type = DB::table('customers')->where('user_id', $user_id)->first(['type']);
 
-            $total_price = self::type_payment($data);
-            $code = self::codeOrder();
-
-            $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
-                [
-                    'code' => $code,
-                    'coupon_code' => $data->coupon_code,
-                    'name' => $data->name,
-                    'car_type' => 8,
-                    'car_option' => $data->car_option,
-                    'status' => 1,
-                    'total_price' => $total_price,
-                    'payment_type' => (int) $customer_type->type == 1 ? 1 : 2,
-                    'user_id' => $user_id,
-                    'payer' => (int) $data->payer,
-                    'is_speed' => (int) $data->is_speed,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]
-            );
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $user_id=Auth::user()->id;
+        $customer_type=DB::table('customers')->where('user_id',$user_id)->first(['type']);
+        $total_price = self::type_payment($data);
+        $code=self::codeOrder();
+        $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
+            [
+                'code' => $code,
+                'coupon_code' => $data->coupon_code,
+                'name' => $data->name,
+                'car_type' => 8,
+                'car_option' => $data->car_option,
+                'status' => 1,
+                'total_price'=>$total_price,
+                'payment_type' =>(int) $customer_type->type== 1 ? 1 : 2,
+                'user_id' => $user_id,
+                'payer' => (int) $data->payer,
+                'is_speed' => (int)$data->is_speed,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]
+        );
+        DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
+            [
+                'order_id' => $order_id,
+                'sender_name' => $data->sender_name,
+                'sender_phone' => $data->sender_phone,
+                'sender_address' => $data->sender_address,
+                'receive_name' => $data->receive_name,
+                'receive_phone' => $data->receive_phone,
+                'receive_address' => $data->receive_address,
+                'note' => $data->note,
+                'take_money' => $data->take_money,
+                'length' => (float)($data->length == null || $data->length == 0) ? 1 : $data->length,
+                'width' =>(float) ($data->width == null || $data->width == 0) ? 1 : $data->width,
+                'height' => (float)($data->height == null || $data->height == 0) ? 1 : $data->height,
+                'weight' =>(float) ($data->weight == null || $data->weight == 0) ? 1 : $data->weight,
+            ]
+        );
 
             DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
                 [
@@ -694,14 +709,13 @@ class Order extends Model
                         'hand_on' => ($data->hand_on == null || $data->hand_on == '') ? 0 : $data->hand_on,
                         'discharge' => ($data->discharge == null || $data->discharge == '') ? 0 : $data->discharge,
                         'created_at' => date('Y-m-d H:i:s'),
-                    ]
-                );
-            if ($data->hasFile('image_order')) {
-                ImageController::uploadImageOrder($data, $order_id);
-            }
-            $data = DB::table('orders')->where('id', $order_id)->first();} catch (\Exception $e) {
-            dd($e);
-        }
+                        ]
+                    );
+        if ($data->hasFile('image_order')){
+            ImageController::uploadImageOrder($data, $order_id);
+        }        
+        $data=DB::table('orders')->where('id',$order_id)->first();  
+
         return $data;
     }
     public static function type_payment($data)

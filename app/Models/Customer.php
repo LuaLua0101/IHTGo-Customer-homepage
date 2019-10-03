@@ -249,4 +249,38 @@ class Customer
             return $ex;
         }
     }
+    public static function changeInfo($data)
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $data = DB::table('users')
+                ->where('id', $user_id)
+                ->update([
+                    'name'=>$data->name,
+                    'phone'=>$data->phone,
+
+                ]);
+            return 200;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public static function checkPhone($phone)
+    {
+        try {
+            $data = DB::table('users')->where('phone', $phone)->first();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
+    public static function checkEmail($email)
+    {
+        try {
+            $data = DB::table('users')->where('email', $email)->first();
+            return $data;
+        } catch (\Exception $ex) {
+            return $ex;
+        }
+    }
 }
