@@ -307,7 +307,9 @@ class ApiController extends Controller
             $order->status = 3;
             $order->save();
             //send notify to customer
-            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
+            $fcm =Device::getToken($order->user_id);
+            if($fcm)
+            Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -321,7 +323,9 @@ class ApiController extends Controller
             $order->status = 4;
             $order->save();
             //send notify to customer
-            Device::sendMsgToDevice(Device::getToken($order->user_id), 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
+            $fcm =Device::getToken($order->user_id);
+            if($fcm)
+            Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
