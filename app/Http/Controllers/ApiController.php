@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Device;
 use App\Models\District;
 use App\Models\Driver;
 use App\Models\Order;
 use App\Models\Province;
+use App\Models\WebFCM;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,12 +16,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\Models\Customer;
-use App\Models\Company;
 
 class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
+
+    public function updateWebFCM(Request $req)
+    {
+        $id = Auth::user()->id;
+        $o = WebFCM::firstOrNew(array('user_id' => $id));
+        $o->fcm_web_token = $req->fcm;
+        $o->save();
+        // Device::sendMsgToDevice($req->fcm, 'Thông báo từ IHT', 'Đơn hàng đã được tạo thành công', []);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
 
     public function login(Request $request)
     {
@@ -104,7 +116,6 @@ class ApiController extends Controller
             'password' => 'required',
         ]);
         $input = $request->only('phone', 'password');
-
         $jwt_token = null;
         $username = 'phone';
         if (filter_var($input['phone'], FILTER_VALIDATE_EMAIL)) {
@@ -113,13 +124,13 @@ class ApiController extends Controller
         try {
             if (!$jwt_token = JWTAuth::attempt([
                 $username => $input['phone'],
-                'password' => $input['password']
+                'password' => $input['password'],
             ])) {
 
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Phone or Password',
-                ], 401);
+                ], 200);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json(['token_expired'], 500);
@@ -128,6 +139,7 @@ class ApiController extends Controller
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_absent' => $e->getMessage()], 500);
         }
+
         $user_level = Auth::user()->level;
         $user = Auth::user();
 
@@ -138,12 +150,12 @@ class ApiController extends Controller
                 'name' => $user->name,
                 'phone' => $user->phone,
                 'email' => $user->email,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid Phone or Password',
-            ], 401);
+                'message' => 'User has no permission',
+            ], 200);
         }
     }
     public function logout(Request $request)
@@ -204,7 +216,6 @@ class ApiController extends Controller
 
         return response()->json($res);
     }
-
 
     public function changeInfo(Request $req)
     {
@@ -398,6 +409,10 @@ class ApiController extends Controller
             $fcm = Device::getToken($user->id);
             if($fcm)
             Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code. ' đã được tạo thành công', []);
+            //send notify to web
+            $webfcm = WebFCM::find($user->id);
+            if($webfcm)
+            Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
 
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {

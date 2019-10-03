@@ -3,6 +3,7 @@
 Route::post('login', 'ApiController@login');
 Route::post('customer-login', 'ApiController@customerLogin');
 Route::get('logout', 'ApiController@logout');
+
 Route::post('customer-register', 'ApiController@customerRegister');
 
 Route::post('customer/update-fcm', 'ApiController@updateCustomerFCM');
@@ -28,7 +29,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
 //raymond
 
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
-
+    Route::post('update-webfcm', 'ApiController@updateWebFCM');
     Route::post('search-all', 'ApiController@searchAll');
     Route::post('search-waiting', 'ApiController@searchWaiting');
     Route::post('search-finished', 'ApiController@searchFinished');
@@ -39,7 +40,6 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
 
     Route::post('load-info-sender', 'ApiController@loadInfoSender');
     Route::post('load-info-receive', 'ApiController@loadInfoReceive');
-
 
     Route::post('order-detail/{id?}', 'Api\CustomerController@orderDetail');
     Route::post('order-all', 'Api\CustomerController@orderAll');

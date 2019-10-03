@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Http\Controllers\ImageController;
 use App\Models\District;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Request;
@@ -343,7 +341,7 @@ class Order extends Model
             $weight = ($data->weight > 1 || $data->weight != null) ? $data->weight : 1;
             $size = ($length * $width * $height) / 5000;
 
-            //delivery_of_documents 
+            //delivery_of_documents
             $district = District::findDistrict($data->receive_district_id);
             if ($data->car_option == '2') {
                 $car_option = 2;
@@ -399,8 +397,8 @@ class Order extends Model
                     'created_at' => date('Y-m-d h:i:s'),
                     'car_type' => 8,
                     'payment_type' => isset($data->payment_type)
-                        && $data->payment_type !== "undefined"
-                        && $data->payment_type !== null ? $data->payment_type : '1',
+                    && $data->payment_type !== "undefined"
+                    && $data->payment_type !== null ? $data->payment_type : '1',
                     'total_price' => $ship_money,
                 ]
             );
@@ -457,7 +455,7 @@ class Order extends Model
     {
         $user_id = Auth::user()->id;
         $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
-            ->select('sender_name','sender_address')
+            ->select('sender_name', 'sender_address')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('orders.user_id', $user_id)
             ->orderBy('orders.id', 'desc')
@@ -469,7 +467,7 @@ class Order extends Model
     {
         $user_id = Auth::user()->id;
         $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
-            ->select('receive_name','receive_address')
+            ->select('receive_name', 'receive_address')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('orders.user_id', $user_id)
             ->orderBy('orders.id', 'desc')
@@ -543,25 +541,25 @@ class Order extends Model
     }
     public static function searchAll($search)
     {
-        $user_id=Auth::user()->id;
+        $user_id = Auth::user()->id;
         $orders = DB::table('orders as o')
             ->join('order_details as od', 'od.order_id', '=', 'o.id')
             ->where('o.user_id', $user_id)
             ->where(function ($query) use ($search) {
-                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+                $query->where('o.coupon_code', 'LIKE', '%' . $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('o.id', 'desc')
-            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
         return $orders;
     }
     public static function searchWaiting($search)
     {
-        $user_id=Auth::user()->id;
+        $user_id = Auth::user()->id;
         $orders = DB::table('orders as o')
             ->join('order_details as od', 'od.order_id', '=', 'o.id')
             ->where('o.user_id', $user_id)
@@ -571,78 +569,77 @@ class Order extends Model
                     ->orWhere('o.status', '3');
             })
             ->where(function ($query) use ($search) {
-                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+                $query->where('o.coupon_code', 'LIKE', '%' . $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('o.id', 'desc')
-            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
 
         return $orders;
     }
     public static function searchFinished($search)
     {
-        $user_id=Auth::user()->id;
+        $user_id = Auth::user()->id;
         $orders = DB::table('orders as o')
             ->join('order_details as od', 'od.order_id', '=', 'o.id')
             ->where('o.user_id', $user_id)
-            ->where('o.status',4)
+            ->where('o.status', 4)
             ->where(function ($query) use ($search) {
-                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+                $query->where('o.coupon_code', 'LIKE', '%' . $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('o.id', 'desc')
-            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
 
         return $orders;
     }
     public static function searchCancelled($search)
     {
-        $user_id=Auth::user()->id;
+        $user_id = Auth::user()->id;
         $orders = DB::table('orders as o')
             ->join('order_details as od', 'od.order_id', '=', 'o.id')
             ->where('o.user_id', $user_id)
             ->where(function ($query) {
                 $query->where('o.status', 5)
-                    ->orWhere('o.status',6)
+                    ->orWhere('o.status', 6)
                     ->orWhere('o.status', 7);
             })
             ->where(function ($query) use ($search) {
-                $query->where('o.coupon_code', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('o.name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.sender_phone', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_name', 'LIKE', '%' .  $search . '%')
-                    ->orWhere('od.receive_phone', 'LIKE', '%' .  $search . '%');
+                $query->where('o.coupon_code', 'LIKE', '%' . $search . '%')
+                    ->orWhere('o.name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.sender_phone', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('od.receive_phone', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('o.id', 'desc')
-            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']); 
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
 
         return $orders;
     }
     public static function checkCouponCode($data)
     {
-        $user_id=Auth::user()->id;
-        $search=$data->coupon_code;
+        $user_id = Auth::user()->id;
+        $search = $data->coupon_code;
         $orders = DB::table('orders as o')
             ->where('o.user_id', $user_id)
             ->where(function ($query) use ($search) {
                 $query->where('o.coupon_code', $search);
             })
             ->first();
-          if($orders)
-          {
+        if ($orders) {
             return 200;
-          }else{
+        } else {
             return 404;
-          }  
+        }
     }
     public static function createOrder($data)
     {
@@ -686,11 +683,29 @@ class Order extends Model
             ]
         );
 
-        DB::table('order_detail_ext')
+            DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
+                [
+                    'order_id' => $order_id,
+                    'sender_name' => $data->sender_name,
+                    'sender_phone' => $data->sender_phone,
+                    'sender_address' => $data->sender_address,
+                    'receive_name' => $data->receive_name,
+                    'receive_phone' => $data->receive_phone,
+                    'receive_address' => $data->receive_address,
+                    'note' => $data->note,
+                    'take_money' => $data->take_money,
+                    'length' => (float) ($data->length == null || $data->length == 0) ? 1 : $data->length,
+                    'width' => (float) ($data->width == null || $data->width == 0) ? 1 : $data->width,
+                    'height' => (float) ($data->height == null || $data->height == 0) ? 1 : $data->height,
+                    'weight' => (float) ($data->weight == null || $data->weight == 0) ? 1 : $data->weight,
+                ]
+            );
+
+            DB::table('order_detail_ext')
                 ->insert(
                     [
                         'order_id' => $order_id,
-                        'distance' => (float)($data->distance == null || $data->distance == 0) ? 1 : $data->distance,
+                        'distance' => (float) ($data->distance == null || $data->distance == 0) ? 1 : $data->distance,
                         'hand_on' => ($data->hand_on == null || $data->hand_on == '') ? 0 : $data->hand_on,
                         'discharge' => ($data->discharge == null || $data->discharge == '') ? 0 : $data->discharge,
                         'created_at' => date('Y-m-d H:i:s'),
@@ -717,8 +732,7 @@ class Order extends Model
             if ($data->hand_on == 1) {
                 $value = $value + 10000;
             }
-            
-        
+
         } elseif ($data->car_option == 2) { //chứng từ
             //kiểm tra khu vực đơn hàng & quảng đường đơn hàng
             $sender_address = $data->sender_address;
@@ -772,7 +786,7 @@ class Order extends Model
             } else {
                 //bình thường
                 if ($distance > 35 && $value < 30) {
-                        $value = 7000 * ($distance - 35) + 250000;
+                    $value = 7000 * ($distance - 35) + 250000;
                     if ($value > 30 && $distance < 35) {
                         if ($value <= 50) {
                             $value = 3000 * $value + 250000;
@@ -792,16 +806,16 @@ class Order extends Model
                     } elseif ($value > 100) {
                         $value = 1000 * $value + (7000 * ($distance - 35)) + 250000;
                     }
-                    
+
                 }
-                 //tính thêm phí bốc xếp hàng
-                    if ($weight > 51 && $weight <= 150) {
-                        $value = $value + 50000;
-                    } elseif ($weight >= 151 && $weight <= 300) {
-                        $value = $value + 100000;
-                    } elseif ($weight > 300) {
-                        $value = $value + 100000 + (1000 * ($weight - 300));
-                    }
+                //tính thêm phí bốc xếp hàng
+                if ($weight > 51 && $weight <= 150) {
+                    $value = $value + 50000;
+                } elseif ($weight >= 151 && $weight <= 300) {
+                    $value = $value + 100000;
+                } elseif ($weight > 300) {
+                    $value = $value + 100000 + (1000 * ($weight - 300));
+                }
             }
         }
         return $value;
