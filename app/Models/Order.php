@@ -665,23 +665,6 @@ class Order extends Model
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
-        DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
-            [
-                'order_id' => $order_id,
-                'sender_name' => $data->sender_name,
-                'sender_phone' => $data->sender_phone,
-                'sender_address' => $data->sender_address,
-                'receive_name' => $data->receive_name,
-                'receive_phone' => $data->receive_phone,
-                'receive_address' => $data->receive_address,
-                'note' => $data->note,
-                'take_money' => $data->take_money,
-                'length' => (float)($data->length == null || $data->length == 0) ? 1 : $data->length,
-                'width' =>(float) ($data->width == null || $data->width == 0) ? 1 : $data->width,
-                'height' => (float)($data->height == null || $data->height == 0) ? 1 : $data->height,
-                'weight' =>(float) ($data->weight == null || $data->weight == 0) ? 1 : $data->weight,
-            ]
-        );
 
             DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
                 [
