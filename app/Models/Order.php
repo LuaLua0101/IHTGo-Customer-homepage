@@ -668,7 +668,6 @@ class Order extends Model
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
-
         DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
             [
                 'order_id' => $order_id,
@@ -701,6 +700,7 @@ class Order extends Model
             ImageController::uploadImageOrder($data, $order_id);
         }        
         $data=DB::table('orders')->where('id',$order_id)->first();  
+
         return $data;
     }
     public static function type_payment($data)

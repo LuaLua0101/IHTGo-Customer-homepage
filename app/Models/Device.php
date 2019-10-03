@@ -17,7 +17,7 @@ class Device extends Model
     {
         $device = DB::table('devices')
             ->where('user_id', $userId)->first();
-        return $device->fcm;
+        return $device ? $device->fcm : null;
     }
 
     public static function updateFcm($user_id, $fcm)

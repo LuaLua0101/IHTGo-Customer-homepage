@@ -391,7 +391,10 @@ class ApiController extends Controller
             $user = Auth::user();
             $data = Order::createOrder($req);
             //send notify to customer
-            Device::sendMsgToDevice(Device::getToken($user->id), 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code. ' đã được tạo thành công', []);
+            $fcm = Device::getToken($user->id);
+            if($fcm)
+            Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code. ' đã được tạo thành công', []);
+
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json($e);
