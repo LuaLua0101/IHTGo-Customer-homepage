@@ -398,8 +398,8 @@ class Order extends Model
                     'created_at' => date('Y-m-d h:i:s'),
                     'car_type' => 8,
                     'payment_type' => isset($data->payment_type)
-                    && $data->payment_type !== "undefined"
-                    && $data->payment_type !== null ? $data->payment_type : '1',
+                        && $data->payment_type !== "undefined"
+                        && $data->payment_type !== null ? $data->payment_type : '1',
                     'total_price' => $ship_money,
                 ]
             );
@@ -656,10 +656,10 @@ class Order extends Model
     {
 
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $user_id=Auth::user()->id;
-        $customer_type=DB::table('customers')->where('user_id',$user_id)->first(['type']);
+        $user_id = Auth::user()->id;
+        $customer_type = DB::table('customers')->where('user_id', $user_id)->first(['type']);
         $total_price = self::type_payment($data);
-        $code=self::generateOrderCode();
+        $code = self::generateOrderCode();
         $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
             [
                 'code' => $code,
@@ -668,47 +668,47 @@ class Order extends Model
                 'car_type' => 8,
                 'car_option' => $data->car_option,
                 'status' => 1,
-                'total_price'=>$total_price,
-                'payment_type' =>(int) $customer_type->type== 1 ? 1 : 2,
+                'total_price' => $total_price,
+                'payment_type' => (int) $customer_type->type == 1 ? 1 : 2,
                 'user_id' => $user_id,
                 'payer' => (int) $data->payer,
-                'is_speed' => (int)$data->is_speed,
+                'is_speed' => (int) $data->is_speed,
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
 
-            DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
+        DB::table(config('constants.ORDER_DETAIL_TABLE'))->insert(
+            [
+                'order_id' => $order_id,
+                'sender_name' => $data->sender_name,
+                'sender_phone' => $data->sender_phone,
+                'sender_address' => $data->sender_address,
+                'receive_name' => $data->receive_name,
+                'receive_phone' => $data->receive_phone,
+                'receive_address' => $data->receive_address,
+                'note' => $data->note,
+                'take_money' => $data->take_money,
+                'length' => (float) ($data->length == null || $data->length == 0) ? 1 : $data->length,
+                'width' => (float) ($data->width == null || $data->width == 0) ? 1 : $data->width,
+                'height' => (float) ($data->height == null || $data->height == 0) ? 1 : $data->height,
+                'weight' => (float) ($data->weight == null || $data->weight == 0) ? 1 : $data->weight,
+            ]
+        );
+
+        DB::table('order_detail_ext')
+            ->insert(
                 [
                     'order_id' => $order_id,
-                    'sender_name' => $data->sender_name,
-                    'sender_phone' => $data->sender_phone,
-                    'sender_address' => $data->sender_address,
-                    'receive_name' => $data->receive_name,
-                    'receive_phone' => $data->receive_phone,
-                    'receive_address' => $data->receive_address,
-                    'note' => $data->note,
-                    'take_money' => $data->take_money,
-                    'length' => (float) ($data->length == null || $data->length == 0) ? 1 : $data->length,
-                    'width' => (float) ($data->width == null || $data->width == 0) ? 1 : $data->width,
-                    'height' => (float) ($data->height == null || $data->height == 0) ? 1 : $data->height,
-                    'weight' => (float) ($data->weight == null || $data->weight == 0) ? 1 : $data->weight,
+                    'distance' => (float) ($data->distance == null || $data->distance == 0) ? 1 : $data->distance,
+                    'hand_on' => ($data->hand_on == null || $data->hand_on == '') ? 0 : $data->hand_on,
+                    'discharge' => ($data->discharge == null || $data->discharge == '') ? 0 : $data->discharge,
+                    'created_at' => date('Y-m-d H:i:s'),
                 ]
             );
-
-            DB::table('order_detail_ext')
-                ->insert(
-                    [
-                        'order_id' => $order_id,
-                        'distance' => (float) ($data->distance == null || $data->distance == 0) ? 1 : $data->distance,
-                        'hand_on' => ($data->hand_on == null || $data->hand_on == '') ? 0 : $data->hand_on,
-                        'discharge' => ($data->discharge == null || $data->discharge == '') ? 0 : $data->discharge,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        ]
-                    );
-        if ($data->hasFile('image_order')){
+        if ($data->hasFile('image_order')) {
             ImageController::uploadImageOrder($data, $order_id);
-        }        
-        $data=DB::table('orders')->where('id',$order_id)->first();  
+        }
+        $data = DB::table('orders')->where('id', $order_id)->first();
 
         return $data;
     }
@@ -726,7 +726,6 @@ class Order extends Model
             if ($data->hand_on == 1) {
                 $value = $value + 10000;
             }
-
         } elseif ($data->car_option == 2) { //chứng từ
             //kiểm tra khu vực đơn hàng & quảng đường đơn hàng
             $sender_address = $data->sender_address;
@@ -800,7 +799,6 @@ class Order extends Model
                     } elseif ($value > 100) {
                         $value = 1000 * $value + (7000 * ($distance - 35)) + 250000;
                     }
-
                 }
                 //tính thêm phí bốc xếp hàng
                 if ($weight > 51 && $weight <= 150) {
@@ -813,7 +811,6 @@ class Order extends Model
             }
         }
         return $value;
-
     }
     //===========QR Code=========
     public static function listReceive($id, $page)
@@ -828,31 +825,40 @@ class Order extends Model
             ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
         return $res;
     }
-    public static function qrcodeReceive($data){
+    public static function qrcodeReceive($data)
+    {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $order=DB::table('orders')->where('code',$data->cocde)->where('status',1)->first();
-        $driver_id=Auth::user()->id;
-        $order_prepare=DB::table('order_prepare')->where('order_id',$order->id)->first();
-        if($order_prepare->canceled_at == null) {
-            DB::table('order_prepare')
-                ->where('order_id', $order->id)
-                ->where('canceled_at',null)
-                ->update([
-                    'order_id' => $order->id,
-                    'driver_id' => $driver_id,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
-        } else {
-            DB::table('order_prepare')
-                ->insert([
-                    'order_id' =>$order->id,
-                    'driver_id' =>  $driver_id,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+        $order = DB::table('orders')->where('code', $data->code)
+        ->where(function ($query) {
+            $query->where('status', '1')
+                ->orWhere('status', '2');
+        })->first();
+        if ($order) {
+            $user_id = Auth::user()->id;
+            $driver=DB::table('drivers')->where('user_id',$user_id)->first();
+            $order_prepare = DB::table('order_prepare')->where('order_id', $order->id)->first();
+            if ($order_prepare != null && $order_prepare->canceled_at == null) {
+                DB::table('order_prepare')
+                    ->where('order_id', $order->id)
+                    ->where('canceled_at', null)
+                    ->update([
+                        'order_id' => $order->id,
+                        'driver_id' => $driver->id,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+            } elseif ($order_prepare == null || $order_prepare->canceled_at != null) {
+                DB::table('order_prepare')
+                    ->insert([
+                        'order_id' => $order->id,
+                        'driver_id' =>  $driver->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+            }
+            DB::table('orders')->where('id', $order->id)->update([
+                'status' => 2
+            ]);
+            return 200;
         }
-        DB::table('orders')->where('id', $order->id)->update([
-            'status' => 2
-        ]);
-        return 200;
+        return 201;
     }
 }
