@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Request;
+use Carbon\Carbon;
 
 class Order extends Model
 {
@@ -387,7 +388,7 @@ class Order extends Model
             $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
                 [
                     'name' => $data->name,
-                    'code' => self::codeOrder(),
+                    'code' => self::generateOrderCode(),
                     'car_option' => $car_option,
                     'status' => 1,
                     'is_payment' => 0,
@@ -440,7 +441,7 @@ class Order extends Model
         $date = date('Ymd');
         $date_old = (string) substr($code->code, 3, -3);
         if ($date == $date_old) {
-            $code = substr($code->code, 11);
+            $code = substr($code->code, 12);
             $code = ++$code;
             $code = date('Ymd') . '000' + $code;
             $res = 'IHTGO' . $code;
@@ -448,6 +449,16 @@ class Order extends Model
             $res = 'IHTGO' . date('Ymd') . '001';
         }
         return $res;
+    }
+    public static function generateOrderCode()
+    {
+        $countRecordToday = DB::table('orders')->whereDate('created_at', Carbon::now()->toDateString())->count();
+        $countRecordToday = (int) $countRecordToday + 1;
+        do {
+            $orderCode = sprintf("IHTGO%s%'.03d", date('Ymd'), $countRecordToday);
+            $countRecordToday++;
+        } while (DB::table('orders')->where('code', $orderCode)->first());
+        return $orderCode;
     }
 
     //lịch sử thông tin người gửi/nhận
@@ -648,7 +659,7 @@ class Order extends Model
         $user_id=Auth::user()->id;
         $customer_type=DB::table('customers')->where('user_id',$user_id)->first(['type']);
         $total_price = self::type_payment($data);
-        $code=self::codeOrder();
+        $code=self::generateOrderCode();
         $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
             [
                 'code' => $code,
@@ -804,5 +815,44 @@ class Order extends Model
         return $value;
 
     }
-    //====================
+    //===========QR Code=========
+    public static function listReceive($id, $page)
+    {
+        $res = DB::table('orders as o')
+            ->join('order_prepare as op', 'o.id', '=', 'op.order_id')
+            ->where('op.driver_id', $id)
+            ->where('o.status', 2)
+            ->skip($page)
+            ->orderBy('o.id', 'desc')
+            ->take(10)
+            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
+        return $res;
+    }
+    public static function qrcodeReceive($data){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $order=DB::table('orders')->where('code',$data->cocde)->where('status',1)->first();
+        $driver_id=Auth::user()->id;
+        $order_prepare=DB::table('order_prepare')->where('order_id',$order->id)->first();
+        if($order_prepare->canceled_at == null) {
+            DB::table('order_prepare')
+                ->where('order_id', $order->id)
+                ->where('canceled_at',null)
+                ->update([
+                    'order_id' => $order->id,
+                    'driver_id' => $driver_id,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+        } else {
+            DB::table('order_prepare')
+                ->insert([
+                    'order_id' =>$order->id,
+                    'driver_id' =>  $driver_id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+        }
+        DB::table('orders')->where('id', $order->id)->update([
+            'status' => 2
+        ]);
+        return 200;
+    }
 }

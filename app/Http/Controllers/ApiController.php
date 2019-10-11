@@ -318,9 +318,9 @@ class ApiController extends Controller
             $order->status = 3;
             $order->save();
             //send notify to customer
-            $fcm =Device::getToken($order->user_id);
-            if($fcm)
-            Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
+            $fcm = Device::getToken($order->user_id);
+            if ($fcm)
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -334,9 +334,9 @@ class ApiController extends Controller
             $order->status = 4;
             $order->save();
             //send notify to customer
-            $fcm =Device::getToken($order->user_id);
-            if($fcm)
-            Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
+            $fcm = Device::getToken($order->user_id);
+            if ($fcm)
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -407,16 +407,36 @@ class ApiController extends Controller
             $data = Order::createOrder($req);
             //send notify to customer
             $fcm = Device::getToken($user->id);
-            if($fcm)
-            Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code. ' đã được tạo thành công', []);
+            if ($fcm)
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHT', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
             //send notify to web
             $webfcm = WebFCM::find($user->id);
-            if($webfcm)
-            Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+            if ($webfcm)
+                Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHT GO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
 
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
             return response()->json($e);
+        }
+    }
+
+    public function listReceive(Request $req)
+    {
+        $page = $req->page ? $req->page : 0;
+        $driver = Driver::where('user_id', Auth::user()->id)->firstOrFail();
+        $orders = Order::listReceive($driver->id, $page);
+        foreach ($orders as $order) {
+            $order->created_at = date("d-m-Y", strtotime($order->created_at));
+        }
+        return response()->json($orders);
+    }
+    public function qrcodeReceive(Request $req)
+    {
+        $res = Order::qrcodeReceive($req);
+        if ($res == 200) {
+            return response()->json('ok');
+        } else {
+            return response()->json('fail');
         }
     }
 }
