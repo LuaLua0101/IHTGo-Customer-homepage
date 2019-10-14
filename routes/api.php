@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
 
     Route::post('list-receive', 'ApiController@listReceive');
     Route::post('qrcode-receive', 'ApiController@qrcodeReceive');
+    Route::post('qrcode-sender', 'ApiController@qrcodeSender');
     Route::post('order-detail-receive/{id?}', 'ApiController@detail');
 });
 

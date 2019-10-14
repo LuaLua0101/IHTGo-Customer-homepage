@@ -518,7 +518,14 @@ class Order extends Model
     {
         $res = DB::table('orders')
             ->where('id', $id)
-            ->first(['id', 'name', 'status', 'total_price', 'is_speed', 'car_option', 'created_at']);
+            ->first(['id','coupon_code' ,'name', 'status','total_price', 'is_speed', 'car_option', 'created_at']);
+        return $res;
+    }
+    public static function getOrderByCode($code)
+    {
+        $res = DB::table('orders')
+            ->where('code', $code)
+            ->first(['id', 'coupon_code', 'status','user_id']);
         return $res;
     }
 
@@ -829,13 +836,13 @@ class Order extends Model
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $order = DB::table('orders')->where('code', $data->code)
-        ->where(function ($query) {
-            $query->where('status', '1')
-                ->orWhere('status', '2');
-        })->first();
+            ->where(function ($query) {
+                $query->where('status', '1')
+                    ->orWhere('status', '2');
+            })->first();
         if ($order) {
             $user_id = Auth::user()->id;
-            $driver=DB::table('drivers')->where('user_id',$user_id)->first();
+            $driver = DB::table('drivers')->where('user_id', $user_id)->first();
             $order_prepare = DB::table('order_prepare')->where('order_id', $order->id)->first();
             if ($order_prepare != null && $order_prepare->canceled_at == null) {
                 DB::table('order_prepare')
@@ -856,6 +863,43 @@ class Order extends Model
             }
             DB::table('orders')->where('id', $order->id)->update([
                 'status' => 2
+            ]);
+            return 200;
+        }
+        return 201;
+    }
+    public static function qrcodeSender($data)
+    {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $order = DB::table('orders')->where('code', $data->code)
+            ->where(function ($query) {
+                $query->where('status', '2')
+                    ->orWhere('status', '3');
+            })->first();
+        if ($order) {
+            $user_id = Auth::user()->id;
+            $driver = DB::table('drivers')->where('user_id', $user_id)->first();
+            $deliveries = DB::table('deliveries')->where('order_id', $order->id)->first();
+            if ($deliveries != null ) {
+                DB::table('deliveries')
+                    ->where('order_id', $order->id)
+                    ->update([
+                        'order_id' => $order->id,
+                        'user_id' => $driver->id,
+                        'driver_id' => $driver->id,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+            } elseif ($deliveries == null) {
+                DB::table('deliveries')
+                    ->insert([
+                        'order_id' => $order->id,
+                        'driver_id' =>  $driver->id,
+                        'user_id' => $driver->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+            }
+            DB::table('orders')->where('id', $order->id)->update([
+                'status' => 3
             ]);
             return 200;
         }
