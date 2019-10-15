@@ -827,64 +827,65 @@ class Order extends Model
         }
         return $value;
     }
-    public static function type_car($data)
+    public static function type_car($request)
     {
-        $value = 0;
-        $distance = (float) $data->distance != 0 ? (float) $data->distance : 1;
-        $length = (float) $data->length != 0 ? (float) $data->length : 1;
-        $width = (float) $data->width != 0 ? (float) $data->width : 1;
-        $height = (float) $data->height != 0 ? (float) $data->height : 1;
-        $weight = (float) $data->weight != 0 ? (float) $data->weight : 1;
+        $payment = 0;
+        $distance = (float) $request->distance != 0 ? (float) $request->distance : 1;
+        $length = (float) $request->length != 0 ? (float) $request->length : 1;
+        $width = (float) $request->width != 0 ? (float) $request->width : 1;
+        $height = (float) $request->height != 0 ? (float) $request->height : 1;
+        $weight = (float) $request->weight != 0 ? (float) $request->weight : 1;
         $size = ($length * $width * $height) / 5000;
         //xe may
         if ($weight <= 20 && $size <= 9.6) {
             if ($distance <= 25) {
-                $value = 70000;
+                $payment = 70000;
             } else {
-                $value = 3500 * $distance;
+                $payment = 3500 * $distance;
             }
         } else {
-            //kiem tra hang hoa co qua tai khong
+            //xe tai
             $value = ($size < $weight) ? $weight : $size;
             $value = $value - 30;
-            //xe tai
+            //kiem tra hang hoa co qua tai khong
             if ($distance <= 35 && $value <= 30) {
-                $value = 250000;
+                $payment = 250000;
             } else {
                 //bình thường
                 if ($distance <= 35) {
-                    $value = 7000 * ($distance - 35) + 250000;
                     if ($value > 30 && $distance < 35) {
                         if ($value <= 50) {
-                            $value = 3000 * $value + 250000;
+                            $payment = 3000 * $value + 250000;
                         } elseif ($value > 50 && $value < 100) {
-                            $value = 2000 * $value + 250000;
+                            $payment = 2000 * $value + 250000;
                         } elseif ($value > 100) {
-                            $value = 1000 * $value + 250000;
+                            $payment = 1000 * $value + 250000;
                         }
+                    } else {
+                        $payment = 7000 * ($distance - 35) + 250000;
                     }
                 }
                 //quá tải
                 else if ($distance > 35) {
                     if ($value <= 50) {
-                        $value = 3000 * $value + (7000 * ($distance - 35)) + 250000;
+                        $payment = 3000 * $value + (7000 * ($distance - 35)) + 250000;
                     } elseif ($value > 50 && $value < 100) {
-                        $value = 2000 * $value + (7000 * ($distance - 35)) + 250000;
+                        $payment = 2000 * $value + (7000 * ($distance - 35)) + 250000;
                     } elseif ($value > 100) {
-                        $value = 1000 * $value + (7000 * ($distance - 35)) + 250000;
+                        $payment = 1000 * $value + (7000 * ($distance - 35)) + 250000;
                     }
                 }
                 //tính thêm phí bốc xếp hàng
-                if ($weight > 51 && $weight <= 150) {
-                    $value = $value + 50000;
+                if ($weight >= 51 && $weight <= 150) {
+                    $payment = $payment + 50000;
                 } elseif ($weight >= 151 && $weight <= 300) {
-                    $value = $value + 100000;
+                    $payment = $payment + 100000;
                 } elseif ($weight > 300) {
-                    $value = $value + 100000 + (1000 * ($weight - 300));
+                    $payment = $payment + 100000 + (1000 * ($weight - 300));
                 }
             }
         }
-        return $value;
+        return $payment;
     }
     //===========QR Code=========
     public static function listReceive($id, $page)
