@@ -90,7 +90,6 @@ class CustomerController extends Controller
                     'message' => 'Name, email, phone number, address must not be empty',
                 ], 401);
             }else{
-                
                 $data =  Customer::changeInfo($req);
             }
             return response()->json(['data' => 'success', 'code' => 200]);
