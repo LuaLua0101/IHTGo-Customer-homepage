@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Image;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -327,13 +329,40 @@ class ApiController extends Controller
             return response()->json(e);
         }
     }
+    public function uploadImage(Request $request)
+    {
+        try {
+            if ($request->hasFile('image')) {
+                //filename to store
+                $filenametostore = $request->id . '_orders.png';
+                //Upload File
+                $request->file('image')->storeAs('public/orders', $filenametostore);
+                $request->file('image')->storeAs('public/orders/thumbnail', $filenametostore);
 
+                //Resize image here
+                $thumbnailpath = public_path('storage/orders/thumbnail/' . $filenametostore);
+                $img = Image::make($thumbnailpath)->resize(400, 150, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save($thumbnailpath);
+                DB::table('orders')
+                    ->where('id', $request->id)
+                    ->update([
+                        'image_link' => 'public/storage/orders/' . $filenametostore,
+                    ]);
+            }
+            return response()->json(200);
+        } catch (\Exception $e) {
+            return response()->json(e);
+        }
+    }
     public function finishShipping($id)
     {
         try {
             $order = Order::find($id);
             $order->status = 4;
             $order->save();
+
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
             if ($fcm)
