@@ -376,10 +376,10 @@ class ApiController extends Controller
 
         $storage->put('orders/' . '/' . $fileName, base64_decode($content), 'public');
         DB::table('orders')
-                    ->where('id', $request->id)
-                    ->update([
-                        'image_link' => 'public/storage/orders/' . $fileName,
-                    ]);
+            ->where('id', $request->id)
+            ->update([
+                'image_link' => 'public/storage/orders/' . $fileName,
+            ]);
 
         return $fileName;
     }
@@ -525,8 +525,10 @@ class ApiController extends Controller
             }
 
             return response()->json('ok');
-        } else {
-            return response()->json('fail');
+        } else if ($res == 404) {
+            return response()->json('Vui lòng nhập ghi chú');
+        } else if ($res == 201) {
+            return response()->json('Có lỗi xảy ra vui lòng liên hệ admin');
         }
     }
 }

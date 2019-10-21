@@ -949,13 +949,23 @@ class Order extends Model
             $driver = DB::table('drivers')->where('user_id', $user_id)->first();
             $deliveries = DB::table('deliveries')->where('order_id', $order->id)->first();
             if ($deliveries != null) {
-                DB::table('deliveries')
+                if($data->driver_note){
+                    DB::table('deliveries')
                     ->where('order_id', $order->id)
                     ->update([
                         'order_id' => $order->id,
                         'driver_id' => $driver->id,
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
+                    DB::table('order_details')
+                    ->where('order_id', $order->id)
+                    ->update([
+                        'driver_note' => $data->driver_note
+                    ]);
+                }else{
+                    return 404;
+                }
+                
             } elseif ($deliveries == null) {
                 DB::table('deliveries')
                     ->insert([
