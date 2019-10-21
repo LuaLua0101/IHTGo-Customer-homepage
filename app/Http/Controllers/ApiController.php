@@ -18,6 +18,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Image;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
@@ -334,6 +335,8 @@ class ApiController extends Controller
     public function uploadImage(Request $request)
     {
         try {
+            dd($request->image);
+
             if ($request->hasFile('image')) {
                 //filename to store
                 $filenametostore = $request->id . '_orders.png';
@@ -357,6 +360,23 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             return response()->json(e);
         }
+    }
+    protected function saveImgBase64(Request $request)
+    {
+        list($extension, $content) = explode(';', $request->image);
+        $fileName =  $request->id . '_orders.png';
+        $content = explode(',', $content)[1];
+        $storage = Storage::disk('public');
+
+        $checkDirectory = $storage->exists('orders/');
+
+        if (!$checkDirectory) {
+            $storage->makeDirectory('orders/');
+        }
+
+        $storage->put('orders/' . '/' . $fileName, base64_decode($content), 'public');
+
+        return $fileName;
     }
     public function finishShipping($id)
     {
