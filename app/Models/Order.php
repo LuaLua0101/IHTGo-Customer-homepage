@@ -953,7 +953,6 @@ class Order extends Model
                     ->where('order_id', $order->id)
                     ->update([
                         'order_id' => $order->id,
-                        'user_id' => $driver->id,
                         'driver_id' => $driver->id,
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
@@ -961,8 +960,7 @@ class Order extends Model
                 DB::table('deliveries')
                     ->insert([
                         'order_id' => $order->id,
-                        'driver_id' => $driver->id,
-                        'user_id' => $driver->id,
+                        'driver_id' =>  $driver->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
             }
