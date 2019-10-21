@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
     Route::post('check-coupon-code', 'ApiController@checkCouponCode');
     Route::post('create-order', 'ApiController@createOrder');
 
-    Route::post('load-info-sender', 'ApiController@loadInfoSender');
+    Route::post('load-histories', 'ApiController@loadInfoHistories');
     Route::post('load-info-receive', 'ApiController@loadInfoReceive');
 
     Route::post('order-detail/{id?}', 'Api\CustomerController@orderDetail');

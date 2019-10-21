@@ -4,11 +4,11 @@ namespace App\Models;
 
 use App\Http\Controllers\ImageController;
 use App\Models\District;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Request;
-use Carbon\Carbon;
 
 class Order extends Model
 {
@@ -398,8 +398,8 @@ class Order extends Model
                     'created_at' => date('Y-m-d h:i:s'),
                     'car_type' => 8,
                     'payment_type' => isset($data->payment_type)
-                        && $data->payment_type !== "undefined"
-                        && $data->payment_type !== null ? $data->payment_type : '1',
+                    && $data->payment_type !== "undefined"
+                    && $data->payment_type !== null ? $data->payment_type : '1',
                     'total_price' => $ship_money,
                 ]
             );
@@ -443,7 +443,7 @@ class Order extends Model
         if ($date == $date_old) {
             $code = substr($code->code, 12);
             $code = ++$code;
-            $code = date('Ymd') . '000' + $code;
+            $code = date('Ymd') . '000'+$code;
             $res = 'IHTGO' . $code;
         } else {
             $res = 'IHTGO' . date('Ymd') . '001';
@@ -474,6 +474,73 @@ class Order extends Model
             ->get();
         return $res;
     }
+
+    public static function loadSenderPhone()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $user_id)
+            ->distinct()
+            ->get()->pluck('sender_phone');
+        return $res;
+    }
+
+    public static function loadSenderName()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $user_id)
+            ->distinct()
+            ->get()->pluck('sender_name');
+        return $res;
+    }
+
+    public static function loadSenderAddress()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $user_id)
+            ->distinct()
+            ->get()->pluck('sender_address');
+        return $res;
+    }
+
+    public static function loadReceiveName()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $user_id)
+            ->distinct()
+            ->get()->pluck('receive_name');
+        return $res;
+    }
+
+    public static function loadReceivePhone()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $user_id)
+            ->distinct()
+            ->get()->pluck('receive_phone');
+        return $res;
+    }
+
+    public static function loadReceiveAddress()
+    {
+        $user_id = Auth::user()->id;
+        $res = DB::table(config('constants.ORDER_DETAIL_TABLE'))
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $user_id)
+            ->distinct()
+            ->get()->pluck('receive_address');
+        return $res;
+    }
+
     public static function loadInfoReceive()
     {
         $user_id = Auth::user()->id;
@@ -518,14 +585,14 @@ class Order extends Model
     {
         $res = DB::table('orders')
             ->where('id', $id)
-            ->first(['id','coupon_code' ,'name', 'status','total_price', 'is_speed', 'car_option', 'created_at']);
+            ->first(['id', 'coupon_code', 'name', 'status', 'total_price', 'is_speed', 'car_option', 'created_at']);
         return $res;
     }
     public static function getOrderByCode($code)
     {
         $res = DB::table('orders')
             ->where('code', $code)
-            ->first(['id', 'coupon_code', 'status','user_id']);
+            ->first(['id', 'coupon_code', 'status', 'user_id']);
         return $res;
     }
 
@@ -760,64 +827,65 @@ class Order extends Model
         }
         return $value;
     }
-    public static function type_car($data)
+    public static function type_car($request)
     {
-        $value = 0;
-        $distance = (float) $data->distance != 0 ? (float) $data->distance : 1;
-        $length = (float) $data->length != 0 ? (float) $data->length : 1;
-        $width = (float) $data->width != 0 ? (float) $data->width : 1;
-        $height = (float) $data->height != 0 ? (float) $data->height : 1;
-        $weight = (float) $data->weight != 0 ? (float) $data->weight : 1;
+        $payment = 0;
+        $distance = (float) $request->distance != 0 ? (float) $request->distance : 1;
+        $length = (float) $request->length != 0 ? (float) $request->length : 1;
+        $width = (float) $request->width != 0 ? (float) $request->width : 1;
+        $height = (float) $request->height != 0 ? (float) $request->height : 1;
+        $weight = (float) $request->weight != 0 ? (float) $request->weight : 1;
         $size = ($length * $width * $height) / 5000;
         //xe may
         if ($weight <= 20 && $size <= 9.6) {
             if ($distance <= 25) {
-                $value = 70000;
+                $payment = 70000;
             } else {
-                $value = 3500 * $distance;
+                $payment = 3500 * $distance;
             }
         } else {
-            //kiem tra hang hoa co qua tai khong
+            //xe tai
             $value = ($size < $weight) ? $weight : $size;
             $value = $value - 30;
-            //xe tai
+            //kiem tra hang hoa co qua tai khong
             if ($distance <= 35 && $value <= 30) {
-                $value = 250000;
+                $payment = 250000;
             } else {
                 //bình thường
                 if ($distance <= 35) {
-                    $value = 7000 * ($distance - 35) + 250000;
                     if ($value > 30 && $distance < 35) {
                         if ($value <= 50) {
-                            $value = 3000 * $value + 250000;
+                            $payment = 3000 * $value + 250000;
                         } elseif ($value > 50 && $value < 100) {
-                            $value = 2000 * $value + 250000;
+                            $payment = 2000 * $value + 250000;
                         } elseif ($value > 100) {
-                            $value = 1000 * $value + 250000;
+                            $payment = 1000 * $value + 250000;
                         }
+                    } else {
+                        $payment = 7000 * ($distance - 35) + 250000;
                     }
                 }
                 //quá tải
                 else if ($distance > 35) {
                     if ($value <= 50) {
-                        $value = 3000 * $value + (7000 * ($distance - 35)) + 250000;
+                        $payment = 3000 * $value + (7000 * ($distance - 35)) + 250000;
                     } elseif ($value > 50 && $value < 100) {
-                        $value = 2000 * $value + (7000 * ($distance - 35)) + 250000;
+                        $payment = 2000 * $value + (7000 * ($distance - 35)) + 250000;
                     } elseif ($value > 100) {
-                        $value = 1000 * $value + (7000 * ($distance - 35)) + 250000;
+                        $payment = 1000 * $value + (7000 * ($distance - 35)) + 250000;
                     }
                 }
                 //tính thêm phí bốc xếp hàng
-                if ($weight > 51 && $weight <= 150) {
-                    $value = $value + 50000;
+                if ($weight >= 51 && $weight <= 150) {
+                    $payment = $payment + 50000;
                 } elseif ($weight >= 151 && $weight <= 300) {
-                    $value = $value + 100000;
+                    $payment = $payment + 100000;
                 } elseif ($weight > 300) {
-                    $value = $value + 100000 + (1000 * ($weight - 300));
+                    $payment = $payment + 100000 + (1000 * ($weight - 300));
                 }
             }
         }
-        return $value;
+        return $payment;
     }
     //===========QR Code=========
     public static function listReceive($id, $page)
@@ -857,12 +925,12 @@ class Order extends Model
                 DB::table('order_prepare')
                     ->insert([
                         'order_id' => $order->id,
-                        'driver_id' =>  $driver->id,
+                        'driver_id' => $driver->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
             }
             DB::table('orders')->where('id', $order->id)->update([
-                'status' => 2
+                'status' => 2,
             ]);
             return 200;
         }
@@ -880,7 +948,7 @@ class Order extends Model
             $user_id = Auth::user()->id;
             $driver = DB::table('drivers')->where('user_id', $user_id)->first();
             $deliveries = DB::table('deliveries')->where('order_id', $order->id)->first();
-            if ($deliveries != null ) {
+            if ($deliveries != null) {
                 DB::table('deliveries')
                     ->where('order_id', $order->id)
                     ->update([
@@ -897,7 +965,7 @@ class Order extends Model
                     ]);
             }
             DB::table('orders')->where('id', $order->id)->update([
-                'status' => 3
+                'status' => 3,
             ]);
             return 200;
         }

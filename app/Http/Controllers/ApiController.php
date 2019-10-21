@@ -323,8 +323,10 @@ class ApiController extends Controller
             $order->save();
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
-            if ($fcm)
+            if ($fcm) {
                 Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
+            }
+
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -390,8 +392,10 @@ class ApiController extends Controller
 
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
-            if ($fcm)
+            if ($fcm) {
                 Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
+            }
+
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
@@ -418,15 +422,21 @@ class ApiController extends Controller
         }
     }
     //raymond
-    public function loadInfoSender(Request $req)
+    public function loadInfoHistories(Request $req)
     {
         try {
-            $data = Order::loadInfoSender($req);
-            return response()->json(['data' => $data, 'code' => 200]);
+            $data1 = Order::loadSenderAddress($req);
+            $data2 = Order::loadReceiveAddress($req);
+            $data3 = Order::loadSenderName($req);
+            $data4 = Order::loadSenderPhone($req);
+            $data5 = Order::loadReceiveName($req);
+            $data6 = Order::loadReceivePhone($req);
+            return response()->json(['send_add' => $data1, 'rec_add' => $data2, 'send_names' => $data3, 'send_phones' => $data4, 'rec_names' => $data5, 'rec_phones' => $data6, 'code' => 200]);
         } catch (\Exception $e) {
-            return response()->json(['code' => 500]);
+            return response()->json(['code' => 500, 'msg' => $e]);
         }
     }
+
     public function loadInfoReceive(Request $req)
     {
         try {
@@ -462,12 +472,15 @@ class ApiController extends Controller
             $data = Order::createOrder($req);
             //send notify to customer
             $fcm = Device::getToken($user->id);
-            if ($fcm)
+            if ($fcm) {
                 Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+            }
+
             //send notify to web
             $webfcm = WebFCM::find($user->id);
-            if ($webfcm)
+            if ($webfcm) {
                 Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+            }
 
             return response()->json(['data' => $data, 'code' => 200]);
         } catch (\Exception $e) {
@@ -501,12 +514,16 @@ class ApiController extends Controller
         if ($res == 200) {
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
-            if ($fcm)
+            if ($fcm) {
                 Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đang được giao', []);
+            }
+
             //send notify to web
             $webfcm = WebFCM::find($order->user_id);
-            if ($webfcm)
+            if ($webfcm) {
                 Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đang được giao', []);
+            }
+
             return response()->json('ok');
         } else {
             return response()->json('fail');
