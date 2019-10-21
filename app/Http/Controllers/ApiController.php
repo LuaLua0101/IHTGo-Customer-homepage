@@ -373,6 +373,11 @@ class ApiController extends Controller
         }
 
         $storage->put('orders/' . '/' . $fileName, base64_decode($content), 'public');
+        DB::table('orders')
+                    ->where('id', $request->id)
+                    ->update([
+                        'image_link' => 'public/storage/orders/' . $fileName,
+                    ]);
 
         return $fileName;
     }
