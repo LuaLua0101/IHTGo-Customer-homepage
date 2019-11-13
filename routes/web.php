@@ -31,6 +31,7 @@ Route::get('order/status={id?}', 'HomeController@orderStatus');
 Route::post('loadOrder_Status', 'HomeController@loadOrder_Status');
 Route::get('order-detail/{id?}', 'HomeController@order_detail');
 Route::get('order-search', 'HomeController@order_search');
+Route::get('user-manual', 'HomeController@user_manual');
 
 //hiển thị danh sách  (AJAX)
 Route::get('districtOfProvince/{province_id?}', 'DistrictController@districtOfProvince');

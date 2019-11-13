@@ -87,6 +87,17 @@ class HomeController extends Controller
             'province' => $province,
         ]);
     }
+    public function user_manual()
+    {
+        $province = Province::getList();
+        $customer = Customer::getUserOfCustomer();
+        $company = Company::listCompanyAll();
+        return view('user-manual', [
+            'customer' => $customer,
+            'company' => $company,
+            'province' => $province,
+        ]);
+    }
     public function order()
     {
         $province = Province::getList();
@@ -228,4 +239,5 @@ class HomeController extends Controller
             ['path' => $request->url(), 'query' => $request->query()]
         );
     }
+
 }

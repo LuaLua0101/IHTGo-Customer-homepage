@@ -3,6 +3,7 @@ return [
     //nav list
     'about_us' => 'About us',
     'price_list' => 'Price list',
+    'user_manual' => 'User manual',
     'news' => 'News',
     'create_order' => 'Create an order',
     'order_management' => 'Order management',
