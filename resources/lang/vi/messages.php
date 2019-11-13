@@ -3,6 +3,7 @@ return [
     //nav list
     'about_us' => 'Về chúng tôi',
     'price_list' => 'Bảng giá',
+    'user_manual' => 'Hướng dẫn',
     'news' => 'Tin tức',
     'create_order' => 'Tạo đơn hàng',
     'order_management' => 'Quản lý đơn hàng',
