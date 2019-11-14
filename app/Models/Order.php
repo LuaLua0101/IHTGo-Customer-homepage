@@ -641,7 +641,7 @@ class Order extends Model
             ->orderBy('o.id', 'desc')
             ->skip($skip)
             ->take(10)
-            ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
+            ->get(['o.id', 'o.car_option', 'o.status', 'o.coupon_code', 'o.name', 'o.total_price', 'od.sender_address', 'receive_address', 'o.created_at']);
         return $orders;
     }
     public static function searchWaiting($search)
