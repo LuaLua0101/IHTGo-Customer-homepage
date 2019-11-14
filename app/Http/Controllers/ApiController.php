@@ -147,12 +147,14 @@ class ApiController extends Controller
         $user = Auth::user();
 
         if ($user_level == 3) {
+            $customer=DB::table('users as u')->rightJoin('customers as c','c.user_id','=','u.id')->where('u.id',$user->id)->select('u.*','c.address')->first();
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
-                'id' => $user->id,
-                'name' => $user->name,
-                'phone' => $user->phone,
-                'email' => $user->email,
+                'id' => $customer->id,
+                'name' => $customer->name,
+                'phone' => $customer->phone,
+                'email' => $customer->email,
+                'address'=>$customer->address
             ], 200);
         } else {
             return response()->json([
