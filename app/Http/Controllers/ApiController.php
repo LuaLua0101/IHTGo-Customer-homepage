@@ -13,12 +13,12 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Image;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Image;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
@@ -147,14 +147,14 @@ class ApiController extends Controller
         $user = Auth::user();
 
         if ($user_level == 3) {
-            $customer=DB::table('users as u')->rightJoin('customers as c','c.user_id','=','u.id')->where('u.id',$user->id)->select('u.*','c.address')->first();
+            $customer = DB::table('users as u')->rightJoin('customers as c', 'c.user_id', '=', 'u.id')->where('u.id', $user->id)->select('u.*', 'c.address')->first();
             return response()->json([
                 'token' => 'Bearer ' . $jwt_token,
                 'id' => $customer->id,
                 'name' => $customer->name,
                 'phone' => $customer->phone,
                 'email' => $customer->email,
-                'address'=>$customer->address
+                'address' => $customer->address,
             ], 200);
         } else {
             return response()->json([
@@ -199,7 +199,7 @@ class ApiController extends Controller
     }
     public function searchAll(Request $req)
     {
-        $res = Order::searchAll($req->search);
+        $res = Order::searchAll($req->search, $req->skip);
 
         return response()->json($res);
     }
@@ -366,7 +366,7 @@ class ApiController extends Controller
     protected function saveImgBase64(Request $request)
     {
         list($extension, $content) = explode(';', $request->image);
-        $fileName =  $request->id . '_orders.png';
+        $fileName = $request->id . '_orders.png';
         $content = explode(',', $content)[1];
         $storage = Storage::disk('public');
 

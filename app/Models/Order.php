@@ -624,7 +624,7 @@ class Order extends Model
             ->get(['orders.id', 'orders.name', 'orders.status', 'orders.total_price', 'orders.is_speed', 'orders.car_option', 'orders.created_at']);
         return $res;
     }
-    public static function searchAll($search)
+    public static function searchAll($search, $skip = 0)
     {
         $user_id = Auth::user()->id;
         $orders = DB::table('orders as o')
@@ -639,6 +639,8 @@ class Order extends Model
                     ->orWhere('od.receive_phone', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('o.id', 'desc')
+            ->skip($skip)
+            ->take(10)
             ->get(['o.id', 'o.name', 'o.status', 'o.total_price', 'o.is_speed', 'o.car_option', 'o.created_at']);
         return $orders;
     }
@@ -949,28 +951,28 @@ class Order extends Model
             $driver = DB::table('drivers')->where('user_id', $user_id)->first();
             $deliveries = DB::table('deliveries')->where('order_id', $order->id)->first();
             if ($deliveries != null) {
-                if($data->driver_note){
+                if ($data->driver_note) {
                     DB::table('deliveries')
-                    ->where('order_id', $order->id)
-                    ->update([
-                        'order_id' => $order->id,
-                        'driver_id' => $driver->id,
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    ]);
+                        ->where('order_id', $order->id)
+                        ->update([
+                            'order_id' => $order->id,
+                            'driver_id' => $driver->id,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
                     DB::table('order_details')
-                    ->where('order_id', $order->id)
-                    ->update([
-                        'driver_note' => $data->driver_note
-                    ]);
-                }else{
+                        ->where('order_id', $order->id)
+                        ->update([
+                            'driver_note' => $data->driver_note,
+                        ]);
+                } else {
                     return 404;
                 }
-                
+
             } elseif ($deliveries == null) {
                 DB::table('deliveries')
                     ->insert([
                         'order_id' => $order->id,
-                        'driver_id' =>  $driver->id,
+                        'driver_id' => $driver->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
             }
