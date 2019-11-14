@@ -326,7 +326,7 @@ class ApiController extends Controller
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
             if ($fcm) {
-                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đang trên đường giao', []);
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->code . ' đang trên đường giao', []);
             }
 
             return response()->json(200);
@@ -395,7 +395,7 @@ class ApiController extends Controller
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
             if ($fcm) {
-                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đã được giao thành công', []);
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->code . ' đã được giao thành công', []);
             }
 
             return response()->json(200);
@@ -475,13 +475,13 @@ class ApiController extends Controller
             //send notify to customer
             $fcm = Device::getToken($user->id);
             if ($fcm) {
-                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->code . ' đã được tạo thành công', []);
             }
 
             //send notify to web
             $webfcm = WebFCM::find($user->id);
             if ($webfcm) {
-                Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->coupon_code . ' đã được tạo thành công', []);
+                Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->code . ' đã được tạo thành công', []);
             }
 
             return response()->json(['data' => $data, 'code' => 200]);
@@ -517,13 +517,13 @@ class ApiController extends Controller
             //send notify to customer
             $fcm = Device::getToken($order->user_id);
             if ($fcm) {
-                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đang được giao', []);
+                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->code . ' đang được giao', []);
             }
 
             //send notify to web
             $webfcm = WebFCM::find($order->user_id);
             if ($webfcm) {
-                Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->coupon_code . ' đang được giao', []);
+                Device::sendMsgToDevice($webfcm->fcm_web_token, 'Thông báo từ IHTGO', 'Đơn hàng ' . $order->code . ' đang được giao', []);
             }
 
             return response()->json('ok');
