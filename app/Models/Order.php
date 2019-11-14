@@ -737,6 +737,7 @@ class Order extends Model
         $order_id = DB::table(config('constants.ORDER_TABLE'))->insertGetId(
             [
                 'code' => $code,
+                'coupon_code'=>$data->coupon_code,
                 'name' => $data->name,
                 'car_type' => 8,
                 'car_option' => $data->car_option,
