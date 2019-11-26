@@ -253,21 +253,17 @@ class Customer
     {
         try {
             $user_id = Auth::user()->id;
-            if($data->password){
+            if ($data->password) {
                 DB::table('users')
-                ->where('id', $user_id)
-                ->update([
-                    'name'=>$data->name,
-                    'address'=>$data->address,
-                    'password'=> Hash::make($data->password),
-                ]);
-            }else{
-                DB::table('users')
-                ->where('id', $user_id)
-                ->update([
-                    'name'=>$data->name,
-                    'address'=>$data->address,
-                ]);
+                    ->where('id', $user_id)
+                    ->update([
+                        'name' => $data->name,
+                        'password' => Hash::make($data->password),
+                    ]);
+                DB::table('customers')->where('id', $user_id)->update(['address' => $data->address]);
+            } else {
+                DB::table('users')->where('id', $user_id)->update(['name' => $data->name]);
+                DB::table('customers')->where('user_id', $user_id)->update(['address' => $data->address]);
             }
             return 200;
         } catch (\Exception $ex) {
