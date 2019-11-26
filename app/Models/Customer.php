@@ -259,7 +259,7 @@ class Customer
                 ->update([
                     'name'=>$data->name,
                     'address'=>$data->address,
-                    'password'=> $data->Hash::make($data->password),
+                    'password'=> Hash::make($data->password),
                 ]);
             }else{
                 DB::table('users')
