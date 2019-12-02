@@ -337,8 +337,6 @@ class ApiController extends Controller
     public function uploadImage(Request $request)
     {
         try {
-            dd($request->image);
-
             if ($request->hasFile('image')) {
                 //filename to store
                 $filenametostore = $request->id . '_orders.png';

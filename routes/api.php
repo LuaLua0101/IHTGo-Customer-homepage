@@ -9,6 +9,9 @@ Route::post('customer-register', 'ApiController@customerRegister');
 Route::post('customer/update-fcm', 'ApiController@updateCustomerFCM');
 Route::get('driver/find', 'ApiController@findDriver');
 
+Route::post('upload-image', 'ApiController@uploadImage');
+Route::post('upload-image-base64', 'ApiController@saveImgBase64');
+
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     // Route::get('verify', 'ApiController@verify')->middleware(['can:delete-company2']);
     Route::get('verify', 'ApiController@verify');
@@ -24,8 +27,6 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'driver'], function () {
     Route::post('update-fcm', 'ApiController@updateFCM');
     Route::post('get-order', 'ApiController@getOrder');
     Route::post('update-code', 'ApiController@updateCode');
-    Route::post('upload-image', 'ApiController@uploadImage');
-    Route::post('upload-image-base64', 'ApiController@saveImgBase64');
 
     Route::post('list-receive', 'ApiController@listReceive');
     Route::post('qrcode-receive', 'ApiController@qrcodeReceive');
