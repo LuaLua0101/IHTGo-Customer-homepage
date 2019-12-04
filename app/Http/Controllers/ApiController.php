@@ -473,7 +473,7 @@ class ApiController extends Controller
             //send notify to customer
             $fcm = Device::getToken($user->id);
             if ($fcm) {
-                Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->code . ' đã được tạo thành công', []);
+              //  Device::sendMsgToDevice($fcm, 'Thông báo từ IHTGO', 'Đơn hàng ' . $data->code . ' đã được tạo thành công', []);
             }
 
             //send notify to web
