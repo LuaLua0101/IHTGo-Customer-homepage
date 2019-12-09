@@ -55,6 +55,6 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'customer'], function () {
     Route::post('order-waiting', 'Api\CustomerController@orderWaiting');
     Route::post('order-finish', 'Api\CustomerController@orderFinish');
     Route::post('order-cancelled', 'Api\CustomerController@orderCancel');
-
+    Route::post('change-passwd', 'ApiController@changePassword');
     Route::post('change-info', 'Api\CustomerController@changeInfo');
 });
