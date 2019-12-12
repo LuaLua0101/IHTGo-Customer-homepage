@@ -27,9 +27,11 @@ class ApiController extends Controller
     public function updateWebFCM(Request $req)
     {
         $id = Auth::user()->id;
+        if($req->fcm) {
         $o = WebFCM::firstOrNew(array('user_id' => $id));
         $o->fcm_web_token = $req->fcm;
         $o->save();
+        }
         // Device::sendMsgToDevice($req->fcm, 'Thông báo từ IHT', 'Đơn hàng đã được tạo thành công', []);
         return response()->json([
             'success' => true,
