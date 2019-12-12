@@ -405,7 +405,7 @@ class ApiController extends Controller
     public function updateFCM(Request $req)
     {
         try {
-            Device::updateFcm(Auth::user()->id, $req->fcm);
+            if($req->fcm)Device::updateFcm(Auth::user()->id, $req->fcm);
             return response()->json(200);
         } catch (\Exception $e) {
             return response()->json(e);
